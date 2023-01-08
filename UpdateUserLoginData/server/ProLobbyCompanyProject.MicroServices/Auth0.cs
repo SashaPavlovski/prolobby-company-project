@@ -208,6 +208,22 @@ namespace ProLobbyCompanyProject.MicroServices
                             break;
                     }
                     break;
+
+                case "Campaigns":
+                   switch (action)
+                    {
+                        case "checkExist":
+                            int a = 1;
+                            return new OkObjectResult(null);
+                            break;
+
+                        case "addData":
+                            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                            break;
+
+                    }
+
+                    break;
             }
             return null;
         }

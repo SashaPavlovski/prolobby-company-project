@@ -6,6 +6,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { UserContext } from "./../../context/userData.context";
 import { GetRolesAsync } from "./../../services/services";
 import { HomeActivistsBusiness } from "./../../pages/home/home-activists-business/home-activists-business";
+import { CreateCampaign } from "../../pages/organization/create-campaign/create-campaign";
+import { AboutCampaign } from "./../../pages/organization/about-campaign/about-campaign";
+import { ProductsList } from "./../../pages/organization/products-list/products-list";
 import {
   NavBarCompany,
   NavBarActivists,
@@ -75,6 +78,9 @@ const NonProfitOrganizationRoute = () => {
       <Routes>
         <Route path="/" element={<NonProfitOrganizationHP />} />
         <Route path="/profile" element={<LoginNonProfitOrganization />} />
+        <Route path="/create-campaign" element={<CreateCampaign />} />
+        <Route path="/about-campaign" element={<AboutCampaign />} />
+        <Route path="/products" element={<ProductsList />} />
       </Routes>
     </>
   );
@@ -87,6 +93,8 @@ const ProLobbyOwnerRoute = () => {
       <Routes>
         <Route path="/" element={<ProLobbyOwnerHP />} />
         <Route path="/profile" element={<LoginProLobbyOwner />} />
+        <Route path="/about-campaign" element={<AboutCampaign />} />
+        <Route path="/products" element={<ProductsList />} />
       </Routes>
     </>
   );
@@ -99,6 +107,8 @@ const SocialActivistsRoute = () => {
       <Routes>
         <Route path="/" element={<BusinessCompany_SocialActivists />} />
         <Route path="/profile" element={<LoginSocialActivists />} />
+        <Route path="/about-campaign" element={<AboutCampaign />} />
+        <Route path="/products" element={<ProductsList />} />
       </Routes>
     </>
   );
@@ -114,6 +124,8 @@ const BusinessCompanyRepresentativeRoute = () => {
           path="/profile"
           element={<LoginBusinessCompanyRepresentative />}
         />
+        <Route path="/about-campaign" element={<AboutCampaign />} />
+        <Route path="/products" element={<ProductsList />} />
       </Routes>
     </>
   );

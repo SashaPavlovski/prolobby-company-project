@@ -38,12 +38,12 @@ namespace ProLobbyCompanyProject.Dal
             }           
             else if (Campaigns.Count() == 0)
             {
-                TBCampaigns campaigns = new TBCampaigns { Campaigns_Name = "Campaigns_Name", Descreption = "Descreption", Hashtag = "#Hashtag", NonProfitOrganization_Id = 1 };
+                TBCampaigns campaigns = new TBCampaigns { Campaigns_Name = "Campaigns_Name", Descreption = "Descreption", Hashtag = "#Hashtag", NonProfitOrganization_Id = 1,Date = DateTime.Now.AddYears(0),Active = 1 };
                 Campaigns.Add(campaigns);
             }               
             else if (DonatedProducts.Count() == 0)
             {
-                TBDonatedProducts donatedProducts = new TBDonatedProducts { BusinessCompany_Id = 1, Campaigns_Id = 1, Price = 10, Product_Name = "Product_Name" };
+                TBDonatedProducts donatedProducts = new TBDonatedProducts { BusinessCompany_Id = 1, Campaigns_Id = 1, Price = 10, Product_Name = "Product_Name",Status_Product = 1 };
                 DonatedProducts.Add(donatedProducts);
             }
             else if (MoneyTracking.Count() == 0)

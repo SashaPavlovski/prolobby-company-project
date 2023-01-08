@@ -10,6 +10,10 @@ let navBarArr = [
     path: "/profile",
     pathName: "profile",
   },
+  {
+    path: "/create-campaign",
+    pathName: "create-campaign",
+  },
 ];
 
 export const NavBarOrganization = () => {

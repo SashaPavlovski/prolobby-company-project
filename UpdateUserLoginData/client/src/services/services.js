@@ -12,15 +12,17 @@ export const GetRolesAsync = async (userID) => {
   }
 };
 
-export const GetUserDataAsync = async (userAccess, userID) => {
+export const GetDataAsync = async (userAccess, action, userID) => {
+  console.log("enter to GetDataAsync");
   console.log(userID);
   let result = await axios.get(
-    `http://localhost:7251/api/${userAccess}/userData/${userID}`
+    `http://localhost:7251/api/${userAccess}/${action}/${userID}`
   );
   if (result.status === 200) {
     console.log(`seccsed : ${result.data}`);
     return result.data;
   } else {
+    console.log("enter GetDataAsync else");
     return {};
   }
 };
@@ -46,4 +48,15 @@ export const UpdateUserAsync = async (
     updateUser
   );
   console.log(res);
+};
+
+export const GetAllDataAsync = async (userAccess, action) => {
+  let serverUrl = `http://localhost:7251/api/${userAccess}/${action}`;
+  let ProductsFromServer = await axios.get(serverUrl);
+  if (ProductsFromServer.status === 200) {
+    console.log(`seccsed : ${ProductsFromServer.data}`);
+    return ProductsFromServer.data;
+  } else {
+    return {};
+  }
 };

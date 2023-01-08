@@ -18,6 +18,8 @@ namespace ProLobbyCompanyProject.Model
         public int Campaigns_Id { get; set; }
         public string Product_Name { get; set; }
         public SqlMoney Price { get; set; }
+
+        public bool Status_Product { get; set; }
         public byte[] MyImage { get; set; }
         public IFormFile SetImage
         {
