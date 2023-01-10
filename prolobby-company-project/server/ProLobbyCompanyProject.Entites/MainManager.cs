@@ -150,5 +150,11 @@ namespace ProLobbyCompanyProject.Entites
             InitClasses();
             return donatedProducts2.GetCampaignProducts(campaignsId);
         }
+        public void PostDonatedProduct(TBDonatedProducts donatedProduct)
+        {
+            if (donatedProduct == null) return;
+
+            donatedProducts2.PostProduct(donatedProduct);
+        }
     }
 }

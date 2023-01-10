@@ -13,8 +13,8 @@ namespace ProLobbyCompanyProject.Model
         [Key]
         public int MoneyTracking_Id { get; set; }
         public int SocialActivists_Id { get; set; }
-        public int DonatedProducts_Id { get; set; }
-        public double Accumulated_money { get; set; }
+        public int Campaigns_Id { get; set; }
+        public double Accumulated_money { get { return 0; } set { } }
         public bool Active { get { return true; } set { } }
     }
 }

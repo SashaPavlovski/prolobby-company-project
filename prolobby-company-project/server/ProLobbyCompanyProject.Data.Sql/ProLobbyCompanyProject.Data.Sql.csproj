@@ -72,6 +72,7 @@
     <Compile Include="Campaigns\DSCampaignsGet.cs" />
     <Compile Include="Campaigns\DSCampaignsPost.cs" />
     <Compile Include="DonatedProducts\DSDonatedProductsGet.cs" />
+    <Compile Include="DonatedProducts\DSDonatedProductsPost.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsPost.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsGet.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsUpdate.cs" />

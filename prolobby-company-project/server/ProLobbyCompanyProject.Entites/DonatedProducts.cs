@@ -18,5 +18,10 @@ namespace ProLobbyCompanyProject.Entites
             DSDonatedProductsGet dSDonatedProductsGet = new DSDonatedProductsGet();
             return dSDonatedProductsGet.GetProductsCampaign(campaignId);
         }
+        public void PostProduct(TBDonatedProducts donatedProduct)
+        {
+            DSDonatedProductsPost newProduct = new DSDonatedProductsPost();
+            newProduct.PostNewProduct(donatedProduct);
+        }
     }
 }

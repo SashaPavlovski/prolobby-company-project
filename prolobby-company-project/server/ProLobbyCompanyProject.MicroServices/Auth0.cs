@@ -278,7 +278,18 @@ namespace ProLobbyCompanyProject.MicroServices
 
 
                             break;
+                        case "addData":
+                            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
+                            TBDonatedProducts donatedProduct = System.Text.Json.JsonSerializer.Deserialize<TBDonatedProducts>(requestBody);
+
+                            if (donatedProduct.Product_Name != null)
+                            {
+                                MainManager.INSTANCE.PostDonatedProduct(donatedProduct);
+
+                                return new OkObjectResult("The operation was successful");
+                            }
+                            return new OkObjectResult("The operation failed");
 
                     }
                     break;

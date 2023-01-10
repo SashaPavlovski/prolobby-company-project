@@ -38,7 +38,7 @@ namespace ProLobbyCompanyProject.Dal
             }           
             else if (Campaigns.Count() == 0)
             {
-                TBCampaigns campaigns = new TBCampaigns { Campaigns_Name = "Campaigns_Name", Descreption = "Descreption", Hashtag = "#Hashtag", NonProfitOrganization_Id = 1,Active = true };
+                TBCampaigns campaigns = new TBCampaigns { Campaigns_Name = "Campaigns_Name", Descreption = "Descreption", Hashtag = "#Hashtag", NonProfitOrganization_Id = 1,Active = false };
                 Campaigns.Add(campaigns);
             }               
             else if (DonatedProducts.Count() == 0)
@@ -48,7 +48,7 @@ namespace ProLobbyCompanyProject.Dal
             }
             else if (MoneyTracking.Count() == 0)
             {
-                TBMoneyTracking moneyTracking = new TBMoneyTracking { SocialActivists_Id = 1, DonatedProducts_Id = 1, Accumulated_money = 100 ,Active = true};
+                TBMoneyTracking moneyTracking = new TBMoneyTracking { SocialActivists_Id = 1, Campaigns_Id = 1, Accumulated_money = 100 ,Active = true};
                 MoneyTracking.Add(moneyTracking) ;
             } 
             else if (NonProfitOrganization.Count() == 0)
