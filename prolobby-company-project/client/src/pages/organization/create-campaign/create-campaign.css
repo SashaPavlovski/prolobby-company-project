@@ -1,0 +1,13 @@
+.createCampaign {
+  display: flex;
+  flex-direction: column;
+  margin-left: 350px;
+  gap: 10px;
+  width: 600px;
+}
+
+.showIfNameExist {
+}
+.showIfNotExist {
+  display: none;
+}
