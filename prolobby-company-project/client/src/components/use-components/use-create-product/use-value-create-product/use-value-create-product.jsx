@@ -4,6 +4,7 @@ export const UseValueCreateProduct = () => {
   const [product_Name, setProduct_Name] = useState("");
   const [price, setPrice] = useState("");
   const [picture, setPicture] = useState("");
+  const [count, setCount] = useState("");
   console.log(product_Name, price);
 
   return {
@@ -11,6 +12,7 @@ export const UseValueCreateProduct = () => {
       Product_NameV: { product_Name, setProduct_Name },
       PriceV: { price, setPrice },
       PictureV: { picture, setPicture },
+      CountV: { count, setCount },
     },
   };
 };

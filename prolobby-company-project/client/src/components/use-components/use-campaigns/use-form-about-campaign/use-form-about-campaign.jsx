@@ -11,6 +11,7 @@ export const UseFormAboutCampaign = ({
   productDonation,
   productsList,
   remove,
+  joinUs,
 }) => {
   return (
     <div className="card text-center mb-3">
@@ -47,6 +48,13 @@ export const UseFormAboutCampaign = ({
         role1 === "ProLobbyOwner" ? (
           <a className="btn btn-danger" onClick={remove}>
             Remove
+          </a>
+        ) : (
+          <></>
+        )}
+        {role1[0].name === "SocialActivists" ? (
+          <a className="btn btn-primary" onClick={joinUs}>
+            To join
           </a>
         ) : (
           <></>

@@ -17,11 +17,7 @@ export const HomeOrganization = () => {
     <>
       {arrCampaign.length > 0
         ? arrCampaign.map((c) => {
-            return (
-              <>
-                <CampaignCard campaignObject={c} />
-              </>
-            );
+            return <CampaignCard campaignObject={c} />;
           })
         : "loading"}
     </>

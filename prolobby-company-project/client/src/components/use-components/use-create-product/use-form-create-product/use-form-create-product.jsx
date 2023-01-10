@@ -4,6 +4,7 @@ export const UseFormCreateProduct = ({
   setProduct_Name,
   setPrice,
   setPicture,
+  setCount,
   sendingData,
 }) => {
   return (
@@ -20,18 +21,32 @@ export const UseFormCreateProduct = ({
         />
         <div className="valid-feedback">Looks good!</div>
       </div>
-      <div className="input-group">
+      <div>
         <label for="validationCustom01" className="form-label">
           What is the price
         </label>
+        <div className="input-group">
+          <input
+            type="number"
+            className="form-control"
+            id="validationCustom01"
+            onChange={(e) => setPrice(e.target.value)}
+          />
+          {/* <span className="input-group-text">$</span>
+          <span className="input-group-text">0.00</span> */}
+        </div>
+      </div>
+      <div className="col-md-4">
+        <label for="validationCustom01" className="form-label">
+          Amount :
+        </label>
         <input
-          type="text"
+          type="number"
           className="form-control"
-          aria-label="Dollar amount (with dot and two decimal places)"
-          onChange={(e) => setPrice(e.target.value)}
+          id="validationCustom01"
+          onChange={(e) => setCount(e.target.value)}
         />
-        <span className="input-group-text">$</span>
-        <span className="input-group-text">0.00</span>
+        <div className="valid-feedback">Looks good!</div>
       </div>
       <div>
         <label for="formFileLg" className="form-label">
