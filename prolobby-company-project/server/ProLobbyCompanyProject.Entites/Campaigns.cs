@@ -1,4 +1,7 @@
-﻿using ProLobbyCompanyProject.Data.Sql.Campaigns;
+﻿using ProLobbyCompanyProject.Data.Sql;
+using ProLobbyCompanyProject.Data.Sql.Campaigns;
+using ProLobbyCompanyProject.Data.Sql.DonatedProducts;
+using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
 using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Campaigns;
 using System;
@@ -48,6 +51,7 @@ namespace ProLobbyCompanyProject.Entites
             DSCampaignsDelete dSCampaignsDelete = new DSCampaignsDelete();
             dSCampaignsDelete.DeleteDataCampaign(campaignId);
         }
+
     }
     
 }

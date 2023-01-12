@@ -1,6 +1,8 @@
 ﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Campaigns;
+using ProLobbyCompanyProject.Model.MoneyTracking;
+using ProLobbyCompanyProject.Model.Shippers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +23,18 @@ namespace ProLobbyCompanyProject.Entites
         NonProfitOrganizations nonProfitOrganizations2;
         Campaigns campaigns2;
         DonatedProducts donatedProducts2;
-
+        MoneyTracking moneyTracking2;
+        Shippers shippers2;
         public static MainManager INSTANCE
         {
             get { return _INSTANCE; }
         }
         public void Init()
+        {
+            InitClasses();
+            sql.CreateTables();
+        }
+        public void InitClasses()
         {
 
             sql = new SqlQuery();
@@ -34,12 +42,10 @@ namespace ProLobbyCompanyProject.Entites
             proLobbyOwner2 = new ProLobbyOwner();
             socialActivists2 = new SocialActivists();
             nonProfitOrganizations2 = new NonProfitOrganizations();
-            sql.CreateTables();
-        }
-        public void InitClasses()
-        {
             campaigns2 = new Campaigns();
             donatedProducts2 = new DonatedProducts();
+            moneyTracking2 = new MoneyTracking();
+            shippers2 = new Shippers();
         }
 
 
@@ -69,23 +75,24 @@ namespace ProLobbyCompanyProject.Entites
         public void PostNonProfitOrganizationData(TBNonProfitOrganization organizationData)
         {
             if (organizationData == null) return;
-
+            InitClasses();
             nonProfitOrganizations2.PostUsersOrganization(organizationData);
         }
         public void PostNonProfitCompanyData(TBBusinessCompanyRepresentative companyData)
         {
             if (companyData == null) return;
-
+            InitClasses();
             businessCompanyRepresentatives2.PostUsersCompanys(companyData);
         }
         public void PostProLobbyOwnerData(TBProLobbyOwner ownerData)
         {
+            InitClasses();
             proLobbyOwner2.PostUsersOwner(ownerData);
         }
         public void PostSocialActivistsData(TBSocialActivists activistsData)
         {
             if (activistsData == null) return;
-
+            InitClasses();
             socialActivists2.PostUsersActivists(activistsData);
         }
 
@@ -93,25 +100,26 @@ namespace ProLobbyCompanyProject.Entites
         public void UpdateSocialActivistsData(TBSocialActivists activistsData)
         {
             if (activistsData == null) return;
-
+            InitClasses();
             socialActivists2.UpdateActivist(activistsData);
         }
         public void UpdateProLobbyOwnerData(TBProLobbyOwner activistsData)
         {
 
             if (activistsData == null) return;
+            InitClasses();
             proLobbyOwner2.UpdateActivist(activistsData);
         }
         public void UpdateOrganizationData(TBNonProfitOrganization activistsData)
         {
             if (activistsData == null) return;
-
+            InitClasses();
             nonProfitOrganizations2.UpdateActivist(activistsData);
         }
         public void UpdateBusinessCompanyData(TBBusinessCompanyRepresentative activistsData)
         {
             if (activistsData == null) return;
-
+            InitClasses();
             businessCompanyRepresentatives2.UpdateActivist(activistsData);
         }
 
@@ -131,6 +139,7 @@ namespace ProLobbyCompanyProject.Entites
         public MAboutCampaign GetMAboutCampaign( string campaignsId)
         {
             if(campaignsId == null) return null;
+            InitClasses();
             return campaigns2.GetAboutCampaign(campaignsId);
 
         }
@@ -138,9 +147,11 @@ namespace ProLobbyCompanyProject.Entites
         public void RemoveCampaign (string campaignId)
         {
             if (campaignId == null) return;
-
+            InitClasses();
             campaigns2.RemoveCampaignData(campaignId);
         }
+
+
 
         //*******************************************************************
 
@@ -153,8 +164,33 @@ namespace ProLobbyCompanyProject.Entites
         public void PostDonatedProduct(TBDonatedProducts donatedProduct)
         {
             if (donatedProduct == null) return;
-
+            InitClasses();
             donatedProducts2.PostProduct(donatedProduct);
         }
+
+        //**********************************************************************
+
+        public void PostMoneyTracking(TBMoneyTracking moneyTracking)
+        {
+            if (moneyTracking == null) return;
+            InitClasses();
+            moneyTracking2.PostDataTracking(moneyTracking);
+        }
+        public List<MAMoneyTracking> GetMoneyTracking(string idUser)
+        {
+            if (idUser == null) return null;
+            InitClasses();
+            return moneyTracking2.GetMoneyData(idUser);
+        }
+
+        //**********************************************************************
+
+        public string BuyProduct(MAbuyProduct productData)
+        {
+            if (productData == null) return null;
+            InitClasses();
+            return shippers2.PostProduct(productData);
+        }
+
     }
 }
