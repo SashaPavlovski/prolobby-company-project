@@ -21,6 +21,7 @@ namespace ProLobbyCompanyProject.Model
 
         public bool Active { get { return true; } set {  } }
         public string User_Id { get; set; }
+        public double MoneyDonations { get { return 0; } set { } }
 
 
     }
