@@ -1,0 +1,19 @@
+﻿using ProLobbyCompanyProject.Dal;
+using ProLobbyCompanyProject.Entites;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace test
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            ConnectionWithSql._ConnectionWithSql.CreateTables();
+           
+        }
+    }
+}
