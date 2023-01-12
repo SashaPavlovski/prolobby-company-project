@@ -3,6 +3,7 @@ using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Campaigns;
 using ProLobbyCompanyProject.Model.MoneyTracking;
 using ProLobbyCompanyProject.Model.Shippers;
+using ProLobbyCompanyProject.Model.Twitter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace ProLobbyCompanyProject.Entites
         DonatedProducts donatedProducts2;
         MoneyTracking moneyTracking2;
         Shippers shippers2;
+        Twitter twitter2;
         public static MainManager INSTANCE
         {
             get { return _INSTANCE; }
@@ -46,6 +48,7 @@ namespace ProLobbyCompanyProject.Entites
             donatedProducts2 = new DonatedProducts();
             moneyTracking2 = new MoneyTracking();
             shippers2 = new Shippers();
+            twitter2 = new Twitter();
         }
 
 
@@ -191,6 +194,15 @@ namespace ProLobbyCompanyProject.Entites
             InitClasses();
             return shippers2.PostProduct(productData);
         }
+
+        //**********************************************************************
+
+        public List<MATwitter> GetTwitterUserData()
+        {
+            InitClasses();
+            return twitter2.GetTwitterData();
+        }
+
 
     }
 }
