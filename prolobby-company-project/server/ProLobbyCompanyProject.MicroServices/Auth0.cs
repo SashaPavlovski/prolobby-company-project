@@ -17,6 +17,8 @@ using System.Text.Json;
 using System.Reflection.Metadata;
 using System.Net;
 using ProLobbyCompanyProject.Model.Campaigns;
+using ProLobbyCompanyProject.Model.MoneyTracking;
+using ProLobbyCompanyProject.Model.Shippers;
 
 namespace ProLobbyCompanyProject.MicroServices
 {
@@ -262,6 +264,9 @@ namespace ProLobbyCompanyProject.MicroServices
                             }
                             return new OkObjectResult("The operation failed");
                             break;
+
+
+
                     }
 
                     break;
@@ -277,7 +282,7 @@ namespace ProLobbyCompanyProject.MicroServices
                             return new OkObjectResult(responseMessageNP);
 
 
-                            break;
+                           
                         case "addData":
                             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
@@ -290,6 +295,73 @@ namespace ProLobbyCompanyProject.MicroServices
                                 return new OkObjectResult("The operation was successful");
                             }
                             return new OkObjectResult("The operation failed");
+
+                    }
+                    break;
+
+
+                case "MoneyTracking":
+
+                    switch (action)
+                    {
+
+                        case "addTrack":
+
+                            string requestBodyTrack = await new StreamReader(req.Body).ReadToEndAsync();
+
+                            TBMoneyTracking moneyTracking = System.Text.Json.JsonSerializer.Deserialize<TBMoneyTracking>(requestBodyTrack);
+
+                            if (moneyTracking != null)
+                            {
+                                MainManager.INSTANCE.PostMoneyTracking(moneyTracking);
+
+                                return new OkObjectResult("The operation was successful");
+                            }
+                            return new OkObjectResult("The operation failed");
+
+
+
+                        case "getDataMoney":
+                            List<MAMoneyTracking> ListMoneyTracking = MainManager.INSTANCE.GetMoneyTracking(userId);
+
+
+                            string responseMessageList = System.Text.Json.JsonSerializer.Serialize(ListMoneyTracking);
+
+
+                            Console.WriteLine(responseMessageList);
+                            return new OkObjectResult(responseMessageList);
+
+                    }
+                    break;
+
+
+                case "Shippers":
+
+                    switch (action)
+                    {
+
+                        case "buyProduct":
+
+                            string requestBodyProductData= await new StreamReader(req.Body).ReadToEndAsync();
+
+                            MAbuyProduct buyProduct = System.Text.Json.JsonSerializer.Deserialize<MAbuyProduct>(requestBodyProductData);
+
+                            if (buyProduct != null)
+                            {
+                               string anwer =  MainManager.INSTANCE.BuyProduct(buyProduct);
+
+                                if(anwer.Contains("Succeeded")) return new OkObjectResult("Succeeded");
+                                else if (anwer.Contains("you do not have enough money")) return new OkObjectResult("failedNotHaveMonet");
+                                else if (anwer.Contains("You are not following the campaign")) return new OkObjectResult("");
+                                return new OkObjectResult("failedNotFollowing");
+                            }
+                            return new OkObjectResult("The operation failed");
+
+                            
+
+                        case "getDataMoney":
+
+                            break;
 
                     }
                     break;
