@@ -50,7 +50,10 @@ export const AboutCampaign = () => {
     //נכנס למעקב כספים
     //צריכה לשלוח קמפיין תז
     //תז של פעיל חברתי
-    if (userDataRow != null) JoinCampaign({ Campaigns_Id, userDataRow });
+    if (userDataRow != null) {
+      let { addToMoneyTracking } = JoinCampaign({ Campaigns_Id, userDataRow });
+      addToMoneyTracking();
+    }
   };
   if (campaign !== null) {
     let {

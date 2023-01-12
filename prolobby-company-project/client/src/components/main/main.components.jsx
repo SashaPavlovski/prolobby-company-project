@@ -29,6 +29,7 @@ import {
   LoginSocialActivists,
 } from "../../pages/login-components";
 import { DonateProduct } from "../../pages/products/donate-product/donate-product";
+import { UseMoneyTrackingShow } from "../use-components/use-money-tracking/use-money-tracking-show/use-money-tracking-show";
 
 export const Main = () => {
   const { user } = useAuth0();
@@ -146,6 +147,14 @@ const SocialActivistsRoute = () => {
           path="/products"
           element={
             <BusinessCompany_SocialActivists components={ProductsList} />
+          }
+        />
+        <Route
+          path="/my-money"
+          element={
+            <BusinessCompany_SocialActivists
+              components={UseMoneyTrackingShow}
+            />
           }
         />
       </Routes>

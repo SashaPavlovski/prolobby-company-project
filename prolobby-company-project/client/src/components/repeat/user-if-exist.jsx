@@ -13,6 +13,7 @@ export const Ifexist = () => {
     let userRow = await GetDataAsync(role1[0].name, "userData", user.sub);
     if (userRow != null) {
       setUserDataRow(userRow[0]);
+      console.log(`userData : Ifexist : ${userRow.SocialActivists_Id}`);
     }
   };
   useEffect(() => {

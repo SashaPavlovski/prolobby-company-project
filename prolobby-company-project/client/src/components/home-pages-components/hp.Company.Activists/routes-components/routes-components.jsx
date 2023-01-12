@@ -3,6 +3,7 @@ import { HomeOrganization } from "./../../../../pages/home/home-organization/hom
 import { AboutCampaign } from "./../../../../pages/organization/about-campaign/about-campaign";
 import { ProductsList } from "./../../../../pages/products/products-list/products-list";
 import { DonateProduct } from "./../../../../pages/products/donate-product/donate-product";
+import { UseMoneyTrackingShow } from './../../../use-components/use-money-tracking/use-money-tracking-show/use-money-tracking-show';
 
 export const BusinessCompanyRoutes = ({ components }) => {
   return components === HomeOrganization ? (
@@ -24,6 +25,8 @@ export const SocialActivistsRoutes = ({ components }) => {
     <AboutCampaign />
   ) : components === ProductsList ? (
     <ProductsList />
+  ) : components === UseMoneyTrackingShow ? (
+    <UseMoneyTrackingShow />
   ) : (
     <></>
   );

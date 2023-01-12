@@ -15,7 +15,7 @@ export const HomeOrganization = () => {
 
   return (
     <>
-      {arrCampaign.length > 0
+      {arrCampaign !== null && arrCampaign.length > 0
         ? arrCampaign.map((c) => {
             return <CampaignCard campaignObject={c} />;
           })

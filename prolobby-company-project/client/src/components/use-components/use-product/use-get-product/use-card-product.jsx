@@ -7,6 +7,7 @@ export const UseCardProduct = ({
   buy,
   donation,
   backToCampaign,
+  DonatedProducts_Id,
 }) => {
   let { role1 } = useContext(UserContext);
   console.log(Product_Name, Price);
@@ -18,7 +19,10 @@ export const UseCardProduct = ({
         <p className="card-text">price of the product: {Price} $</p>
         {role1[0].name === "SocialActivists" ? (
           <>
-            <a className="btn btn-success" onClick={buy}>
+            <a
+              className="btn btn-success"
+              onClick={() => buy(DonatedProducts_Id)}
+            >
               To buy
             </a>
             <a className="btn btn-primary" onClick={donation}>

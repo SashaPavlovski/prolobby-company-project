@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { UseValueLoginActivists } from "./../../../components/use-components/use-activists/use-value-login-activists/use-value-login-activists";
 import { UsePostLoginActivists } from "./../../../components/use-components/use-activists/use-post-login-activists/use-post-login-activists";
 import { UseUpdateLoginActivists } from "../../../components/use-components/use-activists/use-update-login-activists/use-update-login-activists";
+import { ValueFormActivists } from "./value-form-activists/value-form-activists";
+import { UseMoneyTrackingShow } from "./../../../components/use-components/use-money-tracking/use-money-tracking-show/use-money-tracking-show";
+
 export const LoginSocialActivists = () => {
   let navigate = useNavigate();
   let { defaultVariables, UseStatsVariables, UserDataRowV } =
@@ -54,96 +57,37 @@ export const LoginSocialActivists = () => {
       handleActivistsUserData();
     }
   };
-
+  const showMoney = () => {
+    if (userDataRow !== null) {
+      console.log(`else : showMoney : ${userDataRow.SocialActivists_Id} `);
+      let activistId = userDataRow.SocialActivists_Id;
+      navigate("/my-money", {
+        state: {
+          activistId,
+        },
+      });
+    }
+    //UseMoneyTrackingShow({ userDataRow });
+  };
   return (
     <>
-      <div className="col-md-4">
-        <label for="validationCustom01" className="form-label">
-          First name
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="validationCustom01"
-          defaultValue={userFirstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        <div className="valid-feedback">Looks good!</div>
-      </div>
-      <div className="col-md-4">
-        <label for="validationCustom02" className="form-label">
-          Last name
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="validationCustom02"
-          defaultValue={userLastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        <div className="valid-feedback">Looks good!</div>
-      </div>
-      <div className="col-md-6">
-        <label for="inputEmail4" className="form-label">
-          Email
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="inputEmail4"
-          defaultValue={userEmail}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div className="col-md-4">
-        <label for="validationCustomUsername" className="form-label">
-          Twitter user
-        </label>
-        <div className="input-group has-validation">
-          <span className="input-group-text" id="inputGroupPrepend">
-            @
-          </span>
-          <input
-            type="text"
-            className="form-control"
-            id="validationCustomUsername"
-            aria-describedby="inputGroupPrepend"
-            defaultValue={userTwitterUser}
-            onChange={(e) => setTwitterUser(e.target.value)}
-          />
-          <div className="invalid-feedback">Please choose a username.</div>
-        </div>
-      </div>
-      <div className="col-md-6">
-        <label for="validationCustom03" className="form-label">
-          Address
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="validationCustom03"
-          defaultValue={userAddress}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <div className="invalid-feedback">Please provide a valid city.</div>
-      </div>
-      <div className="col-md-4">
-        <label for="validationCustom01" className="form-label">
-          Phone number
-        </label>
-        <input
-          type="tel"
-          name="phone"
-          placeholder="052-538-1648"
-          defaultValue={userPhoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-        <div className="valid-feedback">Looks good!</div>
-      </div>
-
-      <button className="btn btn-primary" onClick={sendingData1}>
-        Submit form
-      </button>
+      <ValueFormActivists
+        userFirstName={userFirstName}
+        setFirstName={setFirstName}
+        userLastName={userLastName}
+        setLastName={setLastName}
+        userEmail={userEmail}
+        setEmail={setEmail}
+        userTwitterUser={userTwitterUser}
+        setTwitterUser={setTwitterUser}
+        userAddress={userAddress}
+        setAddress={setAddress}
+        userPhoneNumber={userPhoneNumber}
+        setPhoneNumber={setPhoneNumber}
+        sendingData1={sendingData1}
+        showMoney={showMoney}
+      />
+      {/* <UseMoneyTrackingShow activistUser={userDataRow} /> */}
     </>
   );
 };
