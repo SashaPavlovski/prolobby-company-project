@@ -19,6 +19,8 @@ using System.Net;
 using ProLobbyCompanyProject.Model.Campaigns;
 using ProLobbyCompanyProject.Model.MoneyTracking;
 using ProLobbyCompanyProject.Model.Shippers;
+using ProLobbyCompanyProject.Model.Twitter;
+using static System.Net.WebRequestMethods;
 
 namespace ProLobbyCompanyProject.MicroServices
 {
@@ -363,6 +365,65 @@ namespace ProLobbyCompanyProject.MicroServices
 
                             break;
 
+                    }
+                    break;
+
+
+                case "Twitter":
+
+                    switch (action)
+                    {
+
+                        case "getTweet":
+
+                            List<MATwitter> userData = MainManager.INSTANCE.GetTwitterUserData();
+
+                            DateTime currentDate = DateTime.Today.AddDays(-1); 
+
+
+                            DateTime dateOfTomorrow = DateTime.Today;
+                            string currentDay = currentDate.ToString("yyyy-MM-dd");
+                            string tomorrow = dateOfTomorrow.ToString("yyyy-MM-dd");
+                            string start_time = currentDay + "T00:00:00Z";
+                            string end_time = tomorrow + "T00:00:00Z";
+
+
+
+                            foreach (MATwitter user in userData)
+                            {
+                                string url = $"https://api.twitter.com/2/tweets/search/recent?start_time={start_time}&end_time={end_time}&query=from:{user.Twitter_user}";
+
+                                var clientTwitter = new RestClient(url);
+                                var requestTwitter = new RestRequest("", Method.Get);
+
+                                requestTwitter.AddHeader("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAIKmlAEAAAAAi4dUwLeoayKuJvRAVvp99%2BNVzXQ%3DSoycLC7ReE1jcWXN4roMBNMjGVuko4HGREzxjtuX3X9kZwzylW");
+
+
+                                var responseTwitter = clientTwitter.Execute(requestTwitter);
+                                if (responseTwitter.IsSuccessful)
+                                {
+                                    JObject json = JObject.Parse(responseTwitter.Content);
+                                    int tweetCount = 0;
+                                    int resultCount = (int)json["meta"]["result_count"];
+                                    if (resultCount != 0)
+                                    {
+                                        foreach (var tweet in json["data"])
+                                        {
+                                            if (tweet["text"].ToString().Contains(user.Hashtag))
+                                            {
+                                                tweetCount++;
+                                            }
+                                        }
+                                        Console.WriteLine(tweetCount);
+                                    }
+                                }
+                            }
+                                
+                                return new OkObjectResult("failedNotFollowing");
+
+                                return new OkObjectResult("The operation failed");
+
+                            
                     }
                     break;
             }
