@@ -73,12 +73,15 @@
     <Compile Include="Campaigns\DSCampaignsPost.cs" />
     <Compile Include="DonatedProducts\DSDonatedProductsGet.cs" />
     <Compile Include="DonatedProducts\DSDonatedProductsPost.cs" />
+    <Compile Include="MoneyTracking\DSMoneyTrackingGetUserMoney.cs" />
+    <Compile Include="MoneyTracking\DSMoneyTrackingPost.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsPost.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsGet.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsUpdate.cs" />
     <Compile Include="ProLobbyOwner\DSProLobbyOwnerGet.cs" />
     <Compile Include="ProLobbyOwner\DSProLobbyOwnerPost.cs" />
     <Compile Include="ProLobbyOwner\DSProLobbyOwnerUpdate.cs" />
+    <Compile Include="Shippers\DSShippersBuy.cs" />
     <Compile Include="SocialActivists\DSSocialActivistsGet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocialActivists\DSSocialActivistsPost.cs" />

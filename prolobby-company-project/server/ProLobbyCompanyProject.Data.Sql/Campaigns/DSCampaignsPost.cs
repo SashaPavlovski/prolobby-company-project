@@ -24,12 +24,13 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                 command.Parameters.AddWithValue("@Date", Campaign.Date);
                 command.Parameters.AddWithValue("@Active", Campaign.Active);
                 command.Parameters.AddWithValue("@User_Id", Campaign.User_Id);
+
             }
             int rows = command.ExecuteNonQuery();
             return rows;
         }
 
-        string insertCampign = "declare @NonProfitOrganization_Id int\r\nif  not exists (select [Active] from [dbo].[TBCampaigns] where [Campaigns_Name] = @Campaigns_Name and [Active] = 0  )\r\nbegin\r\n       SET @NonProfitOrganization_Id =( select NonProfitOrganization_Id from [dbo].[TBNonProfitOrganizations] where @User_Id = [User_Id])\r\n\t   insert into [dbo].[TBCampaigns] \r\n       values (@NonProfitOrganization_Id,@Campaigns_Name,@Hashtag,@Descreption,@Date,@Active,@User_Id)\r\nend\r\n\r\n";
+        string insertCampign = "declare @NonProfitOrganization_Id int\r\nif  not exists (select [Active] from [dbo].[TBCampaigns] where [Campaigns_Name] = @Campaigns_Name and [Active] = 0  )\r\nbegin\r\n       SET @NonProfitOrganization_Id =( select NonProfitOrganization_Id from [dbo].[TBNonProfitOrganizations] where @User_Id = [User_Id])\r\n\t   insert into [dbo].[TBCampaigns] \r\n       values (@NonProfitOrganization_Id,@Campaigns_Name,@Hashtag,@Descreption,@Date,@Active,@User_Id,0)\r\nend\r\n\r\n";
         public int? PostCampaignRow(TBCampaigns campaign)
         {
 

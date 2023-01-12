@@ -41,15 +41,22 @@ namespace ProLobbyCompanyProject.Data.Sql
             return null;
         }
 
-        //declare @User_Id  nvarchar(max)\r\n
 
-        string insertNonProfitOrganization = "if exists (select  [User_Id]  from [dbo].[TBNonProfitOrganizations] where [User_Id] = @User_Id)\r\nbegin\r\nselect  NonProfitOrganization_Id,[NonProfitOrganizationName],[Url],[decreption],[Email],[RepresentativeFirstName],\r\n[RepresentativeLastName],[Phone_number],[Logo]\r\n\t   from [dbo].[TBNonProfitOrganizations]\r\n\t   where [User_Id] = @User_Id\r\nend";
+
+        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        {
+                command.Parameters.AddWithValue($"@{key}", value);
+        }
+
+    //declare @User_Id  nvarchar(max)\r\n
+
+    string insertNonProfitOrganization = "if exists (select  [User_Id]  from [dbo].[TBNonProfitOrganizations] where [User_Id] = @User_Id)\r\nbegin\r\nselect  NonProfitOrganization_Id,[NonProfitOrganizationName],[Url],[decreption],[Email],[RepresentativeFirstName],\r\n[RepresentativeLastName],[Phone_number],[Logo]\r\n\t   from [dbo].[TBNonProfitOrganizations]\r\n\t   where [User_Id] = @User_Id\r\nend";
 
         public List<TBNonProfitOrganization> GetNonProfitUserRow(string IdUser)
         {
             SqlQuery sqlQuery1 = new SqlQuery();
             List<TBNonProfitOrganization> NonProfitOrganization = null;
-            object listNonProfitOrganization = sqlQuery1.RunCommand(insertNonProfitOrganization, AddNonProfitOrganizationInformation, "User_Id", IdUser, null, null); 
+            object listNonProfitOrganization = sqlQuery1.RunCommand(insertNonProfitOrganization, AddNonProfitOrganizationInformation, SetValues, "User_Id", IdUser, null, null); 
 
             if (listNonProfitOrganization is List<TBNonProfitOrganization>)
             {

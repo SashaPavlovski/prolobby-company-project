@@ -45,6 +45,19 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         }
 
 
+        public void Set2Values(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        {
+          if (key != null && value != null && key2 != null && key2.Contains("Hashtag"))
+          {
+                command.Parameters.AddWithValue($"@{key}", value);
+                command.Parameters.AddWithValue($"@{key2}", value);
+          }
+        }
+
+        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        {
+            command.Parameters.AddWithValue($"@{key}", value);
+        }
 
         string insertIfExistCampign = "if  exists (select  [Campaigns_Name] from [dbo].[TBCampaigns] where [Campaigns_Name] = @Campaigns_Name and [Active] = 1 OR [Hashtag] = @Hashtag and [Active] = 1)\r\nbegin\r\n       select [Campaigns_Name],[Hashtag],[Descreption],[Campaigns_Id]\r\n\t   from [dbo].[TBCampaigns]\r\n\t   where [Campaigns_Name] = @Campaigns_Name OR [Hashtag] = @Hashtag\r\nend";
 
@@ -57,7 +70,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
             SqlQuery sqlQuery1 = new SqlQuery();
             List<TBCampaigns> campaigns = null;
 
-            object listCampign = sqlQuery1.RunCommand(insert, AddCampaign, key, value, key2, value2); ;
+            object listCampign = sqlQuery1.RunCommand(insert, AddCampaign, Set2Values, key, value, key2, value2); ;
             if (listCampign != null)
             {
 
@@ -68,6 +81,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
             }
             return campaigns;
         }
+
         public List<TBCampaigns> GetCampaignRow(TBCampaigns campaign)
         {
             return GetCampaignsG(insertIfExistCampign, "Campaigns_Name", campaign.Campaigns_Name,"Hashtag", campaign.Hashtag);
@@ -77,12 +91,14 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         {
             return GetCampaignsG(insertCampigns, null, null,null,null);
         }
+
+
         public MAboutCampaign GetDataAboutCampaign(string campaignsId)
         {
             SqlQuery sqlQuery1 = new SqlQuery();
             MAboutCampaign aboutCampaign = null;
 
-            object aboutCampaignData = sqlQuery1.RunCommand(insertAboutCampaign, AddCampaignAboutData, "Campaigns_Id", campaignsId,null,null); 
+            object aboutCampaignData = sqlQuery1.RunCommand(insertAboutCampaign, AddCampaignAboutData, SetValues, "Campaigns_Id", campaignsId,null,null); 
             if (aboutCampaignData != null)
             {
                 if (aboutCampaignData is MAboutCampaign)

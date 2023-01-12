@@ -24,6 +24,10 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
             }
             return null;
         }
+        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        {
+            command.Parameters.AddWithValue($"@{key}", value);
+        }
 
         string insertDonatedProducts = "if  exists (select * from [dbo].[TBDonatedProducts] where [Active] =1 and [Campaigns_Id] = @Campaigns_Id)\r\nbegin\r\n       select [Product_Name],[Price],[DonatedProducts_Id]\r\n\t   from [dbo].[TBDonatedProducts]\r\n\t   where [Active] = 1 and [Campaigns_Id] = @Campaigns_Id\r\nend";
 
@@ -34,7 +38,7 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
             List<TBDonatedProducts> DonatedProductsList = null;
 
 
-            object listProducts = sqlQuery1.RunCommand(insertDonatedProducts, AddDonatedProducts, "Campaigns_Id", campaignId, null, null);
+            object listProducts = sqlQuery1.RunCommand(insertDonatedProducts, AddDonatedProducts, SetValues, "Campaigns_Id", campaignId, null, null);
 
             if (listProducts is List<TBDonatedProducts>)
             {

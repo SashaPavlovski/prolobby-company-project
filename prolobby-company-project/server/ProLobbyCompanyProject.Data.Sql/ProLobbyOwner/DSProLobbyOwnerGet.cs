@@ -25,7 +25,10 @@ namespace ProLobbyCompanyProject.Data.Sql
             }
             return null;
         }
-
+        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        {
+            command.Parameters.AddWithValue($"@{key}", value);
+        }
 
         string insertProLobbyOwner = "if exists (select  [User_Id]  from [dbo].[TBProLobbyOwners] where [User_Id] = @User_Id)\r\nbegin\r\n select ProLobbyOwner_Id,[FirstName],[LastName],[Email],[Phone_number]\r\n\t   from [dbo].[TBProLobbyOwners]\r\n\t   where [User_Id] = @User_Id\r\nend";
 
@@ -34,7 +37,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         {
             SqlQuery sqlQuery1 = new SqlQuery();
             List<TBProLobbyOwner> ProLobbyOwnerList = null;
-            object listProLobbyOwner = sqlQuery1.RunCommand(insertProLobbyOwner, AddProLobbyOwnerInformation, "User_Id", IdUser,null,null); ;
+            object listProLobbyOwner = sqlQuery1.RunCommand(insertProLobbyOwner, AddProLobbyOwnerInformation, SetValues, "User_Id", IdUser,null,null); ;
 
             if (listProLobbyOwner is List<TBProLobbyOwner>)
             {

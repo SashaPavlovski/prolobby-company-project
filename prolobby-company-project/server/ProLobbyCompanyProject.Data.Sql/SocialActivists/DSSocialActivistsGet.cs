@@ -26,6 +26,10 @@ namespace ProLobbyCompanyProject.Data.Sql
             }
             return null;
         }
+        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        {
+            command.Parameters.AddWithValue($"@{key}", value);
+        }
 
         string insertSocialActivists = "if exists (select  [User_Id]  from [dbo].[TBSocialActivists] where [User_Id] = @User_Id)\r\nbegin\r\n       select SocialActivists_Id,[FirstName],[LastName],[Address],[Email],[Twitter_user],[Phone_number]\r\n\t   from [dbo].[TBSocialActivists]\r\n\t   where [User_Id] = @User_Id\r\nend";
 
@@ -33,7 +37,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         {
             SqlQuery sqlQuery1 = new SqlQuery();
             List<TBSocialActivists> SocialActivists = null;
-            object listSocialActivists = sqlQuery1.RunCommand(insertSocialActivists, AddSocialActivistsInformation, "User_Id", IdUser, null, null); 
+            object listSocialActivists = sqlQuery1.RunCommand(insertSocialActivists, AddSocialActivistsInformation, SetValues,"User_Id", IdUser, null, null); 
 
             if (listSocialActivists is List<TBSocialActivists>)
             {

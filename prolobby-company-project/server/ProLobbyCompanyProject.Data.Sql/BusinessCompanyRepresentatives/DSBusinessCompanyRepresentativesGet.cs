@@ -25,7 +25,10 @@ namespace ProLobbyCompanyProject.Data.Sql
             }
             return null;
         }
-
+        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        {
+            command.Parameters.AddWithValue($"@{key}", value);
+        }
         string insertBusinessCompany = "if exists (select  [User_Id]  from [dbo].[TBBusinessCompanyRepresentatives] where [User_Id] = @User_Id)\r\nbegin\r\n       select BusinessCompany_Id,[RepresentativeFirstName],\r\n\t   [RepresentativeLastName],\r\n\t [RepresentativeLastName],\r\n\t [CompanyName],[Url],\r\n\t  [Email],\r\n\t [Phone_number]\r\n\t from [dbo].[TBBusinessCompanyRepresentatives]\r\n\twhere [User_Id] = @User_Id\r\nend\r\n";
 
         public List<TBBusinessCompanyRepresentative> GetBusinessCompanyUserRow(string IdUser)
@@ -34,7 +37,7 @@ namespace ProLobbyCompanyProject.Data.Sql
             List<TBBusinessCompanyRepresentative> BusinessCompanyList = null;
 
 
-            object listBusiness = sqlQuery1.RunCommand(insertBusinessCompany, AddBusinessCompanyInformation, "User_Id", IdUser,null,null);
+            object listBusiness = sqlQuery1.RunCommand(insertBusinessCompany, AddBusinessCompanyInformation, SetValues, "User_Id", IdUser,null,null);
 
             if (listBusiness is List<TBBusinessCompanyRepresentative>)
             {
