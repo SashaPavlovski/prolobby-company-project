@@ -85,6 +85,7 @@
     <Compile Include="Tables\TBProLobbyOwner.cs" />
     <Compile Include="Tables\TBShippers.cs" />
     <Compile Include="Tables\TBSocialActivists.cs" />
+    <Compile Include="Twitter\MATwitter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
