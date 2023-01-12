@@ -20,7 +20,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
         
         public delegate void PostData_delegate(object userData, SqlCommand command);
         public delegate int TestPostData_delegate(object userData, SqlCommand command);
-
+        public delegate string Post_delegate(object userData, SqlCommand command);
         public void RunAddUser(string sqlQuerey, PostData_delegate func, object userData)
         {
             if (!(openConnection.Connect())) return;
@@ -38,6 +38,20 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
         {
             if (!(openConnection.Connect())) return null;
             int? answer = null;
+            string insert = sqlQuerey;
+            ;
+            using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+            {
+                answer = func(userData, command);
+
+            }
+            if (!(openConnection.CloseConnect())) return null;
+            return answer;
+        }
+        public string RunAddData(string sqlQuerey, Post_delegate func, object userData)
+        {
+            if (!(openConnection.Connect())) return null;
+            string answer = null;
             string insert = sqlQuerey;
             ;
             using (SqlCommand command = new SqlCommand(insert, openConnection.connection))

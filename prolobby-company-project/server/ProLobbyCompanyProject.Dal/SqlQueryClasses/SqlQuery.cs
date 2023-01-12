@@ -18,8 +18,9 @@ namespace ProLobbyCompanyProject.Dal
         }
 
         public delegate object SetDataReader_delegate(SqlDataReader reader, SqlCommand command,string userID);
+        public delegate void SetValues_delegate( SqlCommand command, string key, string userID, string key2, string value);
 
-        public object RunCommand(string sqlQuerey, SetDataReader_delegate func,string key, string userID,string key2,string value)
+        public object RunCommand(string sqlQuerey, SetDataReader_delegate func, SetValues_delegate setValues, string key, string userID, string key2, string value)
         {
             if (!(openConnection.Connect())) return null;
             object userList = null;
@@ -29,16 +30,7 @@ namespace ProLobbyCompanyProject.Dal
 
             using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
             {
-                if (key != null && userID != null && key.Contains("Campaigns_Id"))
-                    command.Parameters.AddWithValue($"@{key}", int.Parse(userID));
-
-                else if (key != null && userID != null&& key2 != null && key2.Contains("Hashtag"))
-                {
-                    command.Parameters.AddWithValue($"@{key}", userID);
-                    command.Parameters.AddWithValue($"@{key2}", value);
-                }
-
-                else if (key != null && userID != null) command.Parameters.AddWithValue($"@{key}", userID);
+                setValues(command,key, userID, key2, value);
 
                 using (SqlDataReader reader = command.ExecuteReader()) userList = func(reader, command, userID);
             }
