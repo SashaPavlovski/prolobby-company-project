@@ -47,16 +47,18 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
 
                 command.Parameters.AddWithValue("@SocialActivists_Id", moneyTracking.SocialActivists_Id);
                 command.Parameters.AddWithValue("@Campaigns_Id", moneyTracking.Campaigns_Id);
-                //command.Parameters.AddWithValue("@Accumulated_money", moneyTracking.Accumulated_money);
-                //command.Parameters.AddWithValue("@Active", moneyTracking.Active);
 
             }
             int rows = command.ExecuteNonQuery();
         }
 
+    
+
         /// <summary>   Information describing the insert new. </summary>
         string insertNewData = "if not exists (select * from [dbo].[TBMoneyTrackings] where [SocialActivists_Id] = @SocialActivists_Id  and [Campaigns_Id] = @Campaigns_Id)\r\nbegin\r\ninsert into [dbo].[TBMoneyTrackings]\r\nvalues (@SocialActivists_Id ,@Campaigns_Id ,0,1)\r\nend";
 
+
+       
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts a money tracking. </summary>
         ///

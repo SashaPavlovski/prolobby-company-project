@@ -68,6 +68,7 @@
     <Compile Include="BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesGet.cs" />
     <Compile Include="BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesPost.cs" />
     <Compile Include="BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesUpdate.cs" />
+    <Compile Include="Campaigns\DSCampaignsByIdGet.cs" />
     <Compile Include="Campaigns\DSCampaignsDelete.cs" />
     <Compile Include="Campaigns\DSCampaignsGet.cs" />
     <Compile Include="Campaigns\DSCampaignsPost.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="DonatedProducts\DSDonatedProductsGetById.cs" />
     <Compile Include="DonatedProducts\DSDonatedProductsPost.cs" />
     <Compile Include="MoneyTracking\DSMoneyTrackingGetUserMoney.cs" />
+    <Compile Include="MoneyTracking\DSMoneyTrackingMoneyUpdate.cs" />
     <Compile Include="MoneyTracking\DSMoneyTrackingPost.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsPost.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsGet.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="ProLobbyOwner\DSProLobbyOwnerUpdate.cs" />
     <Compile Include="Shippers\DSShippersBuy.cs" />
     <Compile Include="Shippers\DSShippersDeliveryListGet.cs" />
+    <Compile Include="Shippers\DSShippersDeliveryProductSet.cs" />
     <Compile Include="Shippers\DSShippersDonated.cs" />
     <Compile Include="SocialActivists\DSSocialActivistsGet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
