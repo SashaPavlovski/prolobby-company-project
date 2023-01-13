@@ -1,4 +1,10 @@
-﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	SocialActivists\DSSocialActivistsPost.cs
+//
+// summary:	Implements the ds social activists post class
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
 using System;
 using System.Collections.Generic;
@@ -8,9 +14,30 @@ using System.Threading.Tasks;
 
 namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   The ds social activists post. </summary>
+    ///
+    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public class DSSocialActivistsPost
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Default constructor. </summary>
+        ///
+        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public DSSocialActivistsPost() { }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Adds a user data to 'command'. </summary>
+        ///
+        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
+        ///
+        /// <param name="userData"> Information describing the user. </param>
+        /// <param name="command">  The command. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void AddUserData(object userData, System.Data.SqlClient.SqlCommand command)
         {
@@ -29,7 +56,16 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
             int rows = command.ExecuteNonQuery();
         }
 
+        /// <summary>   The insert. </summary>
         string insert = "insert into [dbo].[TBSocialActivists] values (@FirstName,@LastName,@Address,@Email,@Twitter_user,@Phone_number,@User_Id)";
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Posts the users data. </summary>
+        ///
+        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
+        ///
+        /// <param name="userSocialActivists">  The user social activists. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void PostUsersData(TBSocialActivists userSocialActivists)
         {
