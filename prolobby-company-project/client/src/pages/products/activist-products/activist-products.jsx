@@ -16,9 +16,15 @@ export const ActivistProducts = () => {
         Product_Name={p.Product_Name}
         Price={p.Price}
         IfSent={
-          product.Active
-            ? "The product has been shipped"
-            : "Product awaiting shipment"
+          !p.Active ? (
+            <button className="btn btn-outline-info">
+              The product has been shipped
+            </button>
+          ) : (
+            <button className="btn btn-outline-warning">
+              Product awaiting shipment
+            </button>
+          )
         }
       />
     ));

@@ -11,7 +11,7 @@ export const Ifexist = () => {
   const { user } = useAuth0();
   const Checking = async () => {
     let userRow = await GetDataAsync(role1[0].name, "userData", user.sub);
-    if (userRow != null) {
+    if (userRow !== null) {
       setUserDataRow(userRow[0]);
       // console.log(`userData : Ifexist : ${userRow.SocialActivists_Id}`);
     }

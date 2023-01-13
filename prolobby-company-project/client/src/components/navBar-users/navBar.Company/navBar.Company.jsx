@@ -10,6 +10,10 @@ let navBarArr = [
     path: "/profile",
     pathName: "profile",
   },
+  {
+    path: "/delivery-List",
+    pathName: "delivery List",
+  },
 ];
 
 export const NavBarCompany = () => {

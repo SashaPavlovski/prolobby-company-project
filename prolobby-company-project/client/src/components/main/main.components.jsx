@@ -4,7 +4,6 @@ import { LogoutButton } from "../auth/buttons/logOut.buttons.auth0.components";
 import { useAuth0 } from "@auth0/auth0-react";
 import { UserContext } from "./../../context/userData.context";
 import { GetRolesAsync } from "./../../services/services";
-import { HomeActivistsBusiness } from "./../../pages/home/home-activists-business/home-activists-business";
 import {
   RoutesBusinessCompanyRepresentative,
   RoutesNonProfitOrganization,
@@ -38,12 +37,7 @@ export const Main = () => {
             } else if (r.name === "ProLobbyOwner") return RoutesProLobbyOwner();
             else if (r.name === "SocialActivists")
               return RoutesSocialActivists();
-            else
-              return (
-                <>
-                  <HomeActivistsBusiness />
-                </>
-              );
+            else return <></>;
           })
         ) : (
           <>

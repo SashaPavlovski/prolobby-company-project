@@ -25,12 +25,3 @@ export const CampaignCard = ({ campaignObject }) => {
     </div>
   );
 };
-// let {
-//   Campaigns_Id,
-//   Campaigns_Name,
-//   Hashtag,
-//   Descreption,
-//   NonProfitOrganizationName,
-//   decreption,
-//   Url,
-// } = campaignObject;

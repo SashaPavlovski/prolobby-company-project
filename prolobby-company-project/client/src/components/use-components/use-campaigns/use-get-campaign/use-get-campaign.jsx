@@ -8,7 +8,6 @@ export const UseGetCampaign = ({ type, action, sortValue, setfunc }) => {
   let getCampaigns = async () => {
     let campaignsArr = await GetDataAsync(type, action, sortValue);
     //let arrPro = Object.values(campaignsArr);
-
     setfunc(campaignsArr);
   };
 
