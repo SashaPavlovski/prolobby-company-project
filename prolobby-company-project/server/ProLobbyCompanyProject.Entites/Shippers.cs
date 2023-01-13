@@ -4,8 +4,10 @@
 // summary:	Implements the shippers class
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
 using ProLobbyCompanyProject.Data.Sql.Shippers;
 using ProLobbyCompanyProject.Data.Sql.Twitter;
+using ProLobbyCompanyProject.Model.MoneyTracking;
 using ProLobbyCompanyProject.Model.Shippers;
 using ProLobbyCompanyProject.Model.Twitter;
 using System;
@@ -60,6 +62,12 @@ namespace ProLobbyCompanyProject.Entites
         {
             DSShippersDeliveryListGet dsShippersDeliveryListGet = new DSShippersDeliveryListGet();
             return dsShippersDeliveryListGet.GetDeliveryListProduct();
+        }
+
+        public void SetProductDelivery(string idUser)
+        {
+            DSShippersDeliveryProductSet dsShippersDeliveryProductSet = new DSShippersDeliveryProductSet();
+            dsShippersDeliveryProductSet.SendingDeliveryProduct(idUser);
         }
     }
 }

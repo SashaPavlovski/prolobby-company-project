@@ -4,11 +4,14 @@
 // summary:	Implements the twitter class
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
 using ProLobbyCompanyProject.Data.Sql.Twitter;
+using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Twitter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,6 +45,11 @@ namespace ProLobbyCompanyProject.Entites
         {
             DSTwitterGet dSTwitterGet = new DSTwitterGet();
             return dSTwitterGet.GetTwitterUserRow();
+        }
+        public void UpdateMoneyTracking(MATwitter userTwitterMoney, double UserMoney)
+        {
+            DSMoneyTrackingMoneyUpdate newData = new DSMoneyTrackingMoneyUpdate();
+            newData.UpdateMoneyTracking(userTwitterMoney, UserMoney);
         }
     }
 }

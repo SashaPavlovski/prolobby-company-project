@@ -111,7 +111,12 @@ namespace ProLobbyCompanyProject.Entites
             dSCampaignsDelete.DeleteDataCampaign(campaignId);
         }
 
-
+        public List<TBCampaigns> GetByIdCampaigns(string organizationId)
+        {
+            DSCampaignsByIdGet dSCampaignsByIdGet = new DSCampaignsByIdGet();
+            List<TBCampaigns> CampaignsList = dSCampaignsByIdGet.GetCampaignsById(organizationId);
+            return CampaignsList;
+        }
     }
 
 }

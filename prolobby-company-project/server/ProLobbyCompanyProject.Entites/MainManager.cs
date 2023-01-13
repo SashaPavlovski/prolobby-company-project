@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using ProLobbyCompanyProject.Dal;
+using ProLobbyCompanyProject.Data.Sql.Campaigns;
 using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Campaigns;
 using ProLobbyCompanyProject.Model.MoneyTracking;
@@ -354,7 +355,12 @@ namespace ProLobbyCompanyProject.Entites
             InitClasses();
             campaigns2.RemoveCampaignData(campaignId);
         }
-
+        public List<TBCampaigns> GetCampaignsOrganizationById(string organizationId)
+        {
+            if (organizationId == null) return null;
+            InitClasses();
+            return campaigns2.GetByIdCampaigns(organizationId);
+        }
 
 
         //*******************************************************************
@@ -462,6 +468,13 @@ namespace ProLobbyCompanyProject.Entites
             InitClasses();
             return shippers2.GetDeliveryList();
         }
+
+        public void SetDeliveryProduct(string idUser)
+        {
+            if (idUser == null) return ;
+            InitClasses();
+            shippers2.SetProductDelivery(idUser);
+        }
         //**********************************************************************
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -478,7 +491,12 @@ namespace ProLobbyCompanyProject.Entites
             return twitter2.GetTwitterData();
         }
 
-
+        public void UpdateNewUserMoneyTracking (MATwitter userTwitterMoney, double UserMoney)
+        {
+            if (userTwitterMoney == null || UserMoney == 0) return;
+            InitClasses();
+            twitter2.UpdateMoneyTracking(userTwitterMoney, UserMoney);
+        }
 
     }
 }
