@@ -17,6 +17,6 @@ namespace ProLobbyCompanyProject.Model
 
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
-        public bool Sent { get { return true; } set { } }
+        public bool Sent { get; set; }
     }
 }

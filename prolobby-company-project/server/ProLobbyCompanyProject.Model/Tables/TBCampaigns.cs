@@ -17,11 +17,11 @@ namespace ProLobbyCompanyProject.Model
         public string Hashtag { get; set; }
         public string Descreption { get; set; }
    
-        public DateTime Date { get { return DateTime.Now; } set { } }
+        public DateTime Date { get; set; }
 
-        public bool Active { get { return true; } set {  } }
+        public bool Active { get; set; }
         public string User_Id { get; set; }
-        public double MoneyDonations { get { return 0; } set { } }
+        public double MoneyDonations { get; set; }
 
 
     }
