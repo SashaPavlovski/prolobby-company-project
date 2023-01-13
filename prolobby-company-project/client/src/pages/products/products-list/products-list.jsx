@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { Await, useLocation, useNavigate } from "react-router-dom";
 import { UseCardProduct } from "../../../components/use-components/use-product/use-get-product/use-card-product";
 import { UseGetCampaign } from "../../../components/use-components/use-campaigns/use-get-campaign/use-get-campaign";
 import { UseBuyProduct } from "../../../components/use-components/use-product/use-buy-product/use-buy-product";
@@ -19,10 +19,38 @@ export const ProductsList = () => {
   };
   UseGetCampaign(getProducts);
   let { userDataRow } = Ifexist();
-  const buy = (DonatedProducts_Id) => {
-    UseBuyProduct({ DonatedProducts_Id, userDataRow });
+  const buy = async (DonatedProducts_Id) => {
+    let action = "buyProduct";
+    let answer = await UseBuyProduct({
+      DonatedProducts_Id,
+      userDataRow,
+      action,
+    });
+    alert(answer);
+    navigate("/about-campaign", {
+      state: {
+        Campaigns_Id,
+      },
+    });
+    console.log(`answer end : ${answer}`);
+    return answer;
   };
-  const donation = () => {};
+  const donation = async (DonatedProducts_Id) => {
+    let action = "donationProduct";
+    let answer = await UseBuyProduct({
+      DonatedProducts_Id,
+      userDataRow,
+      action,
+    });
+    alert(answer);
+    navigate("/about-campaign", {
+      state: {
+        Campaigns_Id,
+      },
+    });
+    console.log(`answer end : ${answer}`);
+    return answer;
+  };
   const backToCampaign = () => {
     navigate("/about-campaign", {
       state: {
@@ -36,7 +64,7 @@ export const ProductsList = () => {
         Product_Name={p.Product_Name}
         Price={p.Price}
         buy={buy}
-        donation1={donation}
+        donation={donation}
         backToCampaign={backToCampaign}
         DonatedProducts_Id={p.DonatedProducts_Id}
       />

@@ -69,6 +69,18 @@ export const LoginSocialActivists = () => {
     }
     //UseMoneyTrackingShow({ userDataRow });
   };
+
+  const showMyProduct = () => {
+    if (userDataRow !== null) {
+      console.log(`else : showMoney : ${userDataRow.SocialActivists_Id} `);
+      let activistId = userDataRow.SocialActivists_Id;
+      navigate("/my-products", {
+        state: {
+          activistId,
+        },
+      });
+    }
+  };
   return (
     <>
       <ValueFormActivists
@@ -86,6 +98,7 @@ export const LoginSocialActivists = () => {
         setPhoneNumber={setPhoneNumber}
         sendingData1={sendingData1}
         showMoney={showMoney}
+        showMyProduct={showMyProduct}
       />
       {/* <UseMoneyTrackingShow activistUser={userDataRow} /> */}
     </>

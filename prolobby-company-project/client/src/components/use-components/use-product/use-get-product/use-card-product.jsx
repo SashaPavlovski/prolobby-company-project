@@ -25,7 +25,10 @@ export const UseCardProduct = ({
             >
               To buy
             </a>
-            <a className="btn btn-primary" onClick={donation}>
+            <a
+              className="btn btn-primary"
+              onClick={() => donation(DonatedProducts_Id)}
+            >
               For donation
             </a>
           </>
