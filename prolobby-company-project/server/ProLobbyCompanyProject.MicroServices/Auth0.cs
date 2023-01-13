@@ -54,13 +54,14 @@ namespace ProLobbyCompanyProject.MicroServices
                     switch (action)
                     {
                         case "userData":
+
                             List<TBBusinessCompanyRepresentative> ListBusinessCompany = MainManager.INSTANCE.CheckingBusinessCompanyRepresentative(userId);
                             string responseMessageLB = System.Text.Json.JsonSerializer.Serialize(ListBusinessCompany);
                             Console.WriteLine(responseMessageLB);
                             return new OkObjectResult(responseMessageLB);
-                            break;
 
                         case "addData":
+
                             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                             TBBusinessCompanyRepresentative userCompany = System.Text.Json.JsonSerializer.Deserialize<TBBusinessCompanyRepresentative>(requestBody);
                             if (userCompany.Url != null && userCompany.Email != null && userCompany.CompanyName != null && userCompany.RepresentativeFirstName != null && userCompany.RepresentativeLastName != null && userCompany.User_Id != null && userCompany.Phone_number != null)
@@ -69,20 +70,16 @@ namespace ProLobbyCompanyProject.MicroServices
                                 return new OkObjectResult("The operation was successful");
                             }
                             return new OkObjectResult("The operation failed");
-                            break;
+
                         case "updateData":
 
                             string requestCompanyBody = await new StreamReader(req.Body).ReadToEndAsync();
                             TBBusinessCompanyRepresentative UserCompanyData = System.Text.Json.JsonSerializer.Deserialize<TBBusinessCompanyRepresentative>(requestCompanyBody);
-
-
                             if (UserCompanyData.BusinessCompany_Id != 0 && UserCompanyData.RepresentativeFirstName != null && UserCompanyData.RepresentativeLastName != null && UserCompanyData.CompanyName != null && UserCompanyData.Phone_number != null && UserCompanyData.Email != null)
                             {
                                 MainManager.INSTANCE.UpdateBusinessCompanyData(UserCompanyData);
-
                                 return new OkObjectResult("The operation was successful");
                             }
-
                             return new OkObjectResult("The operation failed");
 
                     }
@@ -117,17 +114,12 @@ namespace ProLobbyCompanyProject.MicroServices
 
                             string requestOwnerBody = await new StreamReader(req.Body).ReadToEndAsync();
                             TBProLobbyOwner UserOwnerData = System.Text.Json.JsonSerializer.Deserialize<TBProLobbyOwner>(requestOwnerBody);
-
-
                             if (UserOwnerData.ProLobbyOwner_Id != 0 && UserOwnerData.FirstName != null && UserOwnerData.LastName != null && UserOwnerData.Email != null && UserOwnerData.Phone_number != null)
                             {
                                 MainManager.INSTANCE.UpdateProLobbyOwnerData(UserOwnerData);
-
                                 return new OkObjectResult("The operation was successful");
                             }
                             return new OkObjectResult("The operation failed");
-
-                            break;
                     }
                     break;
 
@@ -159,15 +151,11 @@ namespace ProLobbyCompanyProject.MicroServices
 
                             string requestOrganizationBody = await new StreamReader(req.Body).ReadToEndAsync();
                             TBNonProfitOrganization UserOrganizationData = System.Text.Json.JsonSerializer.Deserialize<TBNonProfitOrganization>(requestOrganizationBody);
-
-
                             if (UserOrganizationData.NonProfitOrganization_Id != 0 && UserOrganizationData.NonProfitOrganizationName != null && UserOrganizationData.RepresentativeLastName != null && UserOrganizationData.Email != null && UserOrganizationData.Phone_number != null && UserOrganizationData.RepresentativeFirstName != null && UserOrganizationData.decreption != null && UserOrganizationData.Url != null)
                             {
                                 MainManager.INSTANCE.UpdateOrganizationData(UserOrganizationData);
-
                                 return new OkObjectResult("The operation was successful");
                             }
-
                             return new OkObjectResult("The operation failed");
 
 
@@ -200,17 +188,12 @@ namespace ProLobbyCompanyProject.MicroServices
 
                             string requestActivistsBody = await new StreamReader(req.Body).ReadToEndAsync();
                             TBSocialActivists UserActivistsData = System.Text.Json.JsonSerializer.Deserialize<TBSocialActivists>(requestActivistsBody);
-
-
                             if (UserActivistsData.SocialActivists_Id != 0 && UserActivistsData.FirstName != null && UserActivistsData.LastName != null && UserActivistsData.Email != null && UserActivistsData.Phone_number != null && UserActivistsData.Address != null && UserActivistsData.Twitter_user != null)
                             {
                                 MainManager.INSTANCE.UpdateSocialActivistsData(UserActivistsData);
-
                                 return new OkObjectResult("The operation was successful");
                             }
                             return new OkObjectResult("The operation failed");
-
-                            break;
                     }
                     break;
 
@@ -218,16 +201,22 @@ namespace ProLobbyCompanyProject.MicroServices
                     switch (action)
                     {
                         case "getData":
+
                             List<TBCampaigns> campaignList = MainManager.INSTANCE.GetTBCampaigns();
                             string responseCampaignList = System.Text.Json.JsonSerializer.Serialize(campaignList);
-
                             return new OkObjectResult(responseCampaignList);
-                            break;
+
+                        case "getDataById":
+
+                            List<TBCampaigns> organizationCampaignsList = MainManager.INSTANCE.GetCampaignsOrganizationById(userId);
+                            string responseCampaignsByIdList = System.Text.Json.JsonSerializer.Serialize(organizationCampaignsList);
+                            return new OkObjectResult(responseCampaignsByIdList);
+
 
                         case "addData":
+
                             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                             TBCampaigns userActivists = System.Text.Json.JsonSerializer.Deserialize<TBCampaigns>(requestBody);
-
                             if (userActivists.User_Id != null && userActivists.Campaigns_Name != null)
                             {
 
@@ -235,10 +224,7 @@ namespace ProLobbyCompanyProject.MicroServices
                                 if (CampaignName != null)
                                 {
                                     if (CampaignName.Contains("Exists")) return new OkObjectResult(CampaignName);
-
                                     else if (CampaignName.Contains("Not exists")) return new OkObjectResult(CampaignName);
-
-
                                 }
                                 else
                                 {
@@ -254,7 +240,6 @@ namespace ProLobbyCompanyProject.MicroServices
                             string responseMessageSA = System.Text.Json.JsonSerializer.Serialize(ListAboutCampaign);
                             Console.WriteLine(responseMessageSA);
                             return new OkObjectResult(responseMessageSA);
-                            break;
 
 
                         case "deleteData":
@@ -265,15 +250,12 @@ namespace ProLobbyCompanyProject.MicroServices
                                 return new OkObjectResult("The operation was successful");
                             }
                             return new OkObjectResult("The operation failed");
-                            break;
-
-
 
                     }
-
                     break;
 
                 case "DonatedProducts":
+
                     switch (action)
                     {
                         case "getData":
@@ -286,14 +268,12 @@ namespace ProLobbyCompanyProject.MicroServices
 
                            
                         case "addData":
+
                             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-
                             TBDonatedProducts donatedProduct = System.Text.Json.JsonSerializer.Deserialize<TBDonatedProducts>(requestBody);
-
                             if (donatedProduct.Product_Name != null)
                             {
                                 MainManager.INSTANCE.PostDonatedProduct(donatedProduct);
-
                                 return new OkObjectResult("The operation was successful");
                             }
                             return new OkObjectResult("The operation failed");
@@ -310,13 +290,11 @@ namespace ProLobbyCompanyProject.MicroServices
                         case "addTrack":
 
                             string requestBodyTrack = await new StreamReader(req.Body).ReadToEndAsync();
-
                             TBMoneyTracking moneyTracking = System.Text.Json.JsonSerializer.Deserialize<TBMoneyTracking>(requestBodyTrack);
 
                             if (moneyTracking != null)
                             {
                                 MainManager.INSTANCE.PostMoneyTracking(moneyTracking);
-
                                 return new OkObjectResult("The operation was successful");
                             }
                             return new OkObjectResult("The operation failed");
@@ -324,12 +302,9 @@ namespace ProLobbyCompanyProject.MicroServices
 
 
                         case "getDataMoney":
+
                             List<MAMoneyTracking> ListMoneyTracking = MainManager.INSTANCE.GetMoneyTracking(userId);
-
-
                             string responseMessageList = System.Text.Json.JsonSerializer.Serialize(ListMoneyTracking);
-
-
                             Console.WriteLine(responseMessageList);
                             return new OkObjectResult(responseMessageList);
 
@@ -345,17 +320,14 @@ namespace ProLobbyCompanyProject.MicroServices
                         case "buyProduct":
 
                             string requestBodyProductData= await new StreamReader(req.Body).ReadToEndAsync();
-
                             MAbuyProduct buyProduct = System.Text.Json.JsonSerializer.Deserialize<MAbuyProduct>(requestBodyProductData);
 
                             if (buyProduct != null)
                             {
                                string anwer =  MainManager.INSTANCE.BuyProduct(buyProduct);
-
                                 if(anwer.Contains("Succeeded")) return new OkObjectResult("The operation was carried out successfully, the package passes through the delivery person");
                                 else if (anwer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
                                 else if (anwer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to buy the product you must join the campaign");
-
                                 return new OkObjectResult("failedNotFollowing");
                             }
                             return new OkObjectResult("The operation failed");
@@ -368,13 +340,9 @@ namespace ProLobbyCompanyProject.MicroServices
                             Console.WriteLine(responseMessageNP);
                             return new OkObjectResult(responseMessageNP);
 
-                            break;
-
-
                         case "donationProduct":
 
                             string requestBodyProductDataDonated = await new StreamReader(req.Body).ReadToEndAsync();
-
                             MAbuyProduct donationProduct = System.Text.Json.JsonSerializer.Deserialize<MAbuyProduct>(requestBodyProductDataDonated);
 
                             if (donationProduct != null)
@@ -388,12 +356,20 @@ namespace ProLobbyCompanyProject.MicroServices
                                 return new OkObjectResult("failedNotFollowing");
                             }
                             return new OkObjectResult("The operation failed");
-                            break;
+                           
 
 
                         case "getDeliveryList":
+
                             List<MADeliveryProductList> deliveryProductList = MainManager.INSTANCE.GetDeliveryDataProductList();
-                            break;
+                            string responseMessageDL = System.Text.Json.JsonSerializer.Serialize(deliveryProductList);
+                            Console.WriteLine(responseMessageDL);
+                            return new OkObjectResult(responseMessageDL);
+                       
+                        case "sendProduct":
+
+                            MainManager.INSTANCE.SetDeliveryProduct(userId);
+                            return new OkObjectResult("Succeeded");
                     }
                     break;
 
@@ -402,32 +378,23 @@ namespace ProLobbyCompanyProject.MicroServices
 
                     switch (action)
                     {
-
                         case "getTweet":
 
                             List<MATwitter> userData = MainManager.INSTANCE.GetTwitterUserData();
-
-                            DateTime currentDate = DateTime.Today.AddDays(-1); 
-
-
-                            DateTime dateOfTomorrow = DateTime.Today;
+                            //לא לשכוח להחליף ליום של אתמול
+                            //וגם שעות
+                            DateTime currentDate = DateTime.Today; 
+                            DateTime dateOfTomorrow = DateTime.Today.AddDays(0);
                             string currentDay = currentDate.ToString("yyyy-MM-dd");
                             string tomorrow = dateOfTomorrow.ToString("yyyy-MM-dd");
                             string start_time = currentDay + "T00:00:00Z";
-                            string end_time = tomorrow + "T10:00:00Z";
-
-
-
+                            string end_time = tomorrow + "T18:50:50Z";
                             foreach (MATwitter user in userData)
                             {
                                 string url = $"https://api.twitter.com/2/tweets/search/recent?start_time={start_time}&end_time={end_time}&query=from:{user.Twitter_user}";
-
                                 var clientTwitter = new RestClient(url);
                                 var requestTwitter = new RestRequest("", Method.Get);
-
                                 requestTwitter.AddHeader("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAIKmlAEAAAAAi4dUwLeoayKuJvRAVvp99%2BNVzXQ%3DSoycLC7ReE1jcWXN4roMBNMjGVuko4HGREzxjtuX3X9kZwzylW");
-
-
                                 var responseTwitter = clientTwitter.Execute(requestTwitter);
                                 if (responseTwitter.IsSuccessful)
                                 {
@@ -444,14 +411,11 @@ namespace ProLobbyCompanyProject.MicroServices
                                             }
                                         }
                                         Console.WriteLine(tweetCount);
+                                        MainManager.INSTANCE.UpdateNewUserMoneyTracking(user, tweetCount);
                                     }
                                 }
                             }
-                                
                                 return new OkObjectResult("failedNotFollowing");
-
-                                return new OkObjectResult("The operation failed");
-
                             
                     }
                     break;
