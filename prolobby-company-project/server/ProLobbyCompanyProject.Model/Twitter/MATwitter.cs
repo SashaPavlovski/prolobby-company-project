@@ -13,7 +13,7 @@ namespace ProLobbyCompanyProject.Model.Twitter
         public int SocialActivists_Id { get; set; }
         public string Twitter_user { get; set; }
         public string Hashtag { get; set; }
-        public double Accumulated_money { get { return 0; } set { } }
+        public double Accumulated_money { get; set; }
 
     }
 }
