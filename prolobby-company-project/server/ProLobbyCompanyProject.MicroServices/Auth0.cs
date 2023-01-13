@@ -352,19 +352,48 @@ namespace ProLobbyCompanyProject.MicroServices
                             {
                                string anwer =  MainManager.INSTANCE.BuyProduct(buyProduct);
 
-                                if(anwer.Contains("Succeeded")) return new OkObjectResult("Succeeded");
-                                else if (anwer.Contains("you do not have enough money")) return new OkObjectResult("failedNotHaveMonet");
-                                else if (anwer.Contains("You are not following the campaign")) return new OkObjectResult("");
+                                if(anwer.Contains("Succeeded")) return new OkObjectResult("The operation was carried out successfully, the package passes through the delivery person");
+                                else if (anwer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
+                                else if (anwer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to buy the product you must join the campaign");
+
                                 return new OkObjectResult("failedNotFollowing");
                             }
                             return new OkObjectResult("The operation failed");
 
-                            
 
-                        case "getDataMoney":
+                        case "getProductById":
+
+                            List<TBDonatedProducts> ListDonatedProducts = MainManager.INSTANCE.GetUserProductsByUserId(userId);
+                            string responseMessageNP = System.Text.Json.JsonSerializer.Serialize(ListDonatedProducts);
+                            Console.WriteLine(responseMessageNP);
+                            return new OkObjectResult(responseMessageNP);
 
                             break;
 
+
+                        case "donationProduct":
+
+                            string requestBodyProductDataDonated = await new StreamReader(req.Body).ReadToEndAsync();
+
+                            MAbuyProduct donationProduct = System.Text.Json.JsonSerializer.Deserialize<MAbuyProduct>(requestBodyProductDataDonated);
+
+                            if (donationProduct != null)
+                            {
+                                string anwer = MainManager.INSTANCE.DonationProduct(donationProduct);
+
+                                if (anwer.Contains("Succeeded")) return new OkObjectResult("The operation was carried out successfully,Thanks for the donation");
+                                else if (anwer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
+                                else if (anwer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to donate a product you must join the campaign");
+
+                                return new OkObjectResult("failedNotFollowing");
+                            }
+                            return new OkObjectResult("The operation failed");
+                            break;
+
+
+                        case "getDeliveryList":
+                            List<MADeliveryProductList> deliveryProductList = MainManager.INSTANCE.GetDeliveryDataProductList();
+                            break;
                     }
                     break;
 
@@ -385,7 +414,7 @@ namespace ProLobbyCompanyProject.MicroServices
                             string currentDay = currentDate.ToString("yyyy-MM-dd");
                             string tomorrow = dateOfTomorrow.ToString("yyyy-MM-dd");
                             string start_time = currentDay + "T00:00:00Z";
-                            string end_time = tomorrow + "T00:00:00Z";
+                            string end_time = tomorrow + "T10:00:00Z";
 
 
 
