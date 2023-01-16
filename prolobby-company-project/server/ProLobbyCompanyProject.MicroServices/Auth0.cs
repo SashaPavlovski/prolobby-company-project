@@ -21,6 +21,7 @@ using ProLobbyCompanyProject.Model.MoneyTracking;
 using ProLobbyCompanyProject.Model.Shippers;
 using ProLobbyCompanyProject.Model.Twitter;
 using static System.Net.WebRequestMethods;
+using Tweetinvi;
 
 namespace ProLobbyCompanyProject.MicroServices
 {
@@ -324,8 +325,14 @@ namespace ProLobbyCompanyProject.MicroServices
 
                             if (buyProduct != null)
                             {
-                               string anwer =  MainManager.INSTANCE.BuyProduct(buyProduct);
-                                if(anwer.Contains("Succeeded")) return new OkObjectResult("The operation was carried out successfully, the package passes through the delivery person");
+                                string anwer = MainManager.INSTANCE.BuyProduct(buyProduct);
+                                if(anwer == null) return new OkObjectResult("The operation failed");
+                                if (anwer.Contains("Succeeded")) {
+                                    var userClient = new TwitterClient("36kPxWu2NiCOLPT0TIQWhSg6A", "ZBPV84cGVuTLKfOizWXqKxg5GkwYAz2yUmWaqzXKuQGz4UOIQc", "1613252594201247745-n1Vnhu76k9Qp9YsgoalMyppKnQx1NA", "955oQxhXL3HRHZxxfaxs5kXSEwJwipYUJSlErnZ8c0rVU");
+                                    await userClient.Users.GetAuthenticatedUserAsync();
+                                    await userClient.Tweets.PublishTweetAsync($"A product number {buyProduct.DonatedProducts_Id} has been purchased on the website");
+                                    return new OkObjectResult("The operation was carried out successfully, the package passes through the delivery person"); 
+                                }
                                 else if (anwer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
                                 else if (anwer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to buy the product you must join the campaign");
                                 return new OkObjectResult("failedNotFollowing");
@@ -381,14 +388,14 @@ namespace ProLobbyCompanyProject.MicroServices
                         case "getTweet":
 
                             List<MATwitter> userData = MainManager.INSTANCE.GetTwitterUserData();
-                            //לא לשכוח להחליף ליום של אתמול
-                            //וגם שעות
-                            DateTime currentDate = DateTime.Today; 
-                            DateTime dateOfTomorrow = DateTime.Today.AddDays(0);
+                            if(userData == null)  return new OkObjectResult("failedNotFollowing"); 
+                            DateTime Yesterday = DateTime.Today.AddDays(-1);
+                            DateTime currentDate = DateTime.Today;
+                            string YesterdayDay = Yesterday.ToString("yyyy-MM-dd");
                             string currentDay = currentDate.ToString("yyyy-MM-dd");
-                            string tomorrow = dateOfTomorrow.ToString("yyyy-MM-dd");
-                            string start_time = currentDay + "T00:00:00Z";
-                            string end_time = tomorrow + "T18:50:50Z";
+                            string start_time = YesterdayDay + "T00:00:50Z";
+                            string end_time = currentDay + "T00:00:00Z";
+ 
                             foreach (MATwitter user in userData)
                             {
                                 string url = $"https://api.twitter.com/2/tweets/search/recent?start_time={start_time}&end_time={end_time}&query=from:{user.Twitter_user}";
