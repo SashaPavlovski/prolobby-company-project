@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
+using ProLobbyCompanyProject.Data.Sql.PostsTracking;
 using ProLobbyCompanyProject.Data.Sql.Twitter;
 using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Twitter;
@@ -46,10 +47,12 @@ namespace ProLobbyCompanyProject.Entites
             DSTwitterGet dSTwitterGet = new DSTwitterGet();
             return dSTwitterGet.GetTwitterUserRow();
         }
-        public void UpdateMoneyTracking(MATwitter userTwitterMoney, double UserMoney)
+        public void UpdateMoneyTracking(MATwitter userTwitterMoney, double UserPosts)
         {
             DSMoneyTrackingMoneyUpdate newData = new DSMoneyTrackingMoneyUpdate();
-            newData.UpdateMoneyTracking(userTwitterMoney, UserMoney);
+            DSPostsTrackingPost dSPostsTrackingPost = new DSPostsTrackingPost();
+            newData.UpdateMoneyTracking(userTwitterMoney, UserPosts);
+            dSPostsTrackingPost.PostPostsTracking(userTwitterMoney, UserPosts);
         }
     }
 }
