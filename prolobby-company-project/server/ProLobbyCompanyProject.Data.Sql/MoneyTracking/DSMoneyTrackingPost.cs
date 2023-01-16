@@ -55,10 +55,8 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
     
 
         /// <summary>   Information describing the insert new. </summary>
-        string insertNewData = "if not exists (select * from [dbo].[TBMoneyTrackings] where [SocialActivists_Id] = @SocialActivists_Id  and [Campaigns_Id] = @Campaigns_Id)\r\nbegin\r\ninsert into [dbo].[TBMoneyTrackings]\r\nvalues (@SocialActivists_Id ,@Campaigns_Id ,0,1)\r\nend";
+        string insertNewData = "if not exists (select * from [dbo].[TBMoneyTrackings] where [SocialActivists_Id] = @SocialActivists_Id  and [Campaigns_Id] = @Campaigns_Id)\r\nbegin\r\ninsert into [dbo].[TBMoneyTrackings]\r\nvalues (@SocialActivists_Id ,@Campaigns_Id ,0,1,getdate())\r\nend";
 
-
-       
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts a money tracking. </summary>
         ///

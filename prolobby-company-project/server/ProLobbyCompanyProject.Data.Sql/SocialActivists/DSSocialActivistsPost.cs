@@ -57,7 +57,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
         }
 
         /// <summary>   The insert. </summary>
-        string insert = "insert into [dbo].[TBSocialActivists] values (@FirstName,@LastName,@Address,@Email,@Twitter_user,@Phone_number,@User_Id)";
+        string insert = "insert into [dbo].[TBSocialActivists] values (@FirstName,@LastName,@Address,@Email,@Twitter_user,@Phone_number,@User_Id,getdate())";
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts the users data. </summary>

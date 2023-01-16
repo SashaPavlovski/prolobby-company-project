@@ -60,7 +60,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         }
 
         /// <summary>   The insert. </summary>
-        string insert = "insert into [dbo].[TBNonProfitOrganizations] ([NonProfitOrganizationName],[Url],[decreption],[Email],[RepresentativeFirstName],\r\n[RepresentativeLastName],[Phone_number],[User_Id])\r\nvalues (@NonProfitOrganizationName,@Url,@decreption,@Email,@RepresentativeFirstName,\r\n@RepresentativeLastName,@Phone_number,@User_Id)";
+        string insert = "insert into [dbo].[TBNonProfitOrganizations] ([NonProfitOrganizationName],[Url],[decreption],[Email],[RepresentativeFirstName],[RepresentativeLastName],[Phone_number],[User_Id],[Date])\r\nvalues (@NonProfitOrganizationName,@Url,@decreption,@Email,@RepresentativeFirstName,\r\n@RepresentativeLastName,@Phone_number,@User_Id,getdate())";
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts the users data. </summary>

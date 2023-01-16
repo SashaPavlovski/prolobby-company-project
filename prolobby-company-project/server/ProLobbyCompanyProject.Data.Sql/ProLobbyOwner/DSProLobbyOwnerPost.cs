@@ -55,7 +55,7 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
         }
 
         /// <summary>   The insert. </summary>
-        string insert = "insert into [dbo].[TBProLobbyOwners] values (@FirstName,@LastName,@Email,@Phone_number,@User_Id)";
+        string insert = "insert into [dbo].[TBProLobbyOwners] values (@FirstName,@LastName,@Email,@Phone_number,@User_Id,getdate())";
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts the users data. </summary>

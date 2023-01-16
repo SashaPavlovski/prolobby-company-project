@@ -57,7 +57,7 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
         }
 
         /// <summary>   The insert. </summary>
-        string insert = "insert into [dbo].[TBBusinessCompanyRepresentatives] values (@RepresentativeFirstName,@RepresentativeLastName,@CompanyName,@Url,@Email,@Phone_number,@User_Id)";
+        string insert = "insert into [dbo].[TBBusinessCompanyRepresentatives] values (@RepresentativeFirstName,@RepresentativeLastName,@CompanyName,@Url,@Email,@Phone_number,@User_Id,getdate())";
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts the users data. </summary>

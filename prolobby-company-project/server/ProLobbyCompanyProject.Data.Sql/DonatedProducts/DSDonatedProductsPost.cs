@@ -56,7 +56,7 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
         }
 
         /// <summary>   The insert new product. </summary>
-        string insertNewProduct = "insert into [dbo].[TBDonatedProducts]\r\nvalues (@BusinessCompany_Id,@Campaigns_Id,@Product_Name,@Price,1,1,null)";
+        string insertNewProduct = "insert into [dbo].[TBDonatedProducts]\r\nvalues (@BusinessCompany_Id,@Campaigns_Id,@Product_Name,@Price,1,1,getdate())";
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts a new product. </summary>

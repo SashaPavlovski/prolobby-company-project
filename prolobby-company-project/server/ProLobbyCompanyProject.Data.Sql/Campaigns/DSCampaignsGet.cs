@@ -104,7 +104,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
             if (key != null && value != null && key2 != null && key2.Contains("Hashtag"))
             {
                 command.Parameters.AddWithValue($"@{key}", value);
-                command.Parameters.AddWithValue($"@{key2}", value);
+                command.Parameters.AddWithValue($"@{key2}", value2);
             }
         }
 
