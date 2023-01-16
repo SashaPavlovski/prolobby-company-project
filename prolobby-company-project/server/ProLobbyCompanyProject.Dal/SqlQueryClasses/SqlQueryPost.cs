@@ -120,7 +120,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             if (!(openConnection.Connect())) return null;
             int? answer = null;
             string insert = sqlQuerey;
-            ;
+            
             using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
             {
                 answer = func(userData, command);
