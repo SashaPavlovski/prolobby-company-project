@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tweetinvi;
 
 namespace test
 {
@@ -12,8 +13,10 @@ namespace test
     {
         static void Main(string[] args)
         {
-            ConnectionWithSql._ConnectionWithSql.CreateTables();
            
+
+           ConnectionWithSql._ConnectionWithSql.CreateTables();
+
         }
     }
 }
