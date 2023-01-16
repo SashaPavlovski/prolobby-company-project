@@ -16,6 +16,12 @@ export const ValueFormActivists = ({
   sendingData1,
   showMoney,
   showMyProduct,
+  firstName,
+  lastName,
+  email,
+  twitterUser,
+  address,
+  phoneNumber,
 }) => {
   return (
     <>
@@ -108,9 +114,18 @@ export const ValueFormActivists = ({
       <button className="btn btn-primary" onClick={showMoney}>
         my money
       </button>
-      <button className="btn btn-primary" onClick={sendingData1}>
-        Submit form
-      </button>
+      {firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      twitterUser !== "" &&
+      address !== "" &&
+      phoneNumber !== "" ? (
+        <button className="btn btn-primary" onClick={sendingData1}>
+          Submit form
+        </button>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

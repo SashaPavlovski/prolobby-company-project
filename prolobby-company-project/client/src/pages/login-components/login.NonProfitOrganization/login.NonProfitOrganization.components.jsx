@@ -29,7 +29,7 @@ export const LoginNonProfitOrganization = () => {
     lastNameV: { lastName, setLastName },
     emailV: { email, setEmail },
     phoneNumberV: { phoneNumber, setPhoneNumber },
-    pictureV: { picture, setPicture },
+    // pictureV: { picture, setPicture },
   } = UseStatsVariables;
   let { userDataRow } = UserDataRowV;
   if (userDataRow != null) {
@@ -55,8 +55,8 @@ export const LoginNonProfitOrganization = () => {
     url,
     decreption,
     email,
-    phoneNumber,
-    picture
+    phoneNumber
+    // picture
   );
   let { handleUserData } = UsePostLoginOrganization({ UseStatsVariables });
   let { handleOrganizationUserData } = UseUpdateLoginOrganization({
@@ -91,8 +91,15 @@ export const LoginNonProfitOrganization = () => {
       setEmail={setEmail}
       userPhoneNumber={userPhoneNumber}
       setPhoneNumber={setPhoneNumber}
-      setPicture={setPicture}
+      // setPicture={setPicture}
       sendingData={sendingData}
+      organizationName={organizationName}
+      url={url}
+      decreption={decreption}
+      firstName={firstName}
+      lastName={lastName}
+      email={email}
+      phoneNumber={phoneNumber}
     />
   );
 };

@@ -17,7 +17,7 @@ export const UsePostLoginOrganization = ({ UseStatsVariables }) => {
     lastNameV: { lastName },
     emailV: { email },
     phoneNumberV: { phoneNumber },
-    pictureV: { picture },
+    // pictureV: { picture },
   } = UseStatsVariables;
 
   const handleUserData = async () => {
@@ -30,8 +30,8 @@ export const UsePostLoginOrganization = ({ UseStatsVariables }) => {
       url,
       decreption,
       email,
-      phoneNumber,
-      picture
+      phoneNumber
+      // picture
     );
 
     await addUserDataAsync("NonProfitOrganization", "addData", {
@@ -42,7 +42,7 @@ export const UsePostLoginOrganization = ({ UseStatsVariables }) => {
       RepresentativeLastName: lastName,
       Email: email,
       Phone_number: phoneNumber,
-      SetImage: null,
+      // SetImage: null,
       User_Id: user.sub,
     });
     navigate("/");

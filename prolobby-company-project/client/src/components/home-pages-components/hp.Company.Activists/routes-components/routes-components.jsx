@@ -1,6 +1,6 @@
 import React from "react";
 
-import { HomeOrganization } from "./../../../../pages/home/home-organization/home-organization";
+import { HomeAllCampaigns } from "./../../../../pages/home/home-home-all-campaigns/home-all-campaigns";
 import { AboutCampaign } from "./../../../../pages/organization/about-campaign/about-campaign";
 import { ProductsList } from "./../../../../pages/products/products-list/products-list";
 import { DonateProduct } from "./../../../../pages/products/donate-product/donate-product";
@@ -9,8 +9,8 @@ import { ActivistProducts } from "./../../../../pages/products/activist-products
 import { DeliveryProductList } from "./../../../../pages/delivery-product-list/delivery-product-list";
 
 export const BusinessCompanyRoutes = ({ components }) => {
-  return components === HomeOrganization ? (
-    <HomeOrganization />
+  return components === HomeAllCampaigns ? (
+    <HomeAllCampaigns />
   ) : components === AboutCampaign ? (
     <AboutCampaign />
   ) : components === ProductsList ? (
@@ -24,8 +24,8 @@ export const BusinessCompanyRoutes = ({ components }) => {
   );
 };
 export const SocialActivistsRoutes = ({ components }) => {
-  return components === HomeOrganization ? (
-    <HomeOrganization />
+  return components === HomeAllCampaigns ? (
+    <HomeAllCampaigns />
   ) : components === AboutCampaign ? (
     <AboutCampaign />
   ) : components === ProductsList ? (

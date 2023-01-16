@@ -13,10 +13,10 @@ export const DonateProduct = () => {
   console.log(`DonateProduct : enter : Campaigns_Id : ${Campaigns_Id}`);
   let { UseStatsVariables } = UseValueCreateProduct({});
   let {
-    Product_NameV: { setProduct_Name },
-    PriceV: { setPrice },
-    PictureV: { setPicture },
-    CountV: { setCount },
+    Product_NameV: { product_Name, setProduct_Name },
+    PriceV: { price, setPrice },
+    // PictureV: { setPicture },
+    CountV: { count, setCount },
   } = UseStatsVariables;
   let { userDataRow } = Ifexist({});
   const sendingData = () => {
@@ -37,9 +37,12 @@ export const DonateProduct = () => {
     <UseFormCreateProduct
       setProduct_Name={setProduct_Name}
       setPrice={setPrice}
-      setPicture={setPicture}
+      // setPicture={setPicture}
       setCount={setCount}
       sendingData={sendingData}
+      product_Name={product_Name}
+      price={price}
+      count={count}
     />
   );
 };

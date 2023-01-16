@@ -99,6 +99,12 @@ export const LoginSocialActivists = () => {
         sendingData1={sendingData1}
         showMoney={showMoney}
         showMyProduct={showMyProduct}
+        firstName={firstName}
+        lastName={lastName}
+        email={email}
+        twitterUser={twitterUser}
+        address={address}
+        phoneNumber={phoneNumber}
       />
       {/* <UseMoneyTrackingShow activistUser={userDataRow} /> */}
     </>

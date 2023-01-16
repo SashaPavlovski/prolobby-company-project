@@ -28,6 +28,7 @@ export const UsePostLoginActivists = ({ UseStatsVariables }) => {
       Phone_number: phoneNumber,
       User_Id: user.sub,
     });
+
     navigate("/");
   };
   return { handleUserData };

@@ -10,6 +10,10 @@ let navBarArr = [
     path: "/profile",
     pathName: "profile",
   },
+  {
+    path: "/send-active-money",
+    pathName: "send active money",
+  },
 ];
 
 export const NavBarOwner = () => {

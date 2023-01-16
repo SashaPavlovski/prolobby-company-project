@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { NavBarCompany } from "./../../navBar-users/navBar.Company/navBar.Company";
 import { BusinessCompany_SocialActivists } from "../../home-pages-components";
-import { HomeOrganization } from "../../../pages/home/home-organization/home-organization";
+import { HomeAllCampaigns } from "../../../pages/home/home-home-all-campaigns/home-all-campaigns";
 import { AboutCampaign } from "../../../pages/organization/about-campaign/about-campaign";
 import { ProductsList } from "../../../pages/products/products-list/products-list";
 import { LoginBusinessCompanyRepresentative } from "../../../pages/login-components";
@@ -17,7 +17,7 @@ export const RoutesBusinessCompanyRepresentative = () => {
         <Route
           path="/"
           element={
-            <BusinessCompany_SocialActivists components={HomeOrganization} />
+            <BusinessCompany_SocialActivists components={HomeAllCampaigns} />
           }
         />
         <Route

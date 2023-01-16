@@ -10,6 +10,10 @@ export const ValueFormOwner = ({
   userPhoneNumber,
   setPhoneNumber,
   sendingData1,
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
 }) => {
   return (
     <>
@@ -64,10 +68,16 @@ export const ValueFormOwner = ({
         />
         <div className="valid-feedback">Looks good!</div>
       </div>
-
-      <button className="btn btn-primary" onClick={sendingData1}>
-        Submit form
-      </button>
+      {firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      phoneNumber !== "" ? (
+        <button className="btn btn-primary" onClick={sendingData1}>
+          Submit form
+        </button>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

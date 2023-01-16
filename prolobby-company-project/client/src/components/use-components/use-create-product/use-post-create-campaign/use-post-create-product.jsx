@@ -8,7 +8,7 @@ export const UsePostCreateProduct = ({
   let {
     Product_NameV: { product_Name },
     PriceV: { price },
-    PictureV: { picture },
+    // PictureV: { picture },
     CountV: { count },
   } = UseStatsVariables;
   console.log(

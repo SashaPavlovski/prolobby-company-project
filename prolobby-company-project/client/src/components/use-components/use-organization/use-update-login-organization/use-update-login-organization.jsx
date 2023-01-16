@@ -6,7 +6,7 @@ export const UseUpdateLoginOrganization = ({
   UseStatsVariables,
   userDataRow,
 }) => {
-  if (userDataRow != 0) {
+  if (userDataRow !== 0) {
     console.log(`AAAAAAAAAAAAAAAAAAAAAAAAAAAA : ${userDataRow}`);
   }
 

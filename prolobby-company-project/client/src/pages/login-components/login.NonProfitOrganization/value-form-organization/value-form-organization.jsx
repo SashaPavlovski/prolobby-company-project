@@ -15,8 +15,15 @@ export const ValueFormOrganization = ({
   setEmail,
   userPhoneNumber,
   setPhoneNumber,
-  setPicture,
+  // setPicture,
   sendingData,
+  organizationName,
+  url,
+  decreption,
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
 }) => {
   return (
     <>
@@ -109,7 +116,7 @@ export const ValueFormOrganization = ({
         />
         <div className="valid-feedback">Looks good!</div>
       </div>
-      <div>
+      {/* <div>
         <label for="formFileLg" className="form-label">
           Large file input example
         </label>
@@ -120,14 +127,24 @@ export const ValueFormOrganization = ({
           accept=".jpg, .png"
           onChange={(e) => setPicture(e.target.files[0])}
         />
-      </div>
-      <button
-        className="btn btn-primary"
-        //type="submit"
-        onClick={sendingData}
-      >
-        Submit form
-      </button>
+      </div> */}
+      {organizationName !== "" &&
+      url !== "" &&
+      decreption !== "" &&
+      firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      phoneNumber !== "" ? (
+        <button
+          className="btn btn-primary"
+          //type="submit"
+          onClick={sendingData}
+        >
+          Submit form
+        </button>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

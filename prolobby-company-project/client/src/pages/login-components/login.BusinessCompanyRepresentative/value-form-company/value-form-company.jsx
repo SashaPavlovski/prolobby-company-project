@@ -14,6 +14,12 @@ export const ValueFormCompany = ({
   userPhoneNumber,
   setPhoneNumber,
   sendingData1,
+  companyName,
+  url,
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
 }) => {
   return (
     <>
@@ -96,9 +102,18 @@ export const ValueFormCompany = ({
         />
         <div className="valid-feedback">Looks good!</div>
       </div>
-      <button className="btn btn-primary" onClick={sendingData1}>
-        Submit form
-      </button>
+      {companyName !== "" &&
+      url !== "" &&
+      firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      phoneNumber !== "" ? (
+        <button className="btn btn-primary" onClick={sendingData1}>
+          Submit form
+        </button>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

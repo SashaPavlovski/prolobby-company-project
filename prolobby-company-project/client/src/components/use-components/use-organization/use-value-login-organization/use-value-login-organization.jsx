@@ -11,7 +11,7 @@ export const UseValueLoginOrganization = () => {
   const [lastName, setLastName] = useState(user.family_name);
   const [email, setEmail] = useState(user.email);
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
-  const [picture, setPicture] = useState("");
+  // const [picture, setPicture] = useState("");
 
   let userFirstName = "";
   let userOrganizationName = "";
@@ -20,7 +20,7 @@ export const UseValueLoginOrganization = () => {
   let userLastName = "";
   let userEmail = "";
   let userPhoneNumber = "";
-  let userPicture = "";
+  // let userPicture = "";
 
   // if (userDataRow === null) {
   //   console.log("if");
@@ -48,8 +48,8 @@ export const UseValueLoginOrganization = () => {
     url,
     decreption,
     email,
-    phoneNumber,
-    picture
+    phoneNumber
+    // picture
   );
   return {
     defaultVariables: {
@@ -60,7 +60,7 @@ export const UseValueLoginOrganization = () => {
       userLastName,
       userEmail,
       userPhoneNumber,
-      userPicture,
+      // userPicture,
     },
     UseStatsVariables: {
       organizationNameV: { organizationName, setOrganizationName },
@@ -70,7 +70,7 @@ export const UseValueLoginOrganization = () => {
       lastNameV: { lastName, setLastName },
       emailV: { email, setEmail },
       phoneNumberV: { phoneNumber, setPhoneNumber },
-      pictureV: { picture, setPicture },
+      // pictureV: { picture, setPicture },
     },
     UserDataRowV: { userDataRow },
   };

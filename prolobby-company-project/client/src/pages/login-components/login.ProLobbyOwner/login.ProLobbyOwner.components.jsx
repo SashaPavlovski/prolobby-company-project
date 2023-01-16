@@ -58,6 +58,10 @@ export const LoginProLobbyOwner = () => {
       userPhoneNumber={userPhoneNumber}
       setPhoneNumber={setPhoneNumber}
       sendingData1={sendingData1}
+      firstName={firstName}
+      lastName={lastName}
+      email={email}
+      phoneNumber={phoneNumber}
     />
   );
 };

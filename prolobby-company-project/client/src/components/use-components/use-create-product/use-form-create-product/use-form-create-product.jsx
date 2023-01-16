@@ -3,9 +3,12 @@ import React from "react";
 export const UseFormCreateProduct = ({
   setProduct_Name,
   setPrice,
-  setPicture,
+  // setPicture,
   setCount,
   sendingData,
+  product_Name,
+  price,
+  count,
 }) => {
   return (
     <div className="createCampaign">
@@ -32,8 +35,8 @@ export const UseFormCreateProduct = ({
             id="validationCustom01"
             onChange={(e) => setPrice(e.target.value)}
           />
-          {/* <span className="input-group-text">$</span>
-          <span className="input-group-text">0.00</span> */}
+          <span className="input-group-text">$</span>
+          <span className="input-group-text">0.00</span>
         </div>
       </div>
       <div className="col-md-4">
@@ -48,7 +51,7 @@ export const UseFormCreateProduct = ({
         />
         <div className="valid-feedback">Looks good!</div>
       </div>
-      <div>
+      {/* <div>
         <label for="formFileLg" className="form-label">
           Picture of the donation
         </label>
@@ -59,14 +62,18 @@ export const UseFormCreateProduct = ({
           accept=".jpg, .png"
           onChange={(e) => setPicture(e.target.files[0])}
         />
-      </div>
-      <button
-        className="btn btn-primary"
-        //type="submit"
-        onClick={sendingData}
-      >
-        Save
-      </button>
+      </div> */}
+      {product_Name !== "" && price !== "" && count !== "" ? (
+        <button
+          className="btn btn-primary"
+          //type="submit"
+          onClick={sendingData}
+        >
+          Save
+        </button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

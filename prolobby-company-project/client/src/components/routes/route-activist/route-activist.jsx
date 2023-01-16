@@ -1,12 +1,12 @@
 import { NavBarActivists } from "./../../navBar-users/navBar.Activists/navBar.Activists";
 import { Routes, Route } from "react-router-dom";
 import { BusinessCompany_SocialActivists } from "../../home-pages-components";
-import { HomeOrganization } from "../../../pages/home/home-organization/home-organization";
+import { HomeAllCampaigns } from "../../../pages/home/home-home-all-campaigns/home-all-campaigns";
 import { LoginSocialActivists } from "./../../../pages/login-components/login.SocialActivists/login.SocialActivists.components";
 import { AboutCampaign } from "../../../pages/organization/about-campaign/about-campaign";
 import { ProductsList } from "../../../pages/products/products-list/products-list";
 import { UseMoneyTrackingShow } from "../../use-components/use-money-tracking/use-money-tracking-show/use-money-tracking-show";
-import { ActivistProducts } from './../../../pages/products/activist-products/activist-products';
+import { ActivistProducts } from "./../../../pages/products/activist-products/activist-products";
 
 export const RoutesSocialActivists = () => {
   return (
@@ -16,7 +16,7 @@ export const RoutesSocialActivists = () => {
         <Route
           path="/"
           element={
-            <BusinessCompany_SocialActivists components={HomeOrganization} />
+            <BusinessCompany_SocialActivists components={HomeAllCampaigns} />
           }
         />
         <Route path="/profile" element={<LoginSocialActivists />} />
@@ -43,9 +43,7 @@ export const RoutesSocialActivists = () => {
         <Route
           path="/my-products"
           element={
-            <BusinessCompany_SocialActivists
-             components={ActivistProducts}
-            />
+            <BusinessCompany_SocialActivists components={ActivistProducts} />
           }
         />
       </Routes>

@@ -73,6 +73,12 @@ export const LoginBusinessCompanyRepresentative = () => {
       userPhoneNumber={userPhoneNumber}
       setPhoneNumber={setPhoneNumber}
       sendingData1={sendingData1}
+      companyName={companyName}
+      url={url}
+      firstName={firstName}
+      lastName={lastName}
+      email={email}
+      phoneNumber={phoneNumber}
     />
   );
 };
