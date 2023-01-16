@@ -81,6 +81,7 @@
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsPost.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsGet.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsUpdate.cs" />
+    <Compile Include="PostsTracking\DSPostsTrackingIfExist.cs" />
     <Compile Include="PostsTracking\DSPostsTrackingPost.cs" />
     <Compile Include="ProLobbyOwner\DSProLobbyOwnerGet.cs" />
     <Compile Include="ProLobbyOwner\DSProLobbyOwnerPost.cs" />
@@ -93,6 +94,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocialActivists\DSSocialActivistsPost.cs" />
     <Compile Include="SocialActivists\DSSocialActivistsUpdate.cs" />
+    <Compile Include="SortingTables\SortingCampaigns\DSSortingCampaignsByAmountProducts.cs" />
+    <Compile Include="SortingTables\SortingCampaigns\DSSortingCampaignsByAmountUsers.cs" />
+    <Compile Include="SortingTables\SortingCampaigns\DSSortingCampaignsDefault.cs" />
+    <Compile Include="SortingTables\SortingPosts\DSSortingPostsDefault.cs" />
+    <Compile Include="SortingTables\SortingProducts\DSSortingProductsDefault.cs" />
+    <Compile Include="SortingTables\SortingUsers\DSSortingUsersByCompany.cs" />
+    <Compile Include="SortingTables\SortingUsers\DSSortingUsersByOrganization.cs" />
+    <Compile Include="SortingTables\SortingUsers\DSSortingUsersDefault.cs" />
     <Compile Include="Twitter\DSTwitterGet.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace ProLobbyCompanyProject.Data.Sql.PostsTracking
             int rows = command.ExecuteNonQuery();
         }
 
-        string insertPost = "declare @Campaigns_Id int\r\nif exists (select * from [dbo].[TBMoneyTrackings] where [MoneyTracking_Id] = @MoneyTracking_Id and [Active] = 1 )\r\n   begin\r\n   SET @Campaigns_Id = (select Campaigns_Id from [dbo].[TBMoneyTrackings] where [MoneyTracking_Id] = @MoneyTracking_Id\r\n   and [Active] = 1)\r\n   insert into [dbo].[TBPostsTrackings]\r\n   values ( @Campaigns_Id,@SocialActivists_Id,@Amount_publications,getdate()-1,1)\r\n   end";
+        string insertPost = "if exists (select * from [dbo].[TBMoneyTrackings] where [MoneyTracking_Id] = @MoneyTracking_Id and [Active] = 1 )\r\n   begin\r\n   SET @Campaigns_Id = (select Campaigns_Id from [dbo].[TBMoneyTrackings] where [MoneyTracking_Id] = @MoneyTracking_Id\r\n   and [Active] = 1)\r\n   insert into [dbo].[TBPostsTrackings]\r\n   values ( @Campaigns_Id,@SocialActivists_Id,@Amount_publications,getdate()-1,1)\r\n   end";
 
         public void PostPostsTracking(MATwitter UserTwitterMoney, double UserPosts)
         {
