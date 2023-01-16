@@ -14,6 +14,22 @@ let navBarArr = [
     path: "/send-active-money",
     pathName: "send active money",
   },
+  {
+    path: "/reports/campaigns",
+    pathName: "campaigns reports",
+  },
+  {
+    path: "/reports/posts",
+    pathName: "posts reports",
+  },
+  {
+    path: "/reports/users",
+    pathName: "users reports",
+  },
+  {
+    path: "/reports/products",
+    pathName: "products reports",
+  },
 ];
 
 export const NavBarOwner = () => {
