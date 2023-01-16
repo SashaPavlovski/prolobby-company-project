@@ -54,6 +54,10 @@
     <Compile Include="BusinessCompanyRepresentatives.cs" />
     <Compile Include="Campaigns.cs" />
     <Compile Include="DonatedProducts.cs" />
+    <Compile Include="ENSortingTables\ENSortingCampaigns.cs" />
+    <Compile Include="ENSortingTables\ENSortingPosts.cs" />
+    <Compile Include="ENSortingTables\ENSortingProducts.cs" />
+    <Compile Include="ENSortingTables\ENSortingUsers.cs" />
     <Compile Include="MainManager.cs" />
     <Compile Include="MoneyTracking.cs" />
     <Compile Include="NonProfitOrganizations.cs" />

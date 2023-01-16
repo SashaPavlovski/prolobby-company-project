@@ -6,10 +6,15 @@
 
 using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Data.Sql.Campaigns;
+using ProLobbyCompanyProject.Entites.ENSortingTables;
 using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Campaigns;
 using ProLobbyCompanyProject.Model.MoneyTracking;
 using ProLobbyCompanyProject.Model.Shippers;
+using ProLobbyCompanyProject.Model.SortingTables.SortingCampaigns;
+using ProLobbyCompanyProject.Model.SortingTables.SortingPosts;
+using ProLobbyCompanyProject.Model.SortingTables.SortingProducts;
+using ProLobbyCompanyProject.Model.SortingTables.SortingUsers;
 using ProLobbyCompanyProject.Model.Twitter;
 using System;
 using System.Collections.Generic;
@@ -57,6 +62,10 @@ namespace ProLobbyCompanyProject.Entites
         Shippers shippers2;
         /// <summary>   The second twitter. </summary>
         Twitter twitter2;
+        ENSortingCampaigns eNSortingCampaigns2;
+        ENSortingPosts eNSortingPosts2;
+        ENSortingProducts eNSortingProducts2;
+        ENSortingUsers eNSortingUsers2;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Gets the instance. </summary>
@@ -100,6 +109,10 @@ namespace ProLobbyCompanyProject.Entites
             moneyTracking2 = new MoneyTracking();
             shippers2 = new Shippers();
             twitter2 = new Twitter();
+            eNSortingCampaigns2 = new ENSortingCampaigns();
+            eNSortingPosts2 = new ENSortingPosts();
+            eNSortingProducts2 = new ENSortingProducts();
+            eNSortingUsers2 = new ENSortingUsers();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -475,6 +488,7 @@ namespace ProLobbyCompanyProject.Entites
             InitClasses();
             shippers2.SetProductDelivery(idUser);
         }
+
         //**********************************************************************
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -496,6 +510,36 @@ namespace ProLobbyCompanyProject.Entites
             if (userTwitterMoney == null || UserMoney == 0) return;
             InitClasses();
             twitter2.UpdateMoneyTracking(userTwitterMoney, UserMoney);
+        }
+
+        public bool CheckingIfExistPosts()
+        {
+            InitClasses();
+            return twitter2.IfExistPosts();
+        }
+
+        //**********************************************************************
+
+        public List<TBSortingCampaigns> GetReportsCampaigns(string CaseOf)
+        {
+            InitClasses();
+            return eNSortingCampaigns2.GetSortingCampaigns(CaseOf);
+        }
+        public List<TBSortingPosts> GetReportsPosts(string CaseOf)
+        {
+            InitClasses();
+            return eNSortingPosts2.GetSortingPosts(CaseOf);
+        }
+        public List<TBSortingProducts> GetReportsProducts(string CaseOf)
+        {
+            InitClasses();
+            return eNSortingProducts2.GetSortingProducts(CaseOf);
+        }
+
+        public List<TBSortingUsers> GetReportsUsers(string CaseOf)
+        {
+            InitClasses();
+            return eNSortingUsers2.GetSortingUsers(CaseOf);
         }
 
     }

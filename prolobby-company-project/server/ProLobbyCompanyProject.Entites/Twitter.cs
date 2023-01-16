@@ -54,5 +54,18 @@ namespace ProLobbyCompanyProject.Entites
             newData.UpdateMoneyTracking(userTwitterMoney, UserPosts);
             dSPostsTrackingPost.PostPostsTracking(userTwitterMoney, UserPosts);
         }
+        public bool IfExistPosts()
+        {
+
+            DSPostsTrackingIfExist dSPostsTrackingIfExist = new DSPostsTrackingIfExist();
+            int? answer = dSPostsTrackingIfExist.IfExistPostsTracking();
+            if (answer != null)
+            {
+                if (answer == 1) return false;
+                else if (answer == -1) return true;
+
+            }
+             return false;
+        }
     }
 }
