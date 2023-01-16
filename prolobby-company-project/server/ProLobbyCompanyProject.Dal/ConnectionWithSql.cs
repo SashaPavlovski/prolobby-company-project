@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using ProLobbyCompanyProject.Model;
+using ProLobbyCompanyProject.Model.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,8 @@ namespace ProLobbyCompanyProject.Dal
             List<TBShippers> Shippers1 = CreateSqlTables.Data.Shippers.ToList();
 
             List<TBSocialActivists> SocialActivists1 = CreateSqlTables.Data.SocialActivists.ToList();
+
+            List<TBPostsTracking> PostsTracking1 = CreateSqlTables.Data.PostsTracking.ToList();
         }
     }
 }

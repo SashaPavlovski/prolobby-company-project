@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using ProLobbyCompanyProject.Model;
+using ProLobbyCompanyProject.Model.Tables;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -35,7 +36,7 @@ namespace ProLobbyCompanyProject.Dal
         public CreateSqlTables() : base("Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ProLobbyCompanyProject;Data Source=localhost\\SQLEXPRESS")
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<CreateSqlTables>());
-            if ((SocialActivists.Count() == 0) || (Shippers.Count() == 0) || (ProLobbyOwner.Count() == 0) || (NonProfitOrganization.Count() == 0) || (MoneyTracking.Count() == 0) || (DonatedProducts.Count() == 0) || (Campaigns.Count() == 0) || (BusinessCompanyRepresentative.Count() == 0)) Seed();
+            if ((SocialActivists.Count() == 0) || (Shippers.Count() == 0) || (ProLobbyOwner.Count() == 0) || (NonProfitOrganization.Count() == 0) || (MoneyTracking.Count() == 0) || (DonatedProducts.Count() == 0) || (Campaigns.Count() == 0) || (BusinessCompanyRepresentative.Count() == 0) || (PostsTracking.Count() == 0)) Seed();
             Database.Connection.Close();
 
         }
@@ -65,44 +66,49 @@ namespace ProLobbyCompanyProject.Dal
         {
             if (BusinessCompanyRepresentative.Count() == 0)
             {
-                TBBusinessCompanyRepresentative businessCompanyRepresentative = new TBBusinessCompanyRepresentative { CompanyName = "CompanyName", Email = "Email@gmail.com", Phone_number = "0525381648", RepresentativeFirstName = "RepresentativeFirstName", RepresentativeLastName = "RepresentativeLastName", Url = "@WWW.Url.com", User_Id = "111" };
+                TBBusinessCompanyRepresentative businessCompanyRepresentative = new TBBusinessCompanyRepresentative { CompanyName = "CompanyName", Email = "Email@gmail.com", Phone_number = "0525381648", RepresentativeFirstName = "RepresentativeFirstName", RepresentativeLastName = "RepresentativeLastName", Url = "@WWW.Url.com", User_Id = "111" ,Date = DateTime.Now };
                 BusinessCompanyRepresentative.Add(businessCompanyRepresentative);
             }
             else if (Campaigns.Count() == 0)
             {
-                TBCampaigns campaigns = new TBCampaigns { Campaigns_Name = "Campaigns_Name", Descreption = "Descreption", Hashtag = "#Hashtag", NonProfitOrganization_Id = 1, Active = false, MoneyDonations = 0 ,Date = DateTime.Now
-            };
+                TBCampaigns campaigns = new TBCampaigns { Campaigns_Name = "Campaigns_Name", Descreption = "Descreption", Hashtag = "#Hashtag", NonProfitOrganization_Id = 1, Active = false, MoneyDonations = 0 ,Date = DateTime.Now };
+
                 Campaigns.Add(campaigns);
             }
             else if (DonatedProducts.Count() == 0)
             {
-                TBDonatedProducts donatedProducts = new TBDonatedProducts { BusinessCompany_Id = 1, Campaigns_Id = 1, Price = 0, Product_Name = "Product_Name", Status_Product = 1 ,Active = true};
+                TBDonatedProducts donatedProducts = new TBDonatedProducts { BusinessCompany_Id = 1, Campaigns_Id = 1, Price = 0, Product_Name = "Product_Name", Status_Product = 1 ,Active = false, Date = DateTime.Now };
                 DonatedProducts.Add(donatedProducts);
             }
             else if (MoneyTracking.Count() == 0)
             {
-                TBMoneyTracking moneyTracking = new TBMoneyTracking { SocialActivists_Id = 1, Campaigns_Id = 1, Accumulated_money = 0, Active = true };
+                TBMoneyTracking moneyTracking = new TBMoneyTracking { SocialActivists_Id = 1, Campaigns_Id = 1, Accumulated_money = 0, Active = false, Date = DateTime.Now };
                 MoneyTracking.Add(moneyTracking);
             }
             else if (NonProfitOrganization.Count() == 0)
             {
-                TBNonProfitOrganization nonProfitOrganization = new TBNonProfitOrganization { decreption = "decreption", Email = "Email1@gmail.com", NonProfitOrganizationName = "NonProfitOrganizationName", Phone_number = "0525381648", User_Id = "111", RepresentativeFirstName = "RepresentativeFirstName", RepresentativeLastName = "RepresentativeLastName", Url = "@url.com" };
+                TBNonProfitOrganization nonProfitOrganization = new TBNonProfitOrganization { decreption = "decreption", Email = "Email1@gmail.com", NonProfitOrganizationName = "NonProfitOrganizationName", Phone_number = "0525381648", User_Id = "111", RepresentativeFirstName = "RepresentativeFirstName", RepresentativeLastName = "RepresentativeLastName", Url = "@url.com", Date = DateTime.Now };
                 NonProfitOrganization.Add(nonProfitOrganization);
             }
             else if (ProLobbyOwner.Count() == 0)
             {
-                TBProLobbyOwner proLobbyOwner = new TBProLobbyOwner { Email = "Email2@gmail.com", FirstName = "FirstName", LastName = "LastName", Phone_number = "0525381628", User_Id = "111" };
+                TBProLobbyOwner proLobbyOwner = new TBProLobbyOwner { Email = "Email2@gmail.com", FirstName = "FirstName", LastName = "LastName", Phone_number = "0525381628", User_Id = "111", Date = DateTime.Now };
                 ProLobbyOwner.Add(proLobbyOwner);
             }
             else if (Shippers.Count() == 0)
             {
-                TBShippers shippers = new TBShippers { Date = DateTime.Now.AddYears(+0), BusinessCompany_Id = 1, DonatedProducts_Id = 1, Sent = true, SocialActivists_Id = 1 };
+                TBShippers shippers = new TBShippers { Date = DateTime.Now, BusinessCompany_Id = 1, DonatedProducts_Id = 1, Sent = false, SocialActivists_Id = 1 };
                 Shippers.Add(shippers);
             }
             else if (SocialActivists.Count() == 0)
             {
-                TBSocialActivists socialActivists = new TBSocialActivists { Twitter_user = "Twitter_user", Address = "Address", FirstName = "FirstName", LastName = "LastName", Email = "Email3@gmail.com", Phone_number = "0525381628", User_Id = "111" };
+                TBSocialActivists socialActivists = new TBSocialActivists { Twitter_user = "Twitter_user", Address = "Address", FirstName = "FirstName", LastName = "LastName", Email = "Email3@gmail.com", Phone_number = "0525381628", User_Id = "111", Date = DateTime.Now };
                 SocialActivists.Add(socialActivists);
+            }
+            else if (PostsTracking.Count() == 0)
+            {
+                TBPostsTracking postsTracking = new TBPostsTracking { SocialActivists_Id = 1, Campaigns_Id = 1, Amount_publications = 0, Active = false, Date = DateTime.Now };
+                PostsTracking.Add(postsTracking);
             }
             SaveChanges();
         }
@@ -170,5 +176,6 @@ namespace ProLobbyCompanyProject.Dal
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public DbSet<TBSocialActivists> SocialActivists { get; set; }
+        public DbSet<TBPostsTracking> PostsTracking { get; set; }
     }
 }
