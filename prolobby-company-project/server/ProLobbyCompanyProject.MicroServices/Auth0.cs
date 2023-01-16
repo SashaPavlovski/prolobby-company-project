@@ -22,6 +22,10 @@ using ProLobbyCompanyProject.Model.Shippers;
 using ProLobbyCompanyProject.Model.Twitter;
 using static System.Net.WebRequestMethods;
 using Tweetinvi;
+using ProLobbyCompanyProject.Model.SortingTables.SortingCampaigns;
+using ProLobbyCompanyProject.Model.SortingTables.SortingPosts;
+using ProLobbyCompanyProject.Model.SortingTables.SortingProducts;
+using ProLobbyCompanyProject.Model.SortingTables.SortingUsers;
 
 namespace ProLobbyCompanyProject.MicroServices
 {
@@ -96,7 +100,7 @@ namespace ProLobbyCompanyProject.MicroServices
                             string responseMessagePO = System.Text.Json.JsonSerializer.Serialize(ListProLobbyOwner);
                             Console.WriteLine(responseMessagePO);
                             return new OkObjectResult(responseMessagePO);
-                            break;
+
 
                         case "addData":
 
@@ -267,7 +271,7 @@ namespace ProLobbyCompanyProject.MicroServices
                             return new OkObjectResult(responseMessageNP);
 
 
-                           
+
                         case "addData":
 
                             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -320,21 +324,22 @@ namespace ProLobbyCompanyProject.MicroServices
 
                         case "buyProduct":
 
-                            string requestBodyProductData= await new StreamReader(req.Body).ReadToEndAsync();
+                            string requestBodyProductData = await new StreamReader(req.Body).ReadToEndAsync();
                             MAbuyProduct buyProduct = System.Text.Json.JsonSerializer.Deserialize<MAbuyProduct>(requestBodyProductData);
 
                             if (buyProduct != null)
                             {
-                                string anwer = MainManager.INSTANCE.BuyProduct(buyProduct);
-                                if(anwer == null) return new OkObjectResult("The operation failed");
-                                if (anwer.Contains("Succeeded")) {
+                                string answer = MainManager.INSTANCE.BuyProduct(buyProduct);
+                                if (answer == null) return new OkObjectResult("The operation failed");
+                                if (answer.Contains("Succeeded"))
+                                {
                                     var userClient = new TwitterClient("36kPxWu2NiCOLPT0TIQWhSg6A", "ZBPV84cGVuTLKfOizWXqKxg5GkwYAz2yUmWaqzXKuQGz4UOIQc", "1613252594201247745-n1Vnhu76k9Qp9YsgoalMyppKnQx1NA", "955oQxhXL3HRHZxxfaxs5kXSEwJwipYUJSlErnZ8c0rVU");
                                     await userClient.Users.GetAuthenticatedUserAsync();
                                     await userClient.Tweets.PublishTweetAsync($"A product number {buyProduct.DonatedProducts_Id} has been purchased on the website");
-                                    return new OkObjectResult("The operation was carried out successfully, the package passes through the delivery person"); 
+                                    return new OkObjectResult("The operation was carried out successfully, the package passes through the delivery person");
                                 }
-                                else if (anwer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
-                                else if (anwer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to buy the product you must join the campaign");
+                                else if (answer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
+                                else if (answer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to buy the product you must join the campaign");
                                 return new OkObjectResult("failedNotFollowing");
                             }
                             return new OkObjectResult("The operation failed");
@@ -354,16 +359,16 @@ namespace ProLobbyCompanyProject.MicroServices
 
                             if (donationProduct != null)
                             {
-                                string anwer = MainManager.INSTANCE.DonationProduct(donationProduct);
+                                string answer = MainManager.INSTANCE.DonationProduct(donationProduct);
 
-                                if (anwer.Contains("Succeeded")) return new OkObjectResult("The operation was carried out successfully,Thanks for the donation");
-                                else if (anwer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
-                                else if (anwer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to donate a product you must join the campaign");
+                                if (answer.Contains("Succeeded")) return new OkObjectResult("The operation was carried out successfully,Thanks for the donation");
+                                else if (answer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
+                                else if (answer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to donate a product you must join the campaign");
 
                                 return new OkObjectResult("failedNotFollowing");
                             }
                             return new OkObjectResult("The operation failed");
-                           
+
 
 
                         case "getDeliveryList":
@@ -372,7 +377,7 @@ namespace ProLobbyCompanyProject.MicroServices
                             string responseMessageDL = System.Text.Json.JsonSerializer.Serialize(deliveryProductList);
                             Console.WriteLine(responseMessageDL);
                             return new OkObjectResult(responseMessageDL);
-                       
+
                         case "sendProduct":
 
                             MainManager.INSTANCE.SetDeliveryProduct(userId);
@@ -386,49 +391,90 @@ namespace ProLobbyCompanyProject.MicroServices
                     switch (action)
                     {
                         case "getTweet":
-
-                            List<MATwitter> userData = MainManager.INSTANCE.GetTwitterUserData();
-                            if(userData == null)  return new OkObjectResult("failedNotFollowing"); 
-                            DateTime Yesterday = DateTime.Today.AddDays(-1);
-                            DateTime currentDate = DateTime.Today;
-                            string YesterdayDay = Yesterday.ToString("yyyy-MM-dd");
-                            string currentDay = currentDate.ToString("yyyy-MM-dd");
-                            string start_time = YesterdayDay + "T00:00:50Z";
-                            string end_time = currentDay + "T00:00:00Z";
- 
-                            foreach (MATwitter user in userData)
+                            bool answer = MainManager.INSTANCE.CheckingIfExistPosts();
+                            if (answer)
                             {
-                                string url = $"https://api.twitter.com/2/tweets/search/recent?start_time={start_time}&end_time={end_time}&query=from:{user.Twitter_user}";
-                                var clientTwitter = new RestClient(url);
-                                var requestTwitter = new RestRequest("", Method.Get);
-                                requestTwitter.AddHeader("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAIKmlAEAAAAAi4dUwLeoayKuJvRAVvp99%2BNVzXQ%3DSoycLC7ReE1jcWXN4roMBNMjGVuko4HGREzxjtuX3X9kZwzylW");
-                                var responseTwitter = clientTwitter.Execute(requestTwitter);
-                                if (responseTwitter.IsSuccessful)
+                                List<MATwitter> userData = MainManager.INSTANCE.GetTwitterUserData();
+                                if (userData == null) return new OkObjectResult("failedNotFollowing");
+                                DateTime Yesterday = DateTime.Today.AddDays(-1);
+                                DateTime currentDate = DateTime.Today;
+                                string YesterdayDay = Yesterday.ToString("yyyy-MM-dd");
+                                string currentDay = currentDate.ToString("yyyy-MM-dd");
+                                string start_time = YesterdayDay + "T00:00:50Z";
+                                string end_time = currentDay + "T00:00:00Z";
+
+                                foreach (MATwitter user in userData)
                                 {
-                                    JObject json = JObject.Parse(responseTwitter.Content);
-                                    int tweetCount = 0;
-                                    int resultCount = (int)json["meta"]["result_count"];
-                                    if (resultCount != 0)
+                                    string url = $"https://api.twitter.com/2/tweets/search/recent?start_time={start_time}&end_time={end_time}&query=from:{user.Twitter_user}";
+                                    var clientTwitter = new RestClient(url);
+                                    var requestTwitter = new RestRequest("", Method.Get);
+                                    requestTwitter.AddHeader("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAIKmlAEAAAAAi4dUwLeoayKuJvRAVvp99%2BNVzXQ%3DSoycLC7ReE1jcWXN4roMBNMjGVuko4HGREzxjtuX3X9kZwzylW");
+                                    var responseTwitter = clientTwitter.Execute(requestTwitter);
+                                    if (responseTwitter.IsSuccessful)
                                     {
-                                        foreach (var tweet in json["data"])
+                                        JObject json = JObject.Parse(responseTwitter.Content);
+                                        int tweetCount = 0;
+                                        int resultCount = (int)json["meta"]["result_count"];
+                                        if (resultCount != 0)
                                         {
-                                            if (tweet["text"].ToString().Contains(user.Hashtag))
+                                            foreach (var tweet in json["data"])
                                             {
-                                                tweetCount++;
+                                                if (tweet["text"].ToString().Contains(user.Hashtag))
+                                                {
+                                                    tweetCount++;
+                                                }
+                                            }
+                                            Console.WriteLine(tweetCount);
+                                            if (tweetCount != 0)
+                                            {
+                                                MainManager.INSTANCE.UpdateNewUserMoneyTracking(user, tweetCount);
                                             }
                                         }
-                                        Console.WriteLine(tweetCount);
-                                        MainManager.INSTANCE.UpdateNewUserMoneyTracking(user, tweetCount);
                                     }
                                 }
                             }
-                                return new OkObjectResult("failedNotFollowing");
-                            
+
+                            return new OkObjectResult("failedNotFollowing");
+
+                    }
+                    break;
+
+
+                case "Reports":
+
+                    switch (action)
+                    {
+                        case "byCampaign":
+                            List<TBSortingCampaigns> ListSortingCampaigns = MainManager.INSTANCE.GetReportsCampaigns(userId);
+                            string responseCampaignsList = System.Text.Json.JsonSerializer.Serialize(ListSortingCampaigns);
+                            Console.WriteLine(responseCampaignsList);
+                            return new OkObjectResult(responseCampaignsList);
+                        
+
+                        case "byPosts":
+                            List<TBSortingPosts> ListSortingPosts = MainManager.INSTANCE.GetReportsPosts(userId);
+                            string responsePostsList = System.Text.Json.JsonSerializer.Serialize(ListSortingPosts);
+                            Console.WriteLine(responsePostsList);
+                            return new OkObjectResult(responsePostsList);
+                           
+
+                        case "byProducts":
+                            List<TBSortingProducts> ListSortingProducts = MainManager.INSTANCE.GetReportsProducts(userId);
+                            string responseProductsList = System.Text.Json.JsonSerializer.Serialize(ListSortingProducts);
+                            Console.WriteLine(responseProductsList);
+                            return new OkObjectResult(responseProductsList);
+
+
+                        case "byUsers":
+                            List<TBSortingUsers> ListSortingUsers = MainManager.INSTANCE.GetReportsUsers(userId);
+                            string responseUsersList = System.Text.Json.JsonSerializer.Serialize(ListSortingUsers);
+                            Console.WriteLine(responseUsersList);
+                            return new OkObjectResult(responseUsersList);
+
                     }
                     break;
             }
-
-                    return null;
+            return null;
         }
     }
 }
