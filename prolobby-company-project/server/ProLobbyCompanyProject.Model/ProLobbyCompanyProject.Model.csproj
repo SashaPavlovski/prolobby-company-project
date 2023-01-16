@@ -78,6 +78,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shippers\MAbuyProduct.cs" />
     <Compile Include="Shippers\MADeliveryProductList.cs" />
+    <Compile Include="SortingTables\SortingCampaigns\TBSortingCampaigns.cs" />
+    <Compile Include="SortingTables\SortingPosts\TBSortingPosts.cs" />
+    <Compile Include="SortingTables\SortingProducts\TBSortingProducts.cs" />
+    <Compile Include="SortingTables\SortingUsers\TBSortingUsers.cs" />
     <Compile Include="Tables\TBBusinessCompanyRepresentative.cs" />
     <Compile Include="Tables\TBCampaigns.cs" />
     <Compile Include="Tables\TBDonatedProducts.cs" />
