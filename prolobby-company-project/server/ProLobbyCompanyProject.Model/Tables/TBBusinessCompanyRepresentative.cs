@@ -21,7 +21,7 @@ namespace ProLobbyCompanyProject.Model
 
         public string Phone_number { get; set; }
         public string User_Id { get; set; }
-
+        public DateTime Date { get; set; }
 
     }
 }

@@ -16,5 +16,6 @@ namespace ProLobbyCompanyProject.Model
         public int Campaigns_Id { get; set; }
         public double Accumulated_money { get; set; }
         public bool Active { get; set; }
+        public DateTime Date { get; set; }
     }
 }

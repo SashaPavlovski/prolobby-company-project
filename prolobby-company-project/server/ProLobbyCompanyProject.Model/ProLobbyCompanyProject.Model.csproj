@@ -83,6 +83,7 @@
     <Compile Include="Tables\TBDonatedProducts.cs" />
     <Compile Include="Tables\TBMoneyTracking.cs" />
     <Compile Include="Tables\TBNonProfitOrganization.cs" />
+    <Compile Include="Tables\TBPostsTracking.cs" />
     <Compile Include="Tables\TBProLobbyOwner.cs" />
     <Compile Include="Tables\TBShippers.cs" />
     <Compile Include="Tables\TBSocialActivists.cs" />

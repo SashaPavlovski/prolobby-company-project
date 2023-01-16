@@ -20,17 +20,18 @@ namespace ProLobbyCompanyProject.Model
         public double Price { get; set; }
         public int Status_Product { get; set; }
         public bool Active { get; set; }
-        public byte[] MyImage { get; set; }
-        public IFormFile SetImage
-        {
+        //public byte[] MyImage { get; set; }
+        //public IFormFile SetImage
+        //{
 
-            set
-            {
-                if (value == null) return;
-                MemoryStream stream = new MemoryStream();
-                value.CopyTo(stream);
-                MyImage = stream.ToArray();
-            }
-        }
+        //    set
+        //    {
+        //        if (value == null) return;
+        //        MemoryStream stream = new MemoryStream();
+        //        value.CopyTo(stream);
+        //        MyImage = stream.ToArray();
+        //    }
+        //}
+        public DateTime Date { get; set; }
     }
 }

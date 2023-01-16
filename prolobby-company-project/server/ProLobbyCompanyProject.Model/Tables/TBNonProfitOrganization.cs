@@ -23,19 +23,20 @@ namespace ProLobbyCompanyProject.Model
         public string RepresentativeFirstName { get; set; }
         public string RepresentativeLastName { get; set; }
         public string Phone_number { get; set; }
-        public byte[] Logo { get; set; }
+        //public byte[] Logo { get; set; }
 
-        public IFormFile SetImage
-        {
+        //public IFormFile SetImage
+        //{
 
-            set
-            {
-                if (value == null) return;
-                MemoryStream stream = new MemoryStream();
-                value.CopyTo(stream);
-                Logo = stream.ToArray();
-            }
-        }
+        //    set
+        //    {
+        //        if (value == null) return;
+        //        MemoryStream stream = new MemoryStream();
+        //        value.CopyTo(stream);
+        //        Logo = stream.ToArray();
+        //    }
+        //}
         public string User_Id { get; set; }
+        public DateTime Date { get; set; }
     }
 }

@@ -23,7 +23,6 @@ namespace ProLobbyCompanyProject.Model
         public string User_Id { get; set; }
         public double MoneyDonations { get; set; }
 
-
     }
 }
 
