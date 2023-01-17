@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Campaigns\MAboutCampaign.cs" />
+    <Compile Include="Keys\Keys.cs" />
     <Compile Include="MoneyTracking\MAMoneyTracking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shippers\MAbuyProduct.cs" />
