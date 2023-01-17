@@ -1,5 +1,6 @@
 import React from "react";
 
+//Display of the owner's login
 export const ValueFormOwner = ({
   userFirstName,
   setFirstName,
@@ -73,7 +74,7 @@ export const ValueFormOwner = ({
       email !== "" &&
       phoneNumber !== "" ? (
         <button className="btn btn-primary" onClick={sendingData1}>
-          Submit form
+          Send
         </button>
       ) : (
         <></>

@@ -5,8 +5,10 @@ import { UseValueLoginActivists } from "./../../../components/use-components/use
 import { UsePostLoginActivists } from "./../../../components/use-components/use-activists/use-post-login-activists/use-post-login-activists";
 import { UseUpdateLoginActivists } from "../../../components/use-components/use-activists/use-update-login-activists/use-update-login-activists";
 import { ValueFormActivists } from "./value-form-activists/value-form-activists";
-import { UseMoneyTrackingShow } from "./../../../components/use-components/use-money-tracking/use-money-tracking-show/use-money-tracking-show";
 
+//Functions that perform the operation of sending the input data
+//button that leading to the money tracking view
+//Button that leading products bought
 export const LoginSocialActivists = () => {
   let navigate = useNavigate();
   let { defaultVariables, UseStatsVariables, UserDataRowV } =
@@ -29,9 +31,6 @@ export const LoginSocialActivists = () => {
     phoneNumberV: { phoneNumber, setPhoneNumber },
   } = UseStatsVariables;
   let { userDataRow } = UserDataRowV;
-  if (userDataRow != null) {
-    console.log(`else : sendingData : ${userDataRow.SocialActivists_Id} `);
-  }
 
   useEffect(() => {
     setTwitterUser(userTwitterUser);
@@ -53,13 +52,11 @@ export const LoginSocialActivists = () => {
       navigate("/");
       handleUserData();
     } else {
-      console.log(`else : sendingData : ${userDataRow.SocialActivists_Id} `);
       handleActivistsUserData();
     }
   };
   const showMoney = () => {
     if (userDataRow !== null) {
-      console.log(`else : showMoney : ${userDataRow.SocialActivists_Id} `);
       let activistId = userDataRow.SocialActivists_Id;
       navigate("/my-money", {
         state: {
@@ -67,12 +64,10 @@ export const LoginSocialActivists = () => {
         },
       });
     }
-    //UseMoneyTrackingShow({ userDataRow });
   };
 
   const showMyProduct = () => {
     if (userDataRow !== null) {
-      console.log(`else : showMoney : ${userDataRow.SocialActivists_Id} `);
       let activistId = userDataRow.SocialActivists_Id;
       navigate("/my-products", {
         state: {

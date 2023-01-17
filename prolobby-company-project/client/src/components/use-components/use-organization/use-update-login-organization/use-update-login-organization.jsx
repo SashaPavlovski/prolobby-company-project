@@ -1,15 +1,10 @@
-import React from "react";
-
 import { UpdateUserAsync } from "../../../../services/services.js";
 
+//Updating the Organization details
 export const UseUpdateLoginOrganization = ({
   UseStatsVariables,
   userDataRow,
 }) => {
-  if (userDataRow !== 0) {
-    console.log(`AAAAAAAAAAAAAAAAAAAAAAAAAAAA : ${userDataRow}`);
-  }
-
   let {
     organizationNameV: { organizationName },
     urlV: { url },
@@ -21,16 +16,6 @@ export const UseUpdateLoginOrganization = ({
   } = UseStatsVariables;
 
   const handleOrganizationUserData = async () => {
-    console.log(
-      userDataRow.NonProfitOrganization_Id,
-      firstName,
-      lastName,
-      organizationName,
-      url,
-      decreption,
-      email,
-      phoneNumber
-    );
     let updateOrganization = {
       NonProfitOrganization_Id: userDataRow.NonProfitOrganization_Id,
       NonProfitOrganizationName: organizationName,

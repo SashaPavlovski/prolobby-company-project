@@ -1,5 +1,6 @@
 import React from "react";
 
+//The campaign creation view
 export const UseFormCreateCampaign = ({
   ifExist,
   setCampaigns_Name,
@@ -40,6 +41,7 @@ export const UseFormCreateCampaign = ({
         <input
           type="text"
           className="form-control"
+          id="input3"
           placeholder="Recipient's username"
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
@@ -50,11 +52,7 @@ export const UseFormCreateCampaign = ({
         </span>
       </div>
       {Campaigns_Name !== "" && Descreption !== "" && Hashtag !== "" ? (
-        <button
-          className="btn btn-primary"
-          //type="submit"
-          onClick={sendingData}
-        >
+        <button className="btn btn-primary" onClick={sendingData}>
           Save
         </button>
       ) : (

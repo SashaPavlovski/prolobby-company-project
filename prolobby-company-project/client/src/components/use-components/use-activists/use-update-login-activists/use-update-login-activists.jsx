@@ -1,12 +1,7 @@
-import React from "react";
-
 import { UpdateUserAsync } from "../../../../services/services.js";
 
+//update the Activists details
 export const UseUpdateLoginActivists = ({ UseStatsVariables, userDataRow }) => {
-  if (userDataRow != null) {
-    console.log(`AAAAAAAAAAAAAAAAAAAAAAAAAAAA : ${userDataRow}`);
-  }
-
   let {
     firstNameV: { firstName },
     lastNameV: { lastName },

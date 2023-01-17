@@ -1,5 +1,6 @@
 import React from "react";
 
+//dynamic row in the financial tracking
 export const UseNewRowMoney = ({
   NonProfitOrganizationName,
   Campaigns_Name,

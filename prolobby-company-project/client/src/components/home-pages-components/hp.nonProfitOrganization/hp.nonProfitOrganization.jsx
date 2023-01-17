@@ -6,11 +6,12 @@ import { AboutCampaign } from "./../../../pages/organization/about-campaign/abou
 import { ProductsList } from "./../../../pages/products/products-list/products-list";
 import { AllCampaignsByIdOrganization } from "../../../pages/home/home-organization-by-id/home-organization-by-id";
 
+//Checks whether the user is already registered in the system
+//If not it takes him to the registration page
 export const NonProfitOrganizationHP = ({ components }) => {
   let { userData } = ExistRowUser();
   let navigate = useNavigate();
 
-  //  console.log("id - " + userData[0].NonProfitOrganization_Id);
   if (!(userData === null))
     return components === AllCampaignsByIdOrganization ? (
       <AllCampaignsByIdOrganization />

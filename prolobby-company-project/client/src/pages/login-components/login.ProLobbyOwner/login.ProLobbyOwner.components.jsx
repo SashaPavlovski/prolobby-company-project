@@ -6,6 +6,7 @@ import { UsePostLoginOwner } from "./../../../components/use-components/use-owne
 import { UseUpdateLoginOwner } from "../../../components/use-components/use-owner/use-update-login-owner/use-update-login-owner";
 import { ValueFormOwner } from "./value-form-owner/value-form-owner";
 
+//The functions that perform the data entry operation of the owner login page
 export const LoginProLobbyOwner = () => {
   let navigate = useNavigate();
   let { defaultVariables, UseStatsVariables, UserDataRowV } =
@@ -21,9 +22,6 @@ export const LoginProLobbyOwner = () => {
   } = UseStatsVariables;
 
   let { userDataRow } = UserDataRowV;
-  if (userDataRow != null) {
-    console.log(`else : sendingData : ${userDataRow.ProLobbyOwner_Id} `);
-  }
 
   useEffect(() => {
     setFirstName(userFirstName);
@@ -43,7 +41,6 @@ export const LoginProLobbyOwner = () => {
       navigate("/");
       handleUserData();
     } else {
-      console.log(`else : sendingData : ${userDataRow.ProLobbyOwner_Id} `);
       handleOwnerUserData();
     }
   };

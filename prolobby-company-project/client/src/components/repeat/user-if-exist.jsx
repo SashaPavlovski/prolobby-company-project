@@ -5,6 +5,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { GetDataAsync } from "../../services/services.js";
 import { UserContext } from "../../context/userData.context.js";
 
+//Checking if the user exists
+//Sends the ID
+//If he gets the details, it means he exists
+//otherwise it will get null
 export const Ifexist = () => {
   const [userDataRow, setUserDataRow] = useState(null);
   let { role1 } = useContext(UserContext);
@@ -13,7 +17,6 @@ export const Ifexist = () => {
     let userRow = await GetDataAsync(role1[0].name, "userData", user.sub);
     if (userRow !== null) {
       setUserDataRow(userRow[0]);
-      // console.log(`userData : Ifexist : ${userRow.SocialActivists_Id}`);
     }
   };
   useEffect(() => {

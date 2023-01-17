@@ -1,16 +1,14 @@
 import React from "react";
 
-import { UseTableReportsCampaigns } from "./../../../components/use-components/use-reports/use-reports-campaigns/use-table-reports-campaigns/use-table-reports-campaigns";
 import { UseSelectFormReports } from "../../../components/use-components/use-reports/use-select-form-reports/use-select-form-reports";
-import { UseValusReportsCampaigns } from "./../../../components/use-components/use-reports/use-reports-campaigns/use-valus-reports-campaigns/use-valus-reports-campaigns";
+import { UseValusReportsCampaigns } from "../../../components/use-components/use-reports/use-reports-campaigns/use-valus/use-valus";
+import { UseTableReportsCampaigns } from "../../../components/use-components/use-reports/use-reports-campaigns/use-table/use-table";
 import { UseSelectValueReports } from "./../../../components/use-components/use-reports/use-reports-campaigns/use-select/use-select";
 
+//Reports Campaigns page
 export const ReportsCampaigns = () => {
   let { valueOption, handleValue, arrOfSortingCampaigns } =
     UseValusReportsCampaigns({});
-  console.log("==============================");
-  console.log(valueOption);
-  console.log("==============================");
   return (
     <>
       <br />

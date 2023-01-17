@@ -6,8 +6,8 @@ import { UsePostLoginOrganization } from "../../../components/use-components/use
 import { useNavigate } from "react-router-dom";
 import { ValueFormOrganization } from "./value-form-organization/value-form-organization";
 
+//The functions that perform the sending operations of the organization login
 export const LoginNonProfitOrganization = () => {
-  console.log("hh");
   let navigate = useNavigate();
 
   let { defaultVariables, UseStatsVariables, UserDataRowV } =
@@ -29,14 +29,8 @@ export const LoginNonProfitOrganization = () => {
     lastNameV: { lastName, setLastName },
     emailV: { email, setEmail },
     phoneNumberV: { phoneNumber, setPhoneNumber },
-    // pictureV: { picture, setPicture },
   } = UseStatsVariables;
   let { userDataRow } = UserDataRowV;
-  if (userDataRow != null) {
-    console.log(
-      `else : sendingData : ${userDataRow.NonProfitOrganization_Id} `
-    );
-  }
 
   useEffect(() => {
     setOrganizationName(userOrganizationName);
@@ -56,7 +50,6 @@ export const LoginNonProfitOrganization = () => {
     decreption,
     email,
     phoneNumber
-    // picture
   );
   let { handleUserData } = UsePostLoginOrganization({ UseStatsVariables });
   let { handleOrganizationUserData } = UseUpdateLoginOrganization({
@@ -65,13 +58,9 @@ export const LoginNonProfitOrganization = () => {
   });
   let sendingData = () => {
     if (userDataRow === null) {
-      console.log(`else : sendingData : ${userDataRow} `);
       handleUserData();
       navigate("/");
     } else {
-      console.log(
-        `else : sendingData : ${userDataRow.NonProfitOrganization_Id} `
-      );
       handleOrganizationUserData();
     }
   };
@@ -91,7 +80,6 @@ export const LoginNonProfitOrganization = () => {
       setEmail={setEmail}
       userPhoneNumber={userPhoneNumber}
       setPhoneNumber={setPhoneNumber}
-      // setPicture={setPicture}
       sendingData={sendingData}
       organizationName={organizationName}
       url={url}

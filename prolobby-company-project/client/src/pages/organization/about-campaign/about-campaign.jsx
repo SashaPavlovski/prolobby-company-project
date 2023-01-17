@@ -8,14 +8,18 @@ import { UseFormAboutCampaign } from "./../../../components/use-components/use-c
 import { JoinCampaign } from "../join-campaign/join-campaign.jsx";
 import { Ifexist } from "./../../../components/repeat/user-if-exist";
 
+//Functions that display the content of the campaigns
+//Buttons according to permissions
+//Delete campaign button
+//Campaign join button
+//Campaign donation button
+//A button that leads a list of products
 export const AboutCampaign = () => {
   let { role1 } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
   const { Campaigns_Id } = location.state;
-  console.log(`Campaigns_Id : ${Campaigns_Id}`);
   const [campaign, setCampaign] = useState({});
-  console.log(`role1 : ${role1[0].name}`);
   let getCampaign = {
     type: "Campaigns",
     action: "getOneData",
@@ -45,11 +49,7 @@ export const AboutCampaign = () => {
   };
 
   const joinUs = () => {
-    //צורפת בהצלחה
     alert("Successfully added to the system");
-    //נכנס למעקב כספים
-    //צריכה לשלוח קמפיין תז
-    //תז של פעיל חברתי
     if (userDataRow != null) {
       let { addToMoneyTracking } = JoinCampaign({ Campaigns_Id, userDataRow });
       addToMoneyTracking();

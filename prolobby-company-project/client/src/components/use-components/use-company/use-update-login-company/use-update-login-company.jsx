@@ -1,12 +1,8 @@
-import React from "react";
-
 import { UpdateUserAsync } from "../../../../services/services.js";
 
+//sending data to cs
+//update the details of company user
 export const UseUpdateLoginCompany = ({ UseStatsVariables, userDataRow }) => {
-  if (userDataRow != null) {
-    console.log(`AAAAAAAAAAAAAAAAAAAAAAAAAAAA : ${userDataRow}`);
-  }
-
   let {
     companyNameV: { companyName },
     urlV: { url },
@@ -17,15 +13,6 @@ export const UseUpdateLoginCompany = ({ UseStatsVariables, userDataRow }) => {
   } = UseStatsVariables;
 
   const handleCompanyUserData = async () => {
-    console.log(
-      userDataRow.BusinessCompany_Id,
-      firstName,
-      lastName,
-      companyName,
-      url,
-      email,
-      phoneNumber
-    );
     let updateCompany = {
       BusinessCompany_Id: userDataRow.BusinessCompany_Id,
       RepresentativeFirstName: firstName,

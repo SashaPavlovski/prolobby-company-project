@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { Ifexist } from "../../../repeat/user-if-exist";
 
+//All the functions we will use at the entrance of Activists
+//to the system
 export const UseValueLoginActivists = () => {
   let { userDataRow, user } = Ifexist({});
   const [firstName, setFirstName] = useState(user.name);
@@ -18,12 +20,6 @@ export const UseValueLoginActivists = () => {
   let userAddress = "";
   let userPhoneNumber = "";
 
-  // if (userDataRow === null) {
-  //   userFirstName = user.name;
-  //   userEmail = user.email;
-  //   userLastName = user.family_name;
-  //   userPhoneNumber = user.phone_number;
-  // }
   if (userDataRow !== null) {
     userFirstName = userDataRow.FirstName;
     userEmail = userDataRow.Email;
@@ -33,7 +29,6 @@ export const UseValueLoginActivists = () => {
     userAddress = userDataRow.Address;
   }
 
-  console.log(firstName, lastName, email, twitterUser, address, phoneNumber);
   return {
     defaultVariables: {
       userFirstName,

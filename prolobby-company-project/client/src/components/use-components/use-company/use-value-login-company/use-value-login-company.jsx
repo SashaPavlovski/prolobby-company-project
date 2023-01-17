@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { Ifexist } from "../../../repeat/user-if-exist";
 
+//The functions that are required to
+// make you a component of the login of company user
 export const UseValueLoginCompany = () => {
   let { userDataRow, user } = Ifexist({});
   const [firstName, setFirstName] = useState(user.name);
@@ -18,12 +20,6 @@ export const UseValueLoginCompany = () => {
   let userEmail = "";
   let userPhoneNumber = "";
 
-  // if (userDataRow === null) {
-  //   userFirstName = user.name;
-  //   userEmail = user.email;
-  //   userLastName = user.family_name;
-  //   userPhoneNumber = user.phone_number;
-  // }
   if (userDataRow != null) {
     userFirstName = userDataRow.RepresentativeFirstName;
     userEmail = userDataRow.Email;

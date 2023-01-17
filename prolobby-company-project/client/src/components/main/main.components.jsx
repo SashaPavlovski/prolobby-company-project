@@ -11,6 +11,7 @@ import {
   RoutesProLobbyOwner,
 } from "../routes";
 
+//Routing the user according to the authorization
 export const Main = () => {
   const { user } = useAuth0();
   const [role1, setRole] = useState([]);

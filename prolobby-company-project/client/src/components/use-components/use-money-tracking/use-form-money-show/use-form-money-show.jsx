@@ -1,6 +1,11 @@
 import React from "react";
+
 import { UseNewRowMoney } from "./../use-new-row-money/use-new-row-money";
 
+//social activist
+//display
+//Showing the amount of money he has from each campaign
+//Whether the campaign is active or not
 export const UseFormMoneyShow = ({ arrMoneyData }) => {
   return (
     <table class="table caption-top">

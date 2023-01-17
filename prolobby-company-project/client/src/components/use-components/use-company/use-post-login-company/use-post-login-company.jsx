@@ -3,11 +3,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { addUserDataAsync } from "../../../../services/services";
 import { useNavigate } from "react-router-dom";
 
+//The functions required for entering the details of PostLoginCompany
 export const UsePostLoginCompany = ({ UseStatsVariables }) => {
   let navigate = useNavigate();
-
   const { user } = useAuth0();
-
   let {
     companyNameV: { companyName },
     urlV: { url },
@@ -18,8 +17,6 @@ export const UsePostLoginCompany = ({ UseStatsVariables }) => {
   } = UseStatsVariables;
 
   const handleUserData = async () => {
-    console.log(firstName, lastName, companyName, url, email, phoneNumber);
-
     await addUserDataAsync("BusinessCompanyRepresentative", "addData", {
       RepresentativeFirstName: firstName,
       RepresentativeLastName: lastName,

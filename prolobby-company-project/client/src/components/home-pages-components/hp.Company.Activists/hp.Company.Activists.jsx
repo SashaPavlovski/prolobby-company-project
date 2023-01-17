@@ -7,6 +7,8 @@ import {
   SocialActivistsRoutes,
 } from "./routes-components/routes-components";
 
+//Checks whether the user is already registered in the system
+//If not it takes him to the registration page
 export const BusinessCompany_SocialActivists = ({ components }) => {
   let { userData, role1 } = ExistRowUser();
   let navigate = useNavigate();

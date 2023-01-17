@@ -8,6 +8,7 @@ import { UseMoneyTrackingShow } from "./../../../use-components/use-money-tracki
 import { ActivistProducts } from "./../../../../pages/products/activist-products/activist-products";
 import { DeliveryProductList } from "./../../../../pages/delivery-product-list/delivery-product-list";
 
+//Checks whether the user is already registered in the system
 export const BusinessCompanyRoutes = ({ components }) => {
   return components === HomeAllCampaigns ? (
     <HomeAllCampaigns />
@@ -23,6 +24,8 @@ export const BusinessCompanyRoutes = ({ components }) => {
     <></>
   );
 };
+
+//Checks whether the user is already registered in the system
 export const SocialActivistsRoutes = ({ components }) => {
   return components === HomeAllCampaigns ? (
     <HomeAllCampaigns />

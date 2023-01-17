@@ -2,6 +2,7 @@ import React from "react";
 
 import { UseRowDeliveryProduct } from "../use-row-delivery-product/use-row-delivery-product";
 
+//The display of the product shipment table
 export const UseFormDeliveryProduct = ({ deliveryList, SendingProduct }) => {
   return (
     <table class="table">

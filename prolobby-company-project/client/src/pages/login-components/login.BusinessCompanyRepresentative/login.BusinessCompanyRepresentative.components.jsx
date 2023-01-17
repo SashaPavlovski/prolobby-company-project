@@ -6,6 +6,8 @@ import { UsePostLoginCompany } from "./../../../components/use-components/use-co
 import { UseUpdateLoginCompany } from "../../../components/use-components/use-company/use-update-login-company/use-update-login-company";
 import { ValueFormCompany } from "./value-form-company/value-form-company";
 
+//The functions of the company login view
+//A button that starts the sending to cs
 export const LoginBusinessCompanyRepresentative = () => {
   let navigate = useNavigate();
   let { defaultVariables, UseStatsVariables, UserDataRowV } =
@@ -54,7 +56,6 @@ export const LoginBusinessCompanyRepresentative = () => {
       navigate("/");
       handleUserData();
     } else {
-      console.log(`else : sendingData : ${userDataRow.BusinessCompany_Id} `);
       handleCompanyUserData();
     }
   };
@@ -82,8 +83,3 @@ export const LoginBusinessCompanyRepresentative = () => {
     />
   );
 };
-// <form className="row g-3 needs-validation">
-
-// type="submit"
-//</form>
-//

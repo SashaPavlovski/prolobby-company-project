@@ -1,5 +1,6 @@
 import React from "react";
 
+//A generic function for displaying the options in each report
 export const UseSelectFormReports = ({
   handleValue,
   UseSelectValueReports,

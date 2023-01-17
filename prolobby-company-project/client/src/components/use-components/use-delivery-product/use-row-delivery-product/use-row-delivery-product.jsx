@@ -1,5 +1,6 @@
 import React from "react";
 
+//A dynamic row in the table of sending the products
 export const UseRowDeliveryProduct = ({
   FullName,
   Product_Name,

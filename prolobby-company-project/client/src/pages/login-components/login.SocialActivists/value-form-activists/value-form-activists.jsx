@@ -1,5 +1,6 @@
 import React from "react";
 
+//Display of the login page of a social activist
 export const ValueFormActivists = ({
   userFirstName,
   setFirstName,

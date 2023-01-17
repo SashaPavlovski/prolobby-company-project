@@ -1,12 +1,7 @@
-import React from "react";
-
 import { UpdateUserAsync } from "../../../../services/services.js";
 
+//Sending updated data to Cs of Owner
 export const UseUpdateLoginOwner = ({ UseStatsVariables, userDataRow }) => {
-  if (userDataRow != null) {
-    console.log(`AAAAAAAAAAAAAAAAAAAAAAAAAAAA : ${userDataRow}`);
-  }
-
   let {
     firstNameV: { firstName },
     lastNameV: { lastName },
@@ -15,13 +10,6 @@ export const UseUpdateLoginOwner = ({ UseStatsVariables, userDataRow }) => {
   } = UseStatsVariables;
 
   const handleOwnerUserData = async () => {
-    console.log(
-      userDataRow.ProLobbyOwner_Id,
-      firstName,
-      lastName,
-      email,
-      phoneNumber
-    );
     let updateOwner = {
       ProLobbyOwner_Id: userDataRow.ProLobbyOwner_Id,
       FirstName: firstName,

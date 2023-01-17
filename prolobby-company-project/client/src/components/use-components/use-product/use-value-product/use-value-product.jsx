@@ -4,6 +4,8 @@ import { UseGetCampaign } from "./../../use-campaigns/use-get-campaign/use-get-c
 import { Ifexist } from "./../../../repeat/user-if-exist";
 import { UseBuyProduct } from "../use-buy-product/use-buy-product";
 
+//The functions required to create the product purchase
+//The functions of the buttons that appear on the products
 export const UseValueProduct = () => {
   const [product, setProduct] = useState([]);
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ export const UseValueProduct = () => {
   };
   UseGetCampaign(getProducts);
   let { userDataRow } = Ifexist();
+
+  //the buy button
   const buy = async (DonatedProducts_Id) => {
     let action = "buyProduct";
     let answer = await UseBuyProduct({
@@ -30,9 +34,10 @@ export const UseValueProduct = () => {
         Campaigns_Id,
       },
     });
-    console.log(`answer end : ${answer}`);
     return answer;
   };
+
+  //Donate button
   const donation = async (DonatedProducts_Id) => {
     let action = "donationProduct";
     let answer = await UseBuyProduct({
@@ -46,9 +51,10 @@ export const UseValueProduct = () => {
         Campaigns_Id,
       },
     });
-    console.log(`answer end : ${answer}`);
     return answer;
   };
+
+  //The button that returns to the product
   const backToCampaign = () => {
     navigate("/about-campaign", {
       state: {

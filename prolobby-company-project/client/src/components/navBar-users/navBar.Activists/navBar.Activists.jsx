@@ -1,6 +1,7 @@
 import React from "react";
 import { NavBar } from "../../navBar-components/navBar-body/navBar-body-components";
 
+//creation NavBarActivists
 let navBarArr = [
   {
     path: "/",

@@ -1,6 +1,7 @@
 import React from "react";
 import { NavBar } from "../../navBar-components/navBar-body/navBar-body-components";
 
+//creation NavBarOrganization
 let navBarArr = [
   {
     path: "/",

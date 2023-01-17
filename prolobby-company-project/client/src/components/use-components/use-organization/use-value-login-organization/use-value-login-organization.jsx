@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Ifexist } from "../../../repeat/user-if-exist";
 
+//The values ​​of the Organization for login component
 export const UseValueLoginOrganization = () => {
   let { userDataRow, user } = Ifexist({});
   const [organizationName, setOrganizationName] = useState("");
@@ -11,7 +12,6 @@ export const UseValueLoginOrganization = () => {
   const [lastName, setLastName] = useState(user.family_name);
   const [email, setEmail] = useState(user.email);
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
-  // const [picture, setPicture] = useState("");
 
   let userFirstName = "";
   let userOrganizationName = "";
@@ -20,16 +20,7 @@ export const UseValueLoginOrganization = () => {
   let userLastName = "";
   let userEmail = "";
   let userPhoneNumber = "";
-  // let userPicture = "";
 
-  // if (userDataRow === null) {
-  //   console.log("if");
-  //   userFirstName = user.name;
-  //   userEmail = user.email;
-  //   userLastName = user.family_name;
-  //   userPhoneNumber = user.phone_number;
-  //   // userPicture = user.picture;
-  // }
   if (userDataRow !== null) {
     console.log("else");
     userFirstName = userDataRow.RepresentativeFirstName;
@@ -49,7 +40,6 @@ export const UseValueLoginOrganization = () => {
     decreption,
     email,
     phoneNumber
-    // picture
   );
   return {
     defaultVariables: {
@@ -60,7 +50,6 @@ export const UseValueLoginOrganization = () => {
       userLastName,
       userEmail,
       userPhoneNumber,
-      // userPicture,
     },
     UseStatsVariables: {
       organizationNameV: { organizationName, setOrganizationName },
@@ -70,7 +59,6 @@ export const UseValueLoginOrganization = () => {
       lastNameV: { lastName, setLastName },
       emailV: { email, setEmail },
       phoneNumberV: { phoneNumber, setPhoneNumber },
-      // pictureV: { picture, setPicture },
     },
     UserDataRowV: { userDataRow },
   };

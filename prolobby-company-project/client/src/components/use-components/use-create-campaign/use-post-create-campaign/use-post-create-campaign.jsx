@@ -1,5 +1,8 @@
 import { addUserDataAsync } from "../../../../services/services.js";
 
+//The function of sends the data of Create Campaign to cs
+//Additionally sends a message to the user
+//If the hashtag or its name of the campaign already exists
 export const UsePostCreateCampaign = ({ UseStatsVariables, userId }) => {
   let {
     Campaigns_NameV: { Campaigns_Name },
@@ -9,7 +12,6 @@ export const UsePostCreateCampaign = ({ UseStatsVariables, userId }) => {
   } = UseStatsVariables;
 
   const addNewCampaign = async () => {
-    console.log(Campaigns_Name, Descreption, Hashtag, userId);
     return await addUserDataAsync("Campaigns", "addData", {
       Campaigns_Name: Campaigns_Name,
       Descreption: Descreption,

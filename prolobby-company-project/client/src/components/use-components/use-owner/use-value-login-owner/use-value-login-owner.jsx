@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Ifexist } from "../../../repeat/user-if-exist";
+
+//The values ​​and functions of an Login Owner component
 export const UseValueLoginOwner = () => {
   let { userDataRow, user } = Ifexist({});
 
@@ -13,16 +15,6 @@ export const UseValueLoginOwner = () => {
   let userLastName = "";
   let userEmail = "";
   let userPhoneNumber = "";
-
-  // if (userDataRow === null) {
-  //   console.log("if");
-  //   userFirstName = user.name;
-  //   console.log("if : " + userFirstName);
-  //   userEmail = user.email;
-  //   userLastName = user.family_name;
-  //   userPhoneNumber = user.phone_number;
-  //   console.log("if : " + userPhoneNumber);
-  // }
 
   if (userDataRow != null) {
     console.log("else");

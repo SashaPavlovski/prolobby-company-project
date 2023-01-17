@@ -1,5 +1,7 @@
 import React from "react";
 
+//Details on each campaign
+//Displaying buttons according to permission
 export const UseFormAboutCampaign = ({
   Campaigns_Name,
   CampaignsDescreption,

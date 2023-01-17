@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { UseGetCampaign } from "./../../../use-campaigns/use-get-campaign/use-get-campaign";
 
+//Receiving the product according to the id of activist
 export const UseValueActivistProduct = ({ activistId }) => {
   const [product, setProduct] = useState([]);
 

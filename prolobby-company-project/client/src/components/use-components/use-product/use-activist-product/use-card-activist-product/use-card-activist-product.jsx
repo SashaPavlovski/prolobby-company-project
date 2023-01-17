@@ -1,5 +1,6 @@
 import React from "react";
 
+//Display of a product bought by a social activist
 export const UseCardActivistProduct = ({ Product_Name, Price, IfSent }) => {
   return (
     <div className="card">

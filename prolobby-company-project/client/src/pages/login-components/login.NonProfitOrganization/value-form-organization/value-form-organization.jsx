@@ -1,5 +1,6 @@
 import React from "react";
 
+//the view of an organization's login
 export const ValueFormOrganization = ({
   userOrganizationName,
   setOrganizationName,
@@ -15,7 +16,6 @@ export const ValueFormOrganization = ({
   setEmail,
   userPhoneNumber,
   setPhoneNumber,
-  // setPicture,
   sendingData,
   organizationName,
   url,
@@ -116,18 +116,6 @@ export const ValueFormOrganization = ({
         />
         <div className="valid-feedback">Looks good!</div>
       </div>
-      {/* <div>
-        <label for="formFileLg" className="form-label">
-          Large file input example
-        </label>
-        <input
-          className="form-control form-control-lg"
-          id="formFileLg"
-          type="file"
-          accept=".jpg, .png"
-          onChange={(e) => setPicture(e.target.files[0])}
-        />
-      </div> */}
       {organizationName !== "" &&
       url !== "" &&
       decreption !== "" &&
@@ -135,12 +123,8 @@ export const ValueFormOrganization = ({
       lastName !== "" &&
       email !== "" &&
       phoneNumber !== "" ? (
-        <button
-          className="btn btn-primary"
-          //type="submit"
-          onClick={sendingData}
-        >
-          Submit form
+        <button className="btn btn-primary" onClick={sendingData}>
+          Send
         </button>
       ) : (
         <></>

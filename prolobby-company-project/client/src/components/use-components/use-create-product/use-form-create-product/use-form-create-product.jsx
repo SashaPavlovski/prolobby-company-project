@@ -1,9 +1,10 @@
 import React from "react";
 
+//The product creation view
+//The button is displayed after all columns are filled
 export const UseFormCreateProduct = ({
   setProduct_Name,
   setPrice,
-  // setPicture,
   setCount,
   sendingData,
   product_Name,
@@ -51,24 +52,8 @@ export const UseFormCreateProduct = ({
         />
         <div className="valid-feedback">Looks good!</div>
       </div>
-      {/* <div>
-        <label for="formFileLg" className="form-label">
-          Picture of the donation
-        </label>
-        <input
-          className="form-control form-control-lg"
-          id="formFileLg"
-          type="file"
-          accept=".jpg, .png"
-          onChange={(e) => setPicture(e.target.files[0])}
-        />
-      </div> */}
       {product_Name !== "" && price !== "" && count !== "" ? (
-        <button
-          className="btn btn-primary"
-          //type="submit"
-          onClick={sendingData}
-        >
+        <button className="btn btn-primary" onClick={sendingData}>
           Save
         </button>
       ) : (

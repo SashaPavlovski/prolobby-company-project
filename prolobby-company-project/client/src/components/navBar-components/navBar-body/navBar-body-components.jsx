@@ -6,8 +6,8 @@ import { NavBarLink } from "../navBar-Link-components/navBar-Link-components";
 
 import "../../navBar-users/navBar.components.css";
 
+//The NavBar repeating component
 export const NavBar = ({ pathArr }) => {
-  //מערך אוביקטים הראשון נתיב והשני שם
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-light myNavBar">

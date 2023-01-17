@@ -1,5 +1,6 @@
 import React from "react";
 
+//view of the login page of company representative
 export const ValueFormCompany = ({
   userFirstName,
   setFirstName,
@@ -109,7 +110,7 @@ export const ValueFormCompany = ({
       email !== "" &&
       phoneNumber !== "" ? (
         <button className="btn btn-primary" onClick={sendingData1}>
-          Submit form
+          Send
         </button>
       ) : (
         <></>

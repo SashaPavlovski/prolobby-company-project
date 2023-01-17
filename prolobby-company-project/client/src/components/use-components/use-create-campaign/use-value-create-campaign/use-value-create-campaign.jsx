@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+//The useState functions of creating the campaign
 export const UseValueCreateCampaign = () => {
   const [Campaigns_Name, setCampaigns_Name] = useState("");
   const [Descreption, setDescreption] = useState("");

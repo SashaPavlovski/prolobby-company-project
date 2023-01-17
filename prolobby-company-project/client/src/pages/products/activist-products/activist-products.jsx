@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { UseCardActivistProduct } from "../../../components/use-components/use-product/use-activist-product/use-card-activist-product/use-card-activist-product";
 import { UseValueActivistProduct } from "../../../components/use-components/use-product/use-activist-product/use-value-activist-product/use-activist-product";
 
+//The display page of the products that the Activist buy
 export const ActivistProducts = () => {
   const navigate = useNavigate();
   const location = useLocation();

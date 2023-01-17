@@ -4,6 +4,8 @@ import { CampaignCard } from "../../../components/organization-components/campai
 import { Ifexist } from "../../../components/repeat/user-if-exist";
 import { GetDataAsync } from "../../../services/services";
 
+//The campaign view of a specific association
+//Sending the association's id to receive its campaigns
 export const AllCampaignsByIdOrganization = () => {
   const [arrCampaign, setArrCampaign] = useState([]);
   let { userDataRow } = Ifexist({});
@@ -18,7 +20,6 @@ export const AllCampaignsByIdOrganization = () => {
         "getDataById",
         userDataRow.NonProfitOrganization_Id
       );
-      //let arrPro = Object.values(campaignsArr);
       setArrCampaign(campaignsArr);
     }
   };

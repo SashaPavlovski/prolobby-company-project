@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../../../context/userData.context.js";
 
+//Product presentation
+//Displaying buttons according to user permission
 export const UseCardProduct = ({
   Product_Name,
   Price,
@@ -10,7 +12,6 @@ export const UseCardProduct = ({
   DonatedProducts_Id,
 }) => {
   let { role1 } = useContext(UserContext);
-  console.log(Product_Name, Price);
 
   return (
     <div className="card">

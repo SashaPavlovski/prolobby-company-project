@@ -1,7 +1,7 @@
 import axios from "axios";
 
+//Sends the user's ID to check if he has permission to log in
 export const GetRolesAsync = async (userID) => {
-  console.log(userID);
   let result = await axios.get(
     `http://localhost:7251/api/roles/roles/${userID}`
   );
@@ -12,9 +12,8 @@ export const GetRolesAsync = async (userID) => {
   }
 };
 
+//Receiving data according to an identity value
 export const GetDataAsync = async (userAccess, action, userID) => {
-  console.log("enter to GetDataAsync");
-  console.log(userID);
   let result = await axios.get(
     `http://localhost:7251/api/${userAccess}/${action}/${userID}`
   );
@@ -27,9 +26,8 @@ export const GetDataAsync = async (userAccess, action, userID) => {
   }
 };
 
+//Sending Json and identity value
 export const addUserDataAsync = async (userAccess, action, userData) => {
-  console.log(userData, action, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-
   let result = await axios.post(
     `http://localhost:7251/api/${userAccess}/${action}`,
     userData
@@ -42,6 +40,8 @@ export const addUserDataAsync = async (userAccess, action, userData) => {
   }
 };
 
+//Sending Json and identity value
+//without getting an answer
 export const UpdateUserAsync = async (
   userAccess,
   action,
@@ -56,7 +56,7 @@ export const UpdateUserAsync = async (
   console.log(res);
 };
 
-//************************************************************************* */
+//Receiving data according to an identity value for Delet
 export const DeleteAsync = async (userAccess, action, id) => {
   console.log(`DeleteAsync : ${(userAccess, action, id)}`);
   const res = await axios.delete(

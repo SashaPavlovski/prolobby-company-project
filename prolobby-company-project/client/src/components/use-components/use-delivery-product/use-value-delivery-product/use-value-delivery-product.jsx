@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 
 import { GetDataAsync } from "../../../../services/services.js";
 
+//Receiving all Buy Product
+//that are needed for sending
 export const UseValueDeliveryProduct = () => {
   const [deliveryList, setDeliveryList] = useState("");
   const [rendering, setRendering] = useState("");
@@ -10,14 +12,13 @@ export const UseValueDeliveryProduct = () => {
     let res = await GetDataAsync("Shippers", "getDeliveryList", null);
     setDeliveryList(res);
   };
-  useEffect(() => {
-    setProducts();
-  }, [rendering]);
 
   const SendingProduct = async (Shippers_Id) => {
-    console.log(`Shippers_Id : ${Shippers_Id}`);
     setRendering(Shippers_Id);
     await GetDataAsync("Shippers", "sendProduct", Shippers_Id);
   };
+  useEffect(() => {
+    setProducts();
+  }, [rendering]);
   return { deliveryList, SendingProduct };
 };

@@ -10,6 +10,8 @@ import { ReportsPosts } from "./../../../pages/reports/reports-posts/reports-pos
 import { ReportsUsers } from "./../../../pages/reports/reports-users/reports-users";
 import { ReportsProducts } from "./../../../pages/reports/reports-products/reports-products";
 
+//Checks whether the user is already registered in the system
+//If not it takes him to the registration page
 export const ProLobbyOwnerHP = ({ components }) => {
   let { userData } = ExistRowUser();
   let navigate = useNavigate();
