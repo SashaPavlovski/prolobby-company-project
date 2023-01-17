@@ -1,9 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	Campaigns.cs
-//
-// summary:	Implements the campaigns class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+﻿
 using ProLobbyCompanyProject.Data.Sql;
 using ProLobbyCompanyProject.Data.Sql.Campaigns;
 using ProLobbyCompanyProject.Data.Sql.DonatedProducts;
@@ -16,34 +11,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+// file:	Campaigns.cs
+// summary:	Implements the campaigns class
 
 namespace ProLobbyCompanyProject.Entites
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   A campaigns. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public class Campaigns
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public Campaigns() { }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Gets campaign name. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="Campaign"> The campaign. </param>
-        ///
-        /// <returns>   The campaign name. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>   Gets campaign name and Check if it exists. </summary>
+        /// <returns>   The answer if it exists. </returns>
 
         public string GetCampaignName(TBCampaigns Campaign)
         {
@@ -64,53 +44,34 @@ namespace ProLobbyCompanyProject.Entites
 
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Gets the campaigns. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
         /// <returns>   The campaigns. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
         public List<TBCampaigns> GetCampaigns()
         {
             DSCampaignsGet dSCampaignsGet = new DSCampaignsGet();
             List<TBCampaigns> CampaignsList = dSCampaignsGet.GetCampaignList();
             return CampaignsList;
 
-
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Gets about campaign. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
         /// <param name="campaignId">   Identifier for the campaign. </param>
-        ///
         /// <returns>   The about campaign. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
         public MAboutCampaign GetAboutCampaign(string campaignId)
         {
             DSCampaignsGet dSCampaignsGet = new DSCampaignsGet();
             return dSCampaignsGet.GetDataAboutCampaign(campaignId);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Removes the campaign data described by campaignId. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
         /// <param name="campaignId">   Identifier for the campaign. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
         public void RemoveCampaignData(string campaignId)
         {
             DSCampaignsDelete dSCampaignsDelete = new DSCampaignsDelete();
             dSCampaignsDelete.DeleteDataCampaign(campaignId);
         }
 
+        //Acceptance of the campaigns by id
         public List<TBCampaigns> GetByIdCampaigns(string organizationId)
         {
             DSCampaignsByIdGet dSCampaignsByIdGet = new DSCampaignsByIdGet();

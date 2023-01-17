@@ -1,10 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	MainManager.cs
-//
-// summary:	Implements the main manager class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using ProLobbyCompanyProject.Dal;
+﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Data.Sql.Campaigns;
 using ProLobbyCompanyProject.Entites.ENSortingTables;
 using ProLobbyCompanyProject.Model;
@@ -24,19 +18,10 @@ using System.Threading.Tasks;
 
 namespace ProLobbyCompanyProject.Entites
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   Manager for mains. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public class MainManager
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public MainManager() { }
 
@@ -67,22 +52,12 @@ namespace ProLobbyCompanyProject.Entites
         ENSortingProducts eNSortingProducts2;
         ENSortingUsers eNSortingUsers2;
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Gets the instance. </summary>
-        ///
-        /// <value> The instance. </value>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public static MainManager INSTANCE
         {
             get { return _INSTANCE; }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   S this object. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void Init()
         {
@@ -90,11 +65,8 @@ namespace ProLobbyCompanyProject.Entites
             sql.CreateTables();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Init classes. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public void InitClasses()
         {
@@ -115,15 +87,10 @@ namespace ProLobbyCompanyProject.Entites
             eNSortingUsers2 = new ENSortingUsers();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Checking business company representative. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+  
         /// <param name="idUser">   The identifier user. </param>
-        ///
-        /// <returns>   A List&lt;TBBusinessCompanyRepresentative&gt; </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public List<TBBusinessCompanyRepresentative> CheckingBusinessCompanyRepresentative(string idUser)
         {
@@ -131,31 +98,21 @@ namespace ProLobbyCompanyProject.Entites
             return businessCompanyRepresentatives2.CheckingIfExistUser(idUser);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Checking terabytes pro lobby owner. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="idUser">   The identifier user. </param>
-        ///
-        /// <returns>   A List&lt;TBProLobbyOwner&gt; </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        /// <param name="idUser">   The identifier user. </param>
+
+  
         public List<TBProLobbyOwner> CheckingTBProLobbyOwner(string idUser)
         {
             Init();
             return proLobbyOwner2.CheckingIfExistUser(idUser);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Checking terabytes non profit organization. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="idUser">   The identifier user. </param>
-        ///
-        /// <returns>   A List&lt;TBNonProfitOrganization&gt; </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public List<TBNonProfitOrganization> CheckingTBNonProfitOrganization(string idUser)
         {
@@ -163,15 +120,10 @@ namespace ProLobbyCompanyProject.Entites
             return nonProfitOrganizations2.CheckingIfExistUser(idUser);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Checking terabytes social activists. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="idUser">   The identifier user. </param>
-        ///
-        /// <returns>   A List&lt;TBSocialActivists&gt; </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public List<TBSocialActivists> CheckingTBSocialActivists(string idUser)
         {
@@ -181,13 +133,9 @@ namespace ProLobbyCompanyProject.Entites
 
         //******************************************************************
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts a non profit organization data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="organizationData"> Information describing the organization. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void PostNonProfitOrganizationData(TBNonProfitOrganization organizationData)
         {
@@ -196,13 +144,12 @@ namespace ProLobbyCompanyProject.Entites
             nonProfitOrganizations2.PostUsersOrganization(organizationData);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Posts a non profit company data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
+  
         /// <param name="companyData">  Information describing the company. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public void PostNonProfitCompanyData(TBBusinessCompanyRepresentative companyData)
         {
@@ -211,27 +158,19 @@ namespace ProLobbyCompanyProject.Entites
             businessCompanyRepresentatives2.PostUsersCompanys(companyData);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Posts a pro lobby owner data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="ownerData">    The data that owns this item. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void PostProLobbyOwnerData(TBProLobbyOwner ownerData)
         {
             InitClasses();
             proLobbyOwner2.PostUsersOwner(ownerData);
         }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts a social activists data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="activistsData">    Information describing the activists. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void PostSocialActivistsData(TBSocialActivists activistsData)
         {
@@ -242,13 +181,11 @@ namespace ProLobbyCompanyProject.Entites
 
         //*******************************************************************
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Updates the social activists data described by activistsData. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="activistsData">    Information describing the activists. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public void UpdateSocialActivistsData(TBSocialActivists activistsData)
         {
@@ -257,13 +194,9 @@ namespace ProLobbyCompanyProject.Entites
             socialActivists2.UpdateActivist(activistsData);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Updates the pro lobby owner data described by activistsData. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="activistsData">    Information describing the activists. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void UpdateProLobbyOwnerData(TBProLobbyOwner activistsData)
         {
@@ -273,13 +206,11 @@ namespace ProLobbyCompanyProject.Entites
             proLobbyOwner2.UpdateActivist(activistsData);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Updates the organization data described by activistsData. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="activistsData">    Information describing the activists. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public void UpdateOrganizationData(TBNonProfitOrganization activistsData)
         {
@@ -288,13 +219,11 @@ namespace ProLobbyCompanyProject.Entites
             nonProfitOrganizations2.UpdateActivist(activistsData);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Updates the business company data described by activistsData. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="activistsData">    Information describing the activists. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public void UpdateBusinessCompanyData(TBBusinessCompanyRepresentative activistsData)
         {
@@ -305,15 +234,10 @@ namespace ProLobbyCompanyProject.Entites
 
         //*******************************************************************
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Checking terabytes campaigns name. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="Campaign"> The campaign. </param>
-        ///
-        /// <returns>   A string. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public string CheckingTBCampaignsName(TBCampaigns Campaign)
         {
@@ -322,13 +246,7 @@ namespace ProLobbyCompanyProject.Entites
             return campaigns2.GetCampaignName(Campaign);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Gets terabytes campaigns. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <returns>   The terabytes campaigns. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public List<TBCampaigns> GetTBCampaigns()
         {
@@ -336,15 +254,11 @@ namespace ProLobbyCompanyProject.Entites
             return campaigns2.GetCampaigns();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Gets m about campaign. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="campaignsId">  Identifier for the campaigns. </param>
-        ///
-        /// <returns>   The m about campaign. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public MAboutCampaign GetMAboutCampaign(string campaignsId)
         {
@@ -354,13 +268,10 @@ namespace ProLobbyCompanyProject.Entites
 
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Removes the campaign described by campaignId. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="campaignId">   Identifier for the campaign. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public void RemoveCampaign(string campaignId)
         {
@@ -378,15 +289,10 @@ namespace ProLobbyCompanyProject.Entites
 
         //*******************************************************************
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Gets donated products. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="campaignsId">  Identifier for the campaigns. </param>
-        ///
-        /// <returns>   The donated products. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public List<TBDonatedProducts> GetDonatedProducts(string campaignsId)
         {
@@ -395,13 +301,10 @@ namespace ProLobbyCompanyProject.Entites
             return donatedProducts2.GetCampaignProducts(campaignsId);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Posts a donated product. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="donatedProduct">   The donated product. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void PostDonatedProduct(TBDonatedProducts donatedProduct)
         {
@@ -412,13 +315,9 @@ namespace ProLobbyCompanyProject.Entites
 
         //**********************************************************************
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts a money tracking. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+
         /// <param name="moneyTracking">    The money tracking. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void PostMoneyTracking(TBMoneyTracking moneyTracking)
         {
@@ -427,15 +326,9 @@ namespace ProLobbyCompanyProject.Entites
             moneyTracking2.PostDataTracking(moneyTracking);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Gets money tracking. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
         /// <param name="idUser">   The identifier user. </param>
-        ///
-        /// <returns>   The money tracking. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         public List<MAMoneyTracking> GetMoneyTracking(string idUser)
         {
@@ -446,15 +339,7 @@ namespace ProLobbyCompanyProject.Entites
 
         //**********************************************************************
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Buy product. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="productData">  Information describing the product. </param>
-        ///
-        /// <returns>   A string. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Buy product. </summary> 
 
         public string BuyProduct(MAbuyProduct productData)
         {
@@ -462,26 +347,28 @@ namespace ProLobbyCompanyProject.Entites
             InitClasses();
             return shippers2.PostProduct(productData);
         }
+
+        //Product donation
         public string DonationProduct(MAbuyProduct productData)
         {
             if (productData == null) return null;
             InitClasses();
             return shippers2.PostDonationProduct(productData);
         }
-
+        //Donate product and return will this be possible
         public List<TBDonatedProducts> GetUserProductsByUserId(string userId)
         {
             if (userId == null) return null;
             return donatedProducts2.GetByUserIdProducts(userId);
 
         }
-
+        //get delivery list
         public List<MADeliveryProductList> GetDeliveryDataProductList()
         {
             InitClasses();
             return shippers2.GetDeliveryList();
         }
-
+        //The sending
         public void SetDeliveryProduct(string idUser)
         {
             if (idUser == null) return ;
@@ -491,27 +378,22 @@ namespace ProLobbyCompanyProject.Entites
 
         //**********************************************************************
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>   Gets twitter user data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <returns>   The twitter user data. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public List<MATwitter> GetTwitterUserData()
         {
             InitClasses();
             return twitter2.GetTwitterData();
         }
-
+        //Update when someone joins the campaign tracking
         public void UpdateNewUserMoneyTracking (MATwitter userTwitterMoney, double UserMoney)
         {
             if (userTwitterMoney == null || UserMoney == 0) return;
             InitClasses();
             twitter2.UpdateMoneyTracking(userTwitterMoney, UserMoney);
         }
-
+        //Checking whether a scan was performed on Twitter today
         public bool CheckingIfExistPosts()
         {
             InitClasses();
@@ -519,7 +401,7 @@ namespace ProLobbyCompanyProject.Entites
         }
 
         //**********************************************************************
-
+        //sorties who receive the value of the option
         public List<TBSortingCampaigns> GetReportsCampaigns(string CaseOf)
         {
             InitClasses();
