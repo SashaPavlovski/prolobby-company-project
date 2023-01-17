@@ -11,6 +11,7 @@ namespace ProLobbyCompanyProject.Data.Sql.PostsTracking
 {
     public class DSPostsTrackingPost
     {
+        //money update after Twitter scan
         public DSPostsTrackingPost() { }
         public void PostTracking(object newData, System.Data.SqlClient.SqlCommand command)
         {

@@ -15,6 +15,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
 {
     public class DSSortingCampaignsDefault
     {
+        //Sorting campaigns by date, organization and activity
         public DSSortingCampaignsDefault () { }
         public object AddSortingCampaigns(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {

@@ -11,6 +11,7 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
 {
     public class DSMoneyTrackingMoneyUpdate
     {
+        //Updating the money in the money tracking table
         public DSMoneyTrackingMoneyUpdate() { }
         public void UpdateUserMoney(object newData, System.Data.SqlClient.SqlCommand command)
         {

@@ -1,9 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	ProLobbyOwner\DSProLobbyOwnerPost.cs
-//
-// summary:	Implements the ds pro lobby owner post class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+﻿
 using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
 using System;
@@ -11,34 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+// file:ProLobbyOwner\DSProLobbyOwnerPost.cs
+// summary:	Implements the ds pro lobby owner post class
 
 namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   The ds pro lobby owner post. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /// <summary> post new data of prolobby owner. </summary>
     public class DSProLobbyOwnerPost
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
         public DSProLobbyOwnerPost() { }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Adds a user data to 'command'. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="userData"> Information describing the user. </param>
-        /// <param name="command">  The command. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Entering new data
         public void AddUserData(object userData, System.Data.SqlClient.SqlCommand command)
         {
             if (userData is TBProLobbyOwner)
@@ -56,15 +35,7 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
 
         /// <summary>   The insert. </summary>
         string insert = "insert into [dbo].[TBProLobbyOwners] values (@FirstName,@LastName,@Email,@Phone_number,@User_Id,getdate())";
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Posts the users data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="userProLobbyOwnerPost">    The user pro lobby owner post. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Sending the details to dal
         public void PostUsersData(TBProLobbyOwner userProLobbyOwnerPost)
         {
             SqlQueryPost sqlQuery = new SqlQueryPost();

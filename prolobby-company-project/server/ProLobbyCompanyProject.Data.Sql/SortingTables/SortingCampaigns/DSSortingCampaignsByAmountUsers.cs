@@ -10,6 +10,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
 {
     public class DSSortingCampaignsByAmountUsers
     {
+        //Sorting campaigns according to the number of users who follow the campaign
         public DSSortingCampaignsByAmountUsers() { }
         public object AddSortingCampaigns(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {

@@ -10,6 +10,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
 {
     public class DSSortingCampaignsByAmountProducts
     {
+        //Sorting of the campaigns according to the amount of products donated to them
         public DSSortingCampaignsByAmountProducts () { }
         public object AddSortingCampaigns(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {

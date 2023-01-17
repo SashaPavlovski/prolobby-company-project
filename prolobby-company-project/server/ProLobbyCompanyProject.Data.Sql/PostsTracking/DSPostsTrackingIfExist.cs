@@ -11,6 +11,8 @@ namespace ProLobbyCompanyProject.Data.Sql.PostsTracking
 {
     public class DSPostsTrackingIfExist
     {
+        //Checking whether this date of yesterday exists in the table
+        //Checking whether a Twitter scan has already been done
         public DSPostsTrackingIfExist() { }
         public int CheckIfExistPostTracking(object newData, System.Data.SqlClient.SqlCommand command)
         {

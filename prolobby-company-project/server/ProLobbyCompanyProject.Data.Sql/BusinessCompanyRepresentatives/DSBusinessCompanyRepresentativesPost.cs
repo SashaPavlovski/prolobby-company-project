@@ -1,9 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesPost.cs
-//
-// summary:	Implements the ds business company representatives post class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+﻿
 using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
 using System;
@@ -11,34 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+// file:	BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesPost.cs
+
+// summary:	Implements the ds business company representatives post class
 
 namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   The ds business company representatives post. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /// <summary>   The business company representatives post login new data . </summary>
     public class DSBusinessCompanyRepresentativesPost
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        /// <summary>   Default constructor. </summary>
         public DSBusinessCompanyRepresentativesPost() { }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Adds a user data to 'command'. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
+        /// <summary>   Adds a user data to DB. </summary>
         /// <param name="userData"> Information describing the user. </param>
         /// <param name="command">  The command. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
         public void AddUserData(object userData, System.Data.SqlClient.SqlCommand command)
         {
             if (userData is TBBusinessCompanyRepresentative)
@@ -56,17 +39,11 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
             int rows = command.ExecuteNonQuery();
         }
 
-        /// <summary>   The insert. </summary>
+        /// <summary>   The insert data of company. </summary>
         string insert = "insert into [dbo].[TBBusinessCompanyRepresentatives] values (@RepresentativeFirstName,@RepresentativeLastName,@CompanyName,@Url,@Email,@Phone_number,@User_Id,getdate())";
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Posts the users data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="userBusinessCompanyRepresentative">    The user business company representative. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /// <param name="userBusinessCompanyRepresentative">    The user business company new data. </param>
         public void PostUsersData(TBBusinessCompanyRepresentative userBusinessCompanyRepresentative)
         {
             SqlQueryPost sqlQuery = new SqlQueryPost();

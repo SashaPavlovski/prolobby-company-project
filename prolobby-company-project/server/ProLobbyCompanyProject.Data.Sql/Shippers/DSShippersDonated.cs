@@ -13,7 +13,9 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
     {
         public DSShippersDonated() { }
 
-
+        //Product donation
+        //Sending the id of the social activist and the product
+        //Receiving an answer as to whether the action was carried out or not and why
         public string DonProduct(object newData, System.Data.SqlClient.SqlCommand command)
         {
             string answer = null;
@@ -23,7 +25,6 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
 
                 command.Parameters.AddWithValue("@SocialActivists_Id", buyProduct.SocialActivists_Id);
                 command.Parameters.AddWithValue("@DonatedProducts_Id", buyProduct.DonatedProducts_Id);
-               // int rows = command.ExecuteNonQuery();
 
             }
             using (SqlDataReader reader = command.ExecuteReader())

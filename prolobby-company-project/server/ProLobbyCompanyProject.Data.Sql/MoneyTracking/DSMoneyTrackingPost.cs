@@ -1,9 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	MoneyTracking\DSMoneyTrackingPost.cs
-//
-// summary:	Implements the ds money tracking post class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+﻿
 using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
 using System;
@@ -12,33 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// file:	MoneyTracking\DSMoneyTrackingPost.cs
+// summary:	Implements the ds money tracking post class
+
 namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   The ds money tracking post. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /// <summary> money tracking post. </summary>
     public class DSMoneyTrackingPost
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
         public DSMoneyTrackingPost() { }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Adds a user data to 'command'. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="newData">  Information describing the new. </param>
-        /// <param name="command">  The command. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        // Entering the details of moneyTracking
         public void AddUserData(object newData, System.Data.SqlClient.SqlCommand command)
         {
             if (newData is TBMoneyTracking)
@@ -56,14 +35,6 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
 
         /// <summary>   Information describing the insert new. </summary>
         string insertNewData = "if not exists (select * from [dbo].[TBMoneyTrackings] where [SocialActivists_Id] = @SocialActivists_Id  and [Campaigns_Id] = @Campaigns_Id)\r\nbegin\r\ninsert into [dbo].[TBMoneyTrackings]\r\nvalues (@SocialActivists_Id ,@Campaigns_Id ,0,1,getdate())\r\nend";
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Posts a money tracking. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="moneyTracking">    The money tracking. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void PostMoneyTracking(TBMoneyTracking moneyTracking)
         {

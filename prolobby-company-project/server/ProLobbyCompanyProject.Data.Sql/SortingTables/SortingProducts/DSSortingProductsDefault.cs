@@ -11,6 +11,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
 {
     public class DSSortingProductsDefault
     {
+        //Sort by date, price, shipment status and quantity of products
         public DSSortingProductsDefault() { }
         public object AddSortingProducts(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {

@@ -11,6 +11,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
 {
     public class DSShippersDeliveryListGet
     {
+        //Receiving a shipment schedule
         public DSShippersDeliveryListGet() { }
         public object AddDeliveryList(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
         {
@@ -32,10 +33,11 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
             return;
         }
 
-
+        //Creating a shipping table
         string insertGetData = "select TB2.Shippers_Id,TB3.Product_Name,TB1.FirstName +' ' +TB1.LastName AS 'Full_Name',TB1.Email,\r\nTB1.Phone_number,TB1.Address,TB2.Sent\r\nfrom [dbo].[TBSocialActivists] TB1 inner join [dbo].[TBShippers] TB2\r\non TB1.SocialActivists_Id =  TB2.SocialActivists_Id inner join [dbo].[TBDonatedProducts] TB3 \r\non TB2.DonatedProducts_Id = TB3.DonatedProducts_Id";
 
-
+        //Sending to dal
+        //Receiving a list of Delivery
         public List<MADeliveryProductList> GetDeliveryListProduct()
         {
             SqlQuery sqlQuery1 = new SqlQuery();

@@ -10,6 +10,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
 {
     public class DSSortingUsersByOrganization
     {
+        //Sorting of users by association
         public DSSortingUsersByOrganization () { sqlQuery1 = new SqlQuery(); }
         SqlQuery sqlQuery1;
         List<TBSortingUsers> sortingUsers = null;

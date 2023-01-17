@@ -11,6 +11,8 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
 {
     public class DSSortingPostsDefault
     {
+        //Sorting tweets by date
+        //and according to their amount
         public DSSortingPostsDefault() { }
 
         public object AddSortingCampaigns(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)

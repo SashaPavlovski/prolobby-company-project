@@ -12,6 +12,9 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
     public class DSCampaignsByIdGet
     {
         public DSCampaignsByIdGet() { }
+
+        //Receiving campaign details
+        //With organization's id
         public object AddCampaignById(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {
             List<TBCampaigns> campaigns = new List<TBCampaigns>();
@@ -38,6 +41,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         string insertCampaignsById = "if  exists (select * from [dbo].[TBCampaigns] where [Active] =1 and [NonProfitOrganization_Id] = @NonProfitOrganization_Id)\r\nbegin\r\n       select [Campaigns_Name],[Descreption],[Campaigns_Id],[Hashtag]\r\n\t   from [dbo].[TBCampaigns]\r\n\t   where [Active] = 1 and [NonProfitOrganization_Id] = @NonProfitOrganization_Id\r\nend";
 
+        //Enter the details of the campaign into a list
         public List<TBCampaigns> GetCampaignsById(string organizationId )
         {
             SqlQuery sqlQuery1 = new SqlQuery();

@@ -12,6 +12,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
 {
     public class DSSortingUsersDefault
     {
+        //Sorting of users by social activists or by an owner
         public DSSortingUsersDefault() { sqlQuery1 = new SqlQuery(); }
 
         SqlQuery sqlQuery1;
