@@ -1,32 +1,50 @@
-﻿
-using ProLobbyCompanyProject.Dal;
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 // file:	Campaigns\DSCampaignsDelete.cs
 // summary:	Implements the ds campaigns delete class
 namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 {
     /// <summary>   The ds campaigns delete. </summary>
-    public class DSCampaignsDelete
+    public class DSCampaignsDelete: BaseDataSql
     {
+        SqlQueryDelete sqlQueryDelete;
         /// <summary>   Default constructor. </summary>
-        public DSCampaignsDelete() { }
+        public DSCampaignsDelete(Logger Logger) : base(Logger)
+        {
+            sqlQueryDelete = new SqlQueryDelete();
+        }
 
         /// <summary>   Deletes the product. </summary>
         /// <param name="command">  The command. </param>
         /// <param name="Id">       The identifier. </param>
 
-        public void DeleteProduct(System.Data.SqlClient.SqlCommand command, string Id)
+        public void DeleteCampaign(System.Data.SqlClient.SqlCommand command, string Id)
         {
+            Logger.LogEvent("Enter into DeleteCampaign function");
 
-            if (command == null && (Id == null)) return;
-            command.Parameters.AddWithValue($"@Campaigns_Id", int.Parse(Id));
-            int rows = command.ExecuteNonQuery();
+            Logger.LogEvent("Deletion of the campaign with the Id");
+
+
+            if (command == null && (Id == null))
+            {
+                Logger.LogError("End DeleteCampaign function and null campaignId value was received");
+
+                return;
+            }
+            try
+            {
+                command.Parameters.AddWithValue($"@Campaigns_Id", int.Parse(Id));
+                int rows = command.ExecuteNonQuery();
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
+            Logger.LogEvent("End DeleteCampaign function and the deletion operation was performed successfully");
         }
 
 
@@ -41,10 +59,23 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         /// <param name="campaignId">   Identifier for the campaign. </param>
         public void DeleteDataCampaign(string campaignId)
         {
-            SqlQueryDelete sqlQueryDelete = new SqlQueryDelete();
-            sqlQueryDelete.RunData(insertDelete, campaignId, DeleteProduct);
+            Logger.LogEvent("Enter into DeleteDataCampaign function");
+
+            if (campaignId == null)
+            {
+                Logger.LogError("End DeleteDataCampaign function and null campaignId value was received");
+                return;
+            }
+            try
+            {
+                sqlQueryDelete.RunData(insertDelete, campaignId, DeleteCampaign);
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+            Logger.LogEvent("End DeleteDataCampaign function");
         }
-
-
     }
 }

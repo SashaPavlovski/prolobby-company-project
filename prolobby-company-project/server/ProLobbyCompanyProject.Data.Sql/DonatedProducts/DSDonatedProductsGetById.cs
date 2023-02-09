@@ -2,35 +2,79 @@
 using ProLobbyCompanyProject.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
 {
-    public class DSDonatedProductsGetById
+    public class DSDonatedProductsGetById: BaseDataSql
     {
-        public DSDonatedProductsGetById() { }
+        SqlQuery SqlQuery;
+        public DSDonatedProductsGetById(Logger Logger) : base(Logger)
+        {
+            SqlQuery = new SqlQuery();
+        }
 
         //Receiving item details
         //by the id of the social activist
         public object AddDonatedProductsByUserId(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
         {
+            Logger.LogEvent("Enter into AddDonatedProductsByUserId function");
+
+            Logger.LogEvent("Get all the products bought by receiving an ID of the social activist");
+
             List<TBDonatedProducts> donatedProducts = new List<TBDonatedProducts>();
-            if (reader.HasRows)
+
+            try
             {
-                while (reader.Read())
+                if (reader.HasRows)
                 {
-                    donatedProducts.Add(new TBDonatedProducts() { Product_Name = reader["Product_Name"].ToString(), Price = double.Parse(reader["Price"].ToString()),Active = bool.Parse(reader["Sent"].ToString()) });
+                    while (reader.Read())
+                    {
+                        donatedProducts.Add(new TBDonatedProducts
+                        {
+                            Product_Name = reader["Product_Name"].ToString(),
+                            Price = double.Parse(reader["Price"].ToString()),
+                            Active = bool.Parse(reader["Sent"].ToString())
+                        });
+                    }
+
+                    Logger.LogEvent("End AddDonatedProductsByUserId function and raturn all products");
+
+                    return donatedProducts;
                 }
-                return donatedProducts;
             }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
+            Logger.LogEvent("End AddDonatedProductsByUserId function and raturn null");
+
             return null;
         }
 
         public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
         {
-            command.Parameters.AddWithValue($"@{key}", int.Parse(value));
+            Logger.LogEvent("Enter into SetValues function");
+
+            if (key != null && value != null)
+            {
+                try
+                {
+                    Logger.LogEvent("Entering data into values");
+
+                    command.Parameters.AddWithValue($"@{key}", int.Parse(value));
+                }
+                catch (Exception EX)
+                {
+
+                    throw;
+                }
+            }
+
+            Logger.LogEvent("End SetValues function");
+
         }
 
 
@@ -39,17 +83,42 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
         //Moves the products using a list
         public List<TBDonatedProducts> GetProductsByUserId(string userId)
         {
-            if (userId == null) return null;
-            SqlQuery sqlQuery1 = new SqlQuery();
+            Logger.LogEvent("Enter into GetProductsByUserId function");
+
+            Logger.LogEvent("Get the data on the donated product");
+
+            if (userId == null)
+            {
+                Logger.LogError("End GetProductsByUserId function and userId is null");
+
+                return null;
+            }
+
             List<TBDonatedProducts> DonatedProductsList = null;
 
+            object listProducts;
 
-            object listProducts = sqlQuery1.RunCommand(insertProductById, AddDonatedProductsByUserId, SetValues, "SocialActivists_Id", userId, null, null);
+            try
+            {
+                listProducts = SqlQuery.RunCommand(insertProductById, AddDonatedProductsByUserId, SetValues, "SocialActivists_Id", userId, null, null);
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
 
             if (listProducts is List<TBDonatedProducts>)
             {
                 DonatedProductsList = (List<TBDonatedProducts>)listProducts;
+
+                Logger.LogEvent("End GetProductsByUserId function and returning the list of donated Products");
+
+                return DonatedProductsList;
             }
+
+            Logger.LogError("End GetProductsByUserId function and the invalid value was received");
+
             return DonatedProductsList;
         }
     }

@@ -1,31 +1,42 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
-using ProLobbyCompanyProject.Model.Twitter;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.PostsTracking
 {
-    public class DSPostsTrackingIfExist
+    public class DSPostsTrackingIfExist: BaseDataSql
     {
         //Checking whether this date of yesterday exists in the table
         //Checking whether a Twitter scan has already been done
-        public DSPostsTrackingIfExist() { }
+        public DSPostsTrackingIfExist(Logger Logger) : base(Logger) { }
         public int CheckIfExistPostTracking(object newData, System.Data.SqlClient.SqlCommand command)
         {
             int answer = 0;
-            using (SqlDataReader reader = command.ExecuteReader())
+            try
             {
-                if (reader.HasRows)
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    if (reader.HasRows)
                     {
-                        answer = int.Parse(reader["answer"].ToString());
+                        if (reader.Read())
+                        {
+                            try
+                            {
+                                answer = int.Parse(reader["answer"].ToString());
+                            }
+                            catch (System.Exception EX)
+                            {
+
+                                throw;
+                            }
+                        }
                     }
                 }
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
             }
             return answer;
         }
@@ -34,8 +45,16 @@ namespace ProLobbyCompanyProject.Data.Sql.PostsTracking
 
         public int? IfExistPostsTracking()
         {
-            SqlQueryPost sqlQuery = new SqlQueryPost();
-            return sqlQuery.RunAdd(insertCheck, CheckIfExistPostTracking, null);
+            try
+            {
+                SqlQueryPost sqlQuery = new SqlQueryPost();
+                return sqlQuery.RunAdd(insertCheck, CheckIfExistPostTracking, null);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -1,26 +1,30 @@
 ﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model.Shippers;
-using ProLobbyCompanyProject.Model.Twitter;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.Shippers
 {
-    public class DSShippersDeliveryListGet
+    public class DSShippersDeliveryListGet: BaseDataSql
     {
         //Receiving a shipment schedule
-        public DSShippersDeliveryListGet() { }
+        public DSShippersDeliveryListGet(Logger Logger) : base(Logger) { }
         public object AddDeliveryList(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
         {
             List<MADeliveryProductList> DeliveryListData = new List<MADeliveryProductList>();
             if (reader.HasRows)
             {
-                while (reader.Read())
+                try
                 {
-                    DeliveryListData.Add(new MADeliveryProductList() {  Shippers_Id = int.Parse(reader["Shippers_Id"].ToString()),FullName = reader["Full_Name"].ToString(),Product_Name = reader["Product_Name"].ToString(),Phone_number = reader["Phone_number"].ToString(),Email = reader["Email"].ToString(),Address = reader["Address"].ToString(),Sent = bool.Parse(reader["Sent"].ToString()) });
+                    while (reader.Read())
+                    {
+                        DeliveryListData.Add(new MADeliveryProductList() { Shippers_Id = int.Parse(reader["Shippers_Id"].ToString()), FullName = reader["Full_Name"].ToString(), Product_Name = reader["Product_Name"].ToString(), Phone_number = reader["Phone_number"].ToString(), Email = reader["Email"].ToString(), Address = reader["Address"].ToString(), Sent = bool.Parse(reader["Sent"].ToString()) });
+                    }
+                }
+                catch (System.Exception EX)
+                {
+
+                    throw;
                 }
                 return DeliveryListData;
             }
@@ -42,7 +46,16 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
         {
             SqlQuery sqlQuery1 = new SqlQuery();
             List<MADeliveryProductList> newData = null;
-            object listNewData = sqlQuery1.RunCommand(insertGetData, AddDeliveryList, SetValues, null, null, null, null);
+            object listNewData;
+            try
+            {
+                listNewData = sqlQuery1.RunCommand(insertGetData, AddDeliveryList, SetValues, null, null, null, null);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
 
             if (listNewData is List<MADeliveryProductList>)
             {

@@ -1,22 +1,20 @@
-﻿
-using ProLobbyCompanyProject.Dal;
+﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 // file:SocialActivists\DSSocialActivistsGet.cs
 // summary:	Implements the ds social activists get class
 
 namespace ProLobbyCompanyProject.Data.Sql
 {
-    public class DSSocialActivistsGet
+    public class DSSocialActivistsGet: BaseDataSql
     {
-
-        public DSSocialActivistsGet() { }
-
+        SqlQuery SqlQuery;
+        public DSSocialActivistsGet(Logger Logger) : base(Logger)
+        {
+            SqlQuery = new SqlQuery();
+        }
 
         /// <summary>   Adds a social activists information. </summary>
         /// <param name="reader">   The reader. </param>
@@ -25,23 +23,62 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <returns>   An object TBSocialActivists List . </returns>
         public object AddSocialActivistsInformation(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
         {
+            Logger.LogEvent("Enter into AddSocialActivistsInformation function");
+
+            Logger.LogEvent("Receiving data about the social activist by the id");
+
             List<TBSocialActivists> socialActivists = new List<TBSocialActivists>();
+            
             if (reader.HasRows)
             {
-                while (reader.Read())
+                try
                 {
-                    socialActivists.Add(new TBSocialActivists() { SocialActivists_Id = int.Parse(reader["SocialActivists_Id"].ToString()), Address = reader["Address"].ToString(), Email = reader["Email"].ToString(), FirstName = reader["FirstName"].ToString(), LastName = reader["LastName"].ToString(), Phone_number = reader["Phone_number"].ToString(), Twitter_user = reader["Twitter_user"].ToString() });
-
+                    while (reader.Read())
+                    {
+                        socialActivists.Add(new TBSocialActivists
+                        {
+                            SocialActivists_Id = int.Parse(reader["SocialActivists_Id"].ToString()),
+                            Address = reader["Address"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            Phone_number = reader["Phone_number"].ToString(),
+                            Twitter_user = reader["Twitter_user"].ToString()
+                        });
+                    }
                 }
+                catch (System.Exception EX)
+                {
+
+                    throw;
+                }
+
+                Logger.LogEvent("End AddSocialActivistsInformation function and the data has been sent");
+                
                 return socialActivists;
             }
+
+            Logger.LogEvent("End AddSocialActivistsInformation function and no data received");
+
             return null;
         }
 
 
         public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
         {
-            command.Parameters.AddWithValue($"@{key}", value);
+            Logger.LogEvent("Enter into SetValues function");
+
+            Logger.LogEvent("Entering data into values");
+
+            try
+            {
+                command.Parameters.AddWithValue($"@{key}", value);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
 
         /// <summary>   The insert social activists. </summary>
@@ -52,14 +89,33 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <returns>   The social activists row. </returns>
         public List<TBSocialActivists> GetSocialActivistsRow(string IdUser)
         {
-            SqlQuery sqlQuery1 = new SqlQuery();
+            Logger.LogEvent("Enter into GetSocialActivistsRow function");
+
             List<TBSocialActivists> SocialActivists = null;
-            object listSocialActivists = sqlQuery1.RunCommand(insertSocialActivists, AddSocialActivistsInformation, SetValues, "User_Id", IdUser, null, null);
+
+            object listSocialActivists;
+
+            try
+            {
+                listSocialActivists = SqlQuery.RunCommand(insertSocialActivists, AddSocialActivistsInformation, SetValues, "User_Id", IdUser, null, null);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
 
             if (listSocialActivists is List<TBSocialActivists>)
             {
                 SocialActivists = (List<TBSocialActivists>)listSocialActivists;
+
+                Logger.LogEvent("End GetSocialActivistsRow function and get listSocialActivists");
+
+                return SocialActivists;
             }
+
+            Logger.LogEvent("End GetSocialActivistsRow function and invalid value was received");
+
             return SocialActivists;
         }
     }

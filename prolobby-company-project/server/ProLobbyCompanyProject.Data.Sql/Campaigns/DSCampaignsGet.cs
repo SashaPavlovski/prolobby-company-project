@@ -1,13 +1,9 @@
-﻿
-using ProLobbyCompanyProject.Dal;
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Campaigns;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 // file:	Campaigns\DSCampaignsGet.cs
 // summary:	Implements the ds campaigns get class
@@ -16,11 +12,15 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 {
     /// <summary> Receiving details of all campaigns. </summary>
 
-    public class DSCampaignsGet
+    public class DSCampaignsGet : BaseDataSql
     {
-        /// <summary>   Default constructor. </summary>
+        SqlQuery sqlQuery1;
 
-        public DSCampaignsGet() { }
+        /// <summary>   Default constructor. </summary>
+        public DSCampaignsGet(Logger Logger) : base(Logger)
+        {
+            sqlQuery1 = new SqlQuery();
+        }
 
         /// <summary>   Adds a campaign to list. </summary>
         /// <param name="reader">       The reader. </param>
@@ -28,19 +28,49 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         /// <param name="campaignName"> Name of the campaign. </param>
         /// <returns>   An object of Campaigns List . </returns>
 
-
         public object AddCampaign(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {
-            List<TBCampaigns> campaigns = new List<TBCampaigns>();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    campaigns.Add(new TBCampaigns() { Campaigns_Id = int.Parse(reader["Campaigns_Id"].ToString()), Campaigns_Name = reader["Campaigns_Name"].ToString(), Descreption = reader["Descreption"].ToString(), Hashtag = reader["Hashtag"].ToString() });
+            Logger.LogEvent("Enter into AddCampaign function");
 
+            Logger.LogEvent("Getting all campaign");
+
+            List<TBCampaigns> campaigns = new List<TBCampaigns>();
+            try
+            {
+                if (reader.HasRows)
+                {
+                    try
+                    {
+                        while (reader.Read())
+                        {
+                            campaigns.Add(new TBCampaigns
+                            {
+                                Campaigns_Id = int.Parse(reader["Campaigns_Id"].ToString()),
+                                Campaigns_Name = reader["Campaigns_Name"].ToString(),
+                                Descreption = reader["Descreption"].ToString(),
+                                Hashtag = reader["Hashtag"].ToString()
+                            });
+                        }
+
+                        Logger.LogEvent("End AddCampaign function and get campaigns");
+
+                        return campaigns;
+                    }
+                    catch (Exception EX)
+                    {
+
+                        throw;
+                    }
                 }
-                return campaigns;
             }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
+            Logger.LogEvent("End AddCampaign function and No information received");
+
             return null;
         }
 
@@ -51,17 +81,53 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         /// <returns>   An object of about campaign. </returns>
         public object AddCampaignAboutData(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {
-            if (reader.HasRows)
+            Logger.LogEvent("Enter into AddCampaignAboutData function");
+
+            Logger.LogEvent("Getting all the information about a specific campaign with ID");
+
+            try
             {
-                MAboutCampaign aboutCampaigns = null;
-
-                while (reader.Read())
+                if (reader.HasRows)
                 {
-                    aboutCampaigns = new MAboutCampaign() { NonProfitOrganizationName = reader["NonProfitOrganizationName"].ToString(), NonProfitOrganizationDecreption = reader["decreption"].ToString(), Url = reader["Url"].ToString(), Campaigns_Id = int.Parse(reader["Campaigns_Id"].ToString()), Campaigns_Name = reader["Campaigns_Name"].ToString(), Hashtag = reader["Hashtag"].ToString(), CampaignsDescreption = reader["Descreption"].ToString() };
+                    MAboutCampaign aboutCampaigns = null;
 
+                    while (reader.Read())
+                    {
+                        try
+                        {
+                            aboutCampaigns = new MAboutCampaign()
+                            {
+                                NonProfitOrganizationName = reader["NonProfitOrganizationName"].ToString(),
+                                NonProfitOrganizationDecreption = reader["decreption"].ToString(),
+                                Url = reader["Url"].ToString(),
+                                Campaigns_Id = int.Parse(reader["Campaigns_Id"].ToString()),
+                                Campaigns_Name = reader["Campaigns_Name"].ToString(),
+                                Hashtag = reader["Hashtag"].ToString(),
+                                CampaignsDescreption = reader["Descreption"].ToString()
+                            };
+
+                        }
+                        catch (Exception EX)
+                        {
+
+                            throw;
+                        }
+
+                    }
+
+                    Logger.LogEvent("End AddCampaignAboutData function and get campaigns data");
+
+                    return aboutCampaigns;
                 }
-                return aboutCampaigns;
             }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
+            Logger.LogEvent("End AddCampaignAboutData function and No information received");
+
             return null;
         }
 
@@ -74,26 +140,55 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         public void Set2Values(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
         {
+            Logger.LogEvent("Enter into Set2Values function");
+
             if (key != null && value != null && key2 != null && key2.Contains("Hashtag"))
             {
-                command.Parameters.AddWithValue($"@{key}", value);
-                command.Parameters.AddWithValue($"@{key2}", value2);
+                Logger.LogEvent("Entering values ​​for variables");
+
+                try
+                {
+                    command.Parameters.AddWithValue($"@{key}", value);
+                    command.Parameters.AddWithValue($"@{key2}", value2);
+
+                }
+                catch (Exception EX)
+                {
+
+                    throw;
+                }
             }
+
+            Logger.LogEvent("End Set2Values function");
         }
 
 
         /// <summary>   Sets the values. </summary>
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
         /// <param name="command">  The command. </param>
         /// <param name="key">      The key. </param>
         /// <param name="value">    The value. </param>
         /// <param name="key2">     The second key. </param>
         /// <param name="value2">   The second value. </param>
-
-
         public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
         {
-            command.Parameters.AddWithValue($"@{key}", value);
+            Logger.LogEvent("Enter into SetValues function");
+
+            if (key != null && value != null)
+            {
+                Logger.LogEvent("Entering values ​​for variables");
+
+                try
+                {
+                    command.Parameters.AddWithValue($"@{key}", value);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+                Logger.LogEvent("End SetValues function");
+            }
         }
 
         /// <summary>   The insert if exist campign. </summary>
@@ -103,7 +198,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         string insertCampigns = "if  exists (select * from [dbo].[TBCampaigns] where [Active] =1)\r\nbegin\r\n       select [Campaigns_Name],[Descreption],[Campaigns_Id],[Hashtag]\r\n\t   from [dbo].[TBCampaigns]\r\n\t   where [Active] = 1\r\nend";
 
         /// <summary>   The insert about campaign. </summary>
-        string insertAboutCampaign = "if  exists (select * from [dbo].[TBCampaigns] where [Active] =1)\r\nbegin\r\n        select Tb1.Url ,Tb1.NonProfitOrganizationName,\r\n        Tb1.decreption,Tb1.NonProfitOrganization_Id,\r\n        Tb2.Descreption,Tb2.Hashtag,Tb2.Campaigns_Name,\r\n        Tb2.Campaigns_Id from [dbo].[TBNonProfitOrganizations] Tb1 inner join [dbo].[TBCampaigns] Tb2\r\n        on  Tb1.NonProfitOrganization_Id = Tb2.NonProfitOrganization_Id where Tb2.Campaigns_Id = @Campaigns_Id\r\n\t\tand  Tb2.[Active] =1\r\nend";
+        string insertAboutCampaign = "if  exists (select * from [dbo].[TBCampaigns] where [Active] =1)\r\nbegin\r\n        select Tb1.Url ,Tb1.NonProfitOrganizationName,\r\n        Tb1.decreption,Tb1.NonProfitOrganization_Id,\r\n Tb2.Descreption,Tb2.Hashtag,Tb2.Campaigns_Name,\r\n        Tb2.Campaigns_Id from [dbo].[TBNonProfitOrganizations] Tb1 inner join [dbo].[TBCampaigns] Tb2\r\n        on  Tb1.NonProfitOrganization_Id = Tb2.NonProfitOrganization_Id where Tb2.Campaigns_Id = @Campaigns_Id\r\n\t\tand  Tb2.[Active] =1\r\nend";
 
         /// <summary>   Gets campaigns global. </summary>
         /// <param name="insert">   The insert. </param>
@@ -112,22 +207,34 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         /// <param name="key2">     The second key. </param>
         /// <param name="value2">   The second value. </param>
         /// <returns>   The campaigns global. </returns>
-
-
         public List<TBCampaigns> GetCampaignsG(string insert, string key, string value, string key2, string value2)
         {
-            SqlQuery sqlQuery1 = new SqlQuery();
-            List<TBCampaigns> campaigns = null;
+            Logger.LogEvent("Enter into GetCampaignsG function");
 
-            object listCampign = sqlQuery1.RunCommand(insert, AddCampaign, Set2Values, key, value, key2, value2); ;
-            if (listCampign != null)
+            List<TBCampaigns> campaigns = null;
+            object listCampign = null;
+
+            try
+            {
+                listCampign = sqlQuery1.RunCommand(insert, AddCampaign, Set2Values, key, value, key2, value2); ;
+            }
+            catch (Exception EX)
             {
 
+                throw;
+            }
+
+
+            if (listCampign != null)
+            {
                 if (listCampign is List<TBCampaigns>)
                 {
                     campaigns = (List<TBCampaigns>)listCampign;
                 }
             }
+
+            Logger.LogEvent("End GetCampaignsG function");
+
             return campaigns;
         }
 
@@ -137,14 +244,21 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         public List<TBCampaigns> GetCampaignRow(TBCampaigns campaign)
         {
-            return GetCampaignsG(insertIfExistCampign, "Campaigns_Name", campaign.Campaigns_Name, "Hashtag", campaign.Hashtag);
+            Logger.LogEvent("Enter into GetCampaignRow function");
 
+            Logger.LogEvent("Checking if the name of the campaign or the hashtag exists and returning an answer");
+
+            return GetCampaignsG(insertIfExistCampign, "Campaigns_Name", campaign.Campaigns_Name, "Hashtag", campaign.Hashtag);
         }
 
         /// <summary>   Gets campaign list. </summary>
         /// <returns>   The campaign list. </returns>
         public List<TBCampaigns> GetCampaignList()
         {
+            Logger.LogEvent("Enter into GetCampaignList function");
+
+            Logger.LogEvent("Get all the data of all the campaigns");
+
             return GetCampaignsG(insertCampigns, null, null, null, null);
         }
 
@@ -155,17 +269,49 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         public MAboutCampaign GetDataAboutCampaign(string campaignsId)
         {
+            Logger.LogEvent("Enter into GetDataAboutCampaign function");
+
+            Logger.LogEvent("Getting all the information about a specific campaign with ID");
+
             SqlQuery sqlQuery1 = new SqlQuery();
             MAboutCampaign aboutCampaign = null;
+            object aboutCampaignData = null;
 
-            object aboutCampaignData = sqlQuery1.RunCommand(insertAboutCampaign, AddCampaignAboutData, SetValues, "Campaigns_Id", campaignsId, null, null);
+            try
+            {
+                if (campaignsId != null)
+                {
+                    aboutCampaignData = sqlQuery1.RunCommand(insertAboutCampaign, AddCampaignAboutData, SetValues, "Campaigns_Id", campaignsId, null, null);
+                }
+                else
+                {
+                    Logger.LogError("End GetDataAboutCampaign function and the campaignsId is null ");
+                    return null;
+
+                }
+
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
             if (aboutCampaignData != null)
             {
                 if (aboutCampaignData is MAboutCampaign)
                 {
                     aboutCampaign = (MAboutCampaign)aboutCampaignData;
+
+                    Logger.LogEvent("End GetDataAboutCampaign function and end get information about a specific campaign");
+
+                    return aboutCampaign;
+
                 }
             }
+
+            Logger.LogError("End GetDataAboutCampaign function and the aboutCampaignData is null ");
+
             return aboutCampaign;
         }
     }

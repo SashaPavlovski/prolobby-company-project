@@ -1,48 +1,60 @@
-﻿
-using ProLobbyCompanyProject.Dal;
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
+
 
 // file:	SocialActivists\DSSocialActivistsUpdate.cs
 // summary:	Implements the ds social activists update class
 
 namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
 {
-
-    public class DSSocialActivistsUpdate
+    public class DSSocialActivistsUpdate: BaseDataSql
     {
-
-        public DSSocialActivistsUpdate() { }
+        SqlQueryUpdate sqlQuery;
+        public DSSocialActivistsUpdate(Logger Logger) : base(Logger)
+        {
+            sqlQuery = new SqlQueryUpdate();
+        }
 
         /// <summary>   Updates the new data. </summary>
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
         /// <param name="command">      The command. </param>
         /// <param name="newUserData">  Information describing the new user. </param>
         public void UpdateNewData(System.Data.SqlClient.SqlCommand command, object newUserData)
         {
+            Logger.LogEvent("Enter into UpdateNewData function");
+
+            Logger.LogEvent("Update the details of the social operator");
 
             if (command == null && (newUserData == null)) return;
             {
                 if (newUserData is TBSocialActivists)
                 {
-                    TBSocialActivists socialActivists = (TBSocialActivists)newUserData;
-                    command.Parameters.AddWithValue("@SocialActivists_Id", socialActivists.SocialActivists_Id);
-                    command.Parameters.AddWithValue("@FirstName", socialActivists.FirstName);
-                    command.Parameters.AddWithValue("@LastName", socialActivists.LastName);
-                    command.Parameters.AddWithValue("@Address", socialActivists.Address);
-                    command.Parameters.AddWithValue("@Email", socialActivists.Email);
-                    command.Parameters.AddWithValue("@Twitter_user", socialActivists.Twitter_user);
-                    command.Parameters.AddWithValue("@Phone_number", socialActivists.Phone_number);
+                    try
+                    {
+                        TBSocialActivists socialActivists = (TBSocialActivists)newUserData;
+                        command.Parameters.AddWithValue("@SocialActivists_Id", socialActivists.SocialActivists_Id);
+                        command.Parameters.AddWithValue("@FirstName", socialActivists.FirstName);
+                        command.Parameters.AddWithValue("@LastName", socialActivists.LastName);
+                        command.Parameters.AddWithValue("@Address", socialActivists.Address);
+                        command.Parameters.AddWithValue("@Email", socialActivists.Email);
+                        command.Parameters.AddWithValue("@Twitter_user", socialActivists.Twitter_user);
+                        command.Parameters.AddWithValue("@Phone_number", socialActivists.Phone_number);
 
+                        int rows = command.ExecuteNonQuery();
+
+                        Logger.LogEvent("The operation was performed successfully");
+
+                    }
+                    catch (System.Exception EX)
+                    {
+
+                        throw;
+                    }
                 }
             }
-            int rows = command.ExecuteNonQuery();
+
+            Logger.LogEvent("End UpdateNewData function");
+
         }
 
         /// <summary>   The social activists id]. </summary>
@@ -53,9 +65,17 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
         /// <param name="NewData">  Information describing the new. </param>
         public void UpdateUsersData(TBSocialActivists NewData)
         {
-            SqlQueryUpdate sqlQuery = new SqlQueryUpdate();
-            sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
-        }
+            Logger.LogEvent("Enter into UpdateUsersData function");
+            
+            try
+            {
+                sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
+            }
+            catch (System.Exception EX)
+            {
 
+                throw;
+            }
+        }
     }
 }

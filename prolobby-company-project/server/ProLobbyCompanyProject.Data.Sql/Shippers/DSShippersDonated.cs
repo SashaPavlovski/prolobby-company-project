@@ -1,17 +1,13 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model.Shippers;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.Shippers
 {
-    public class DSShippersDonated
+    public class DSShippersDonated: BaseDataSql
     {
-        public DSShippersDonated() { }
+        public DSShippersDonated(Logger Logger) : base(Logger) { }
 
         //Product donation
         //Sending the id of the social activist and the product
@@ -21,19 +17,34 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
             string answer = null;
             if (newData is MAbuyProduct)
             {
-                MAbuyProduct buyProduct = (MAbuyProduct)newData;
+                try
+                {
+                    MAbuyProduct buyProduct = (MAbuyProduct)newData;
 
-                command.Parameters.AddWithValue("@SocialActivists_Id", buyProduct.SocialActivists_Id);
-                command.Parameters.AddWithValue("@DonatedProducts_Id", buyProduct.DonatedProducts_Id);
+                    command.Parameters.AddWithValue("@SocialActivists_Id", buyProduct.SocialActivists_Id);
+                    command.Parameters.AddWithValue("@DonatedProducts_Id", buyProduct.DonatedProducts_Id);
+                }
+                catch (System.Exception EX)
+                {
+
+                    throw;
+                }
 
             }
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 if (reader.HasRows)
                 {
-                    reader.Read();
-                    answer = reader["answer"].ToString();
-                    
+                    try
+                    {
+                        reader.Read();
+                        answer = reader["answer"].ToString();
+                    }
+                    catch (System.Exception EX)
+                    {
+
+                        throw;
+                    }                    
                 }
             }
             return answer;
@@ -45,8 +56,17 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
         public string PostDonatedProduct(MAbuyProduct productData)
         {
             if (productData == null) return null;
-            SqlQueryPost sqlQueryPost = new SqlQueryPost();
-            return sqlQueryPost.RunAddData(insertBuyforDonation, DonProduct, productData);
+
+            try
+            {
+                SqlQueryPost sqlQueryPost = new SqlQueryPost();
+                return sqlQueryPost.RunAddData(insertBuyforDonation, DonProduct, productData);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
     }
 }

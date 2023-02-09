@@ -1,11 +1,7 @@
-﻿
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 // file:Campaigns\DSCampaignsPost.cs
 // summary:	Implements the ds campaigns post class
@@ -14,10 +10,16 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 {
 
     /// <summary>   The post campaigns data. </summary>
-    public class DSCampaignsPost
+    public class DSCampaignsPost: BaseDataSql
     {
+
+        SqlQueryPost sqlQuery;
+
         /// <summary>   Default constructor. </summary>
-        public DSCampaignsPost() { }
+        public DSCampaignsPost(Logger Logger) : base(Logger)
+        {
+            sqlQuery = new SqlQueryPost();
+        }
 
         /// <summary>   Adds a campaign data to Campaigns class. </summary>
         /// <param name="userData"> Information describing the user. </param>
@@ -26,18 +28,41 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         public int AddCampaignData(object userData, System.Data.SqlClient.SqlCommand command)
         {
+            Logger.LogEvent("Enter into AddCampaignData function");
+
+            Logger.LogEvent("Entering campaign details");
+
+            int rows = 0;
+
             if (userData is TBCampaigns)
             {
                 TBCampaigns Campaign = (TBCampaigns)userData;
 
-                command.Parameters.AddWithValue("@Campaigns_Name", Campaign.Campaigns_Name);
-                command.Parameters.AddWithValue("@Hashtag", Campaign.Hashtag);
-                command.Parameters.AddWithValue("@Descreption", Campaign.Descreption);
-                command.Parameters.AddWithValue("@Date", DateTime.Now);
-                command.Parameters.AddWithValue("@User_Id", Campaign.User_Id);
+                try
+                {
+                    command.Parameters.AddWithValue("@Campaigns_Name", Campaign.Campaigns_Name);
+                    command.Parameters.AddWithValue("@Hashtag", Campaign.Hashtag);
+                    command.Parameters.AddWithValue("@Descreption", Campaign.Descreption);
+                    command.Parameters.AddWithValue("@Date", DateTime.Now);
+                    command.Parameters.AddWithValue("@User_Id", Campaign.User_Id);
 
+                    rows = command.ExecuteNonQuery();
+
+                    Logger.LogEvent("The operation was carried out successfully");
+
+                    Logger.LogEvent("End AddCampaignData function");
+
+                    return rows;
+                }
+                catch (Exception EX)
+                {
+
+                    throw;
+                }
             }
-            int rows = command.ExecuteNonQuery();
+
+            Logger.LogError("End AddCampaignData function and Invalid data received ");
+
             return rows;
         }
 
@@ -50,14 +75,30 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         public int? PostCampaignRow(TBCampaigns campaign)
         {
+            Logger.LogEvent("Enter into PostCampaignRow function");
 
-            if (campaign == null) return null;
+            if (campaign == null)
+            {
+                Logger.LogError("Invalid data received and campaign is null");
 
-            SqlQueryPost sqlQuery = new SqlQueryPost();
-            int? answer = sqlQuery.RunAdd(insertCampign, AddCampaignData, campaign);
+                return null;
+            }
 
-            if (answer != null) return answer;
-            return null;
+            int? answer;
+            
+            try
+            {
+                answer = sqlQuery.RunAdd(insertCampign, AddCampaignData, campaign);
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
+            Logger.LogEvent("End PostCampaignRow function and sending a answer");
+
+            return answer;
 
         }
     }

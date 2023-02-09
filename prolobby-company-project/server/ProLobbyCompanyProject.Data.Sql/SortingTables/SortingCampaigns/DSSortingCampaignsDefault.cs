@@ -1,31 +1,38 @@
 ﻿using ProLobbyCompanyProject.Dal;
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
-using ProLobbyCompanyProject.Model.Campaigns;
-using ProLobbyCompanyProject.Model;
-using ProLobbyCompanyProject.Model.Twitter;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ProLobbyCompanyProject.Model.SortingTables.SortingCampaigns;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
 {
-    public class DSSortingCampaignsDefault
+    public class DSSortingCampaignsDefault: BaseDataSql
     {
         //Sorting campaigns by date, organization and activity
-        public DSSortingCampaignsDefault () { }
+        public DSSortingCampaignsDefault(Logger Logger) : base(Logger) { }
         public object AddSortingCampaigns(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {
             List<TBSortingCampaigns> sortingCampaigns = new List<TBSortingCampaigns>();
             if (reader.HasRows)
             {
-                while (reader.Read())
+                try
                 {
-                    sortingCampaigns.Add(new TBSortingCampaigns() { Campaigns_Name = reader["Campaigns_Name"].ToString(), NonProfitOrganizationName = reader["NonProfitOrganizationName"].ToString(), MoneyDonations = double.Parse(reader["MoneyDonations"].ToString()), Active = reader["Active"].ToString(),Date = DateTime.Parse(reader["Date"].ToString()) });
+                    while (reader.Read())
+                    {
+                        sortingCampaigns.Add(new TBSortingCampaigns
+                        {
+                            Campaigns_Name = reader["Campaigns_Name"].ToString(),
+                            NonProfitOrganizationName = reader["NonProfitOrganizationName"].ToString(),
+                            MoneyDonations = double.Parse(reader["MoneyDonations"].ToString()),
+                            Active = reader["Active"].ToString(),
+                            Date = DateTime.Parse(reader["Date"].ToString())
+                        });
+                    }
+                }
+                catch (Exception EX)
+                {
 
+                    throw;
                 }
                 return sortingCampaigns;
             }
@@ -52,7 +59,17 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
             SqlQuery sqlQuery1 = new SqlQuery();
             List<TBSortingCampaigns> sortingCampaigns = null;
 
-            object listSortingCampaigns = sqlQuery1.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null); 
+            object listSortingCampaigns;
+            try
+            {
+                listSortingCampaigns = sqlQuery1.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
             if (listSortingCampaigns != null)
             {
 

@@ -1,82 +1,83 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	NonProfitOrganizations\DSNonProfitOrganizationsUpdate.cs
-//
-// summary:	Implements the ds non profit organizations update class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.NonProfitOrganizations
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   The ds non profit organizations update. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public class DSNonProfitOrganizationsUpdate
+    public class DSNonProfitOrganizationsUpdate: BaseDataSql
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        SqlQueryUpdate sqlQuery;
+        public DSNonProfitOrganizationsUpdate(Logger Logger) : base(Logger) 
+        {
+            sqlQuery = new SqlQueryUpdate();
+        }
 
-        public DSNonProfitOrganizationsUpdate() { }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Updates the new data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="command">      The command. </param>
-        /// <param name="newUserData">  Information describing the new user. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Updating organization representative data
         public void UpdateNewData(System.Data.SqlClient.SqlCommand command, object newUserData)
         {
+            Logger.LogEvent("Enter into UpdateNewData function");
 
             if (command == null && (newUserData == null)) return;
             {
                 if (newUserData is TBNonProfitOrganization)
                 {
-                    TBNonProfitOrganization nonProfitOrganization = (TBNonProfitOrganization)newUserData;
-                    command.Parameters.AddWithValue("@NonProfitOrganization_Id", nonProfitOrganization.NonProfitOrganization_Id);
-                    command.Parameters.AddWithValue("@NonProfitOrganizationName", nonProfitOrganization.NonProfitOrganizationName);
-                    command.Parameters.AddWithValue("@Url", nonProfitOrganization.Url);
-                    command.Parameters.AddWithValue("@decreption", nonProfitOrganization.decreption);
-                    command.Parameters.AddWithValue("@Email", nonProfitOrganization.Email);
-                    command.Parameters.AddWithValue("@RepresentativeFirstName", nonProfitOrganization.RepresentativeFirstName);
-                    command.Parameters.AddWithValue("@RepresentativeLastName", nonProfitOrganization.RepresentativeLastName);
-                    command.Parameters.AddWithValue("@Phone_number", nonProfitOrganization.Phone_number);
+                    Logger.LogEvent("Entering new data of an organization representative");
 
+                    try
+                    {
+                        TBNonProfitOrganization nonProfitOrganization = (TBNonProfitOrganization)newUserData;
+
+                        command.Parameters.AddWithValue("@NonProfitOrganization_Id", nonProfitOrganization.NonProfitOrganization_Id);
+                        command.Parameters.AddWithValue("@NonProfitOrganizationName", nonProfitOrganization.NonProfitOrganizationName);
+                        command.Parameters.AddWithValue("@Url", nonProfitOrganization.Url);
+                        command.Parameters.AddWithValue("@decreption", nonProfitOrganization.decreption);
+                        command.Parameters.AddWithValue("@Email", nonProfitOrganization.Email);
+                        command.Parameters.AddWithValue("@RepresentativeFirstName", nonProfitOrganization.RepresentativeFirstName);
+                        command.Parameters.AddWithValue("@RepresentativeLastName", nonProfitOrganization.RepresentativeLastName);
+                        command.Parameters.AddWithValue("@Phone_number", nonProfitOrganization.Phone_number);
+
+                        int rows = command.ExecuteNonQuery();
+
+                        Logger.LogEvent("End UpdateNewData function successfully");
+
+                    }
+                    catch (SqlException EX)
+                    {
+
+                        throw;
+                    }
+                    catch (System.Exception EX)
+                    {
+
+                        throw;
+                    }
                 }
             }
-            int rows = command.ExecuteNonQuery();
         }
 
 
-        /// <summary>   The non profit organization id]. </summary>
+        // Update sql query 
         string insertUpdate = "update [dbo].[TBNonProfitOrganizations] set [NonProfitOrganizationName] = @NonProfitOrganizationName,[Url] = @Url,\r\n[decreption] = @decreption, [Email] = @Email,[RepresentativeFirstName] = @RepresentativeFirstName,\r\n[RepresentativeLastName] = @RepresentativeLastName,[Phone_number] = @Phone_number\r\nwhere [NonProfitOrganization_Id] = @NonProfitOrganization_Id";
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Updates the users data described by NewData. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="NewData">  Information describing the new. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Updating organization representative data
+        //Sending the data to a Dal file 
         public void UpdateUsersData(TBNonProfitOrganization NewData)
         {
-            SqlQueryUpdate sqlQuery = new SqlQueryUpdate();
-            sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
+            Logger.LogEvent("Enter into UpdateUsersData function");
+
+            try
+            {
+                sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
+
+                Logger.LogEvent("End UpdateUsersData function successfully");
+
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
     }
 }

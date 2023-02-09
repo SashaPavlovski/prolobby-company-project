@@ -1,32 +1,41 @@
 ﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model.SortingTables.SortingCampaigns;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
 {
-    public class DSSortingCampaignsByAmountProducts
+    public class DSSortingCampaignsByAmountProducts: BaseDataSql
     {
         //Sorting of the campaigns according to the amount of products donated to them
-        public DSSortingCampaignsByAmountProducts () { }
+        public DSSortingCampaignsByAmountProducts(Logger Logger) : base(Logger) { }
         public object AddSortingCampaigns(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {
             List<TBSortingCampaigns> sortingCampaigns = new List<TBSortingCampaigns>();
             if (reader.HasRows)
             {
-                while (reader.Read())
+                try
                 {
-                    sortingCampaigns.Add(new TBSortingCampaigns() { Campaigns_Name = reader["Campaigns_Name"].ToString(), ProductAmount = int.Parse(reader["ProductAmount"].ToString()) });
+                    while (reader.Read())
+                    {
+                        sortingCampaigns.Add(new TBSortingCampaigns
+                        {
+                            Campaigns_Name = reader["Campaigns_Name"].ToString(),
+                            ProductAmount = int.Parse(reader["ProductAmount"].ToString())
+                        });
 
+                    }
                 }
+                catch (System.Exception EX)
+                {
+
+                    throw;
+                }
+
                 return sortingCampaigns;
             }
             return null;
         }
-
 
 
         public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
@@ -42,7 +51,18 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
             SqlQuery sqlQuery1 = new SqlQuery();
             List<TBSortingCampaigns> sortingCampaigns = null;
 
-            object listSortingCampaigns = sqlQuery1.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
+            object listSortingCampaigns;
+
+            try
+            {
+                listSortingCampaigns = sqlQuery1.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
+
             if (listSortingCampaigns != null)
             {
 

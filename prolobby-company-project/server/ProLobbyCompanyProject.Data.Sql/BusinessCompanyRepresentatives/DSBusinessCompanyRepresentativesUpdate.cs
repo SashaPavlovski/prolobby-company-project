@@ -1,11 +1,6 @@
-﻿
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 
 // file:	BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesUpdate.cs
@@ -13,35 +8,47 @@ using System.Threading.Tasks;
 namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
 {
     /// <summary>   The ds business company representatives update. </summary>
-    public class DSBusinessCompanyRepresentativesUpdate
+    public class DSBusinessCompanyRepresentativesUpdate: BaseDataSql
     {
         /// <summary>   Default constructor. </summary>
-        public DSBusinessCompanyRepresentativesUpdate() { }
+        public DSBusinessCompanyRepresentativesUpdate(Logger Logger) : base(Logger) { }
 
         /// <summary>   Updates the new data. </summary>
         /// <param name="command">      The command. </param>
         /// <param name="newUserData">  Information describing the new user. </param>
         public void UpdateNewData(System.Data.SqlClient.SqlCommand command, object newUserData)
         {
+            Logger.LogEvent("Enter into UpdateNewData function");
 
             if (command == null && (newUserData == null)) return;
             {
                 if (newUserData is TBBusinessCompanyRepresentative)
                 {
-                    TBBusinessCompanyRepresentative businessCompanyRepresentative = (TBBusinessCompanyRepresentative)newUserData;
+                    Logger.LogEvent("Updating the data of the representative business company");
 
-                    command.Parameters.AddWithValue("@BusinessCompany_Id", businessCompanyRepresentative.BusinessCompany_Id);
-                    command.Parameters.AddWithValue("@CompanyName", businessCompanyRepresentative.CompanyName);
-                    command.Parameters.AddWithValue("@Url", businessCompanyRepresentative.Url);
-                    command.Parameters.AddWithValue("@Email", businessCompanyRepresentative.Email);
-                    command.Parameters.AddWithValue("@RepresentativeFirstName", businessCompanyRepresentative.RepresentativeFirstName);
-                    command.Parameters.AddWithValue("@RepresentativeLastName", businessCompanyRepresentative.RepresentativeLastName);
-                    command.Parameters.AddWithValue("@Phone_number", businessCompanyRepresentative.Phone_number);
+                    try
+                    {
+                        TBBusinessCompanyRepresentative businessCompanyRepresentative = (TBBusinessCompanyRepresentative)newUserData;
 
+                        command.Parameters.AddWithValue("@BusinessCompany_Id", businessCompanyRepresentative.BusinessCompany_Id);
+                        command.Parameters.AddWithValue("@CompanyName", businessCompanyRepresentative.CompanyName);
+                        command.Parameters.AddWithValue("@Url", businessCompanyRepresentative.Url);
+                        command.Parameters.AddWithValue("@Email", businessCompanyRepresentative.Email);
+                        command.Parameters.AddWithValue("@RepresentativeFirstName", businessCompanyRepresentative.RepresentativeFirstName);
+                        command.Parameters.AddWithValue("@RepresentativeLastName", businessCompanyRepresentative.RepresentativeLastName);
+                        command.Parameters.AddWithValue("@Phone_number", businessCompanyRepresentative.Phone_number);
 
+                        int rows = command.ExecuteNonQuery();
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             }
-            int rows = command.ExecuteNonQuery();
+
+            Logger.LogEvent("End UpdateNewData function and end of data update");
         }
 
 
@@ -52,8 +59,21 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
         /// <param name="NewData">  Information describing the new. </param>
         public void UpdateUsersData(TBBusinessCompanyRepresentative NewData)
         {
-            SqlQueryUpdate sqlQuery = new SqlQueryUpdate();
-            sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
+            Logger.LogEvent("Enter into UpdateUsersData function");
+
+            try
+            {
+                SqlQueryUpdate sqlQuery = new SqlQueryUpdate();
+                sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+            Logger.LogEvent("End UpdateUsersData function");
+
         }
     }
 }

@@ -1,24 +1,25 @@
-﻿using ProLobbyCompanyProject.Dal;
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
-using ProLobbyCompanyProject.Model;
-using ProLobbyCompanyProject.Model.MoneyTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.Shippers
 {
-    public class DSShippersDeliveryProductSet
+    public class DSShippersDeliveryProductSet: BaseDataSql
     {
-        public DSShippersDeliveryProductSet() { }
+        public DSShippersDeliveryProductSet(Logger Logger) : base(Logger) { }
 
         //SendingDeliveryProduct
         public void SendDeliveryProduct(object UserId,System.Data.SqlClient.SqlCommand command)
         {
-            command.Parameters.AddWithValue("@Shippers_Id", UserId);
-            int rows = command.ExecuteNonQuery();
+            try
+            {
+                command.Parameters.AddWithValue("@Shippers_Id", UserId);
+                int rows = command.ExecuteNonQuery();
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
 
 
@@ -28,8 +29,16 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
 
         public void SendingDeliveryProduct(string IdUser)
         {
-            SqlQueryPost sqlQuery = new SqlQueryPost();
-            sqlQuery.RunAddUser(insertSendDelivery, SendDeliveryProduct, IdUser);
+            try
+            {
+                SqlQueryPost sqlQuery = new SqlQueryPost();
+                sqlQuery.RunAddUser(insertSendDelivery, SendDeliveryProduct, IdUser);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
     }
 }

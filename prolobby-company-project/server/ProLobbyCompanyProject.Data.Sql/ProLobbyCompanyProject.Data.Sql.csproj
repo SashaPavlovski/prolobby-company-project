@@ -41,12 +41,14 @@
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -65,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDataSql.cs" />
     <Compile Include="BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesGet.cs" />
     <Compile Include="BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesPost.cs" />
     <Compile Include="BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesUpdate.cs" />
@@ -105,6 +108,10 @@
     <Compile Include="Twitter\DSTwitterGet.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\cs\Utilities\Utilities\Utilities.csproj">
+      <Project>{A034B5CF-625B-499B-AFD9-25DCD6E24A90}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProLobbyCompanyProject.Dal\ProLobbyCompanyProject.Dal.csproj">
       <Project>{16A99CD9-8F75-4E26-884F-FCC28D37ACD4}</Project>
       <Name>ProLobbyCompanyProject.Dal</Name>

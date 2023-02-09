@@ -1,10 +1,7 @@
 ﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 
 // file:	ProLobbyOwner\DSProLobbyOwnerGet.cs
@@ -14,10 +11,10 @@ namespace ProLobbyCompanyProject.Data.Sql
 {
     /// <summary>  Checking whether it exists prolobby owner . </summary>
     /// <summary>  If exists, receiving the details . </summary>
-    public class DSProLobbyOwnerGet
+    public class DSProLobbyOwnerGet: BaseDataSql
     {
         /// <summary>   Default constructor. </summary>
-        public DSProLobbyOwnerGet() { }
+        public DSProLobbyOwnerGet(Logger Logger) : base(Logger) { }
 
         /// <summary>   Adds a prolobby owner information. </summary>
         /// <param name="reader">   The reader. </param>
@@ -26,21 +23,44 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <returns>   An object TBProLobbyOwner List. </returns>
         public object AddProLobbyOwnerInformation(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
         {
-            List<TBProLobbyOwner> proLobbyOwner = new List<TBProLobbyOwner>();
-            if (reader.HasRows)
+            try
             {
-                while (reader.Read())
+                List<TBProLobbyOwner> proLobbyOwner = new List<TBProLobbyOwner>();
+                if (reader.HasRows)
                 {
-                    proLobbyOwner.Add(new TBProLobbyOwner() { ProLobbyOwner_Id = int.Parse(reader["ProLobbyOwner_Id"].ToString()), FirstName = reader["FirstName"].ToString(), LastName = reader["LastName"].ToString(), Phone_number = reader["Phone_number"].ToString(), Email = reader["Email"].ToString() });
+                    while (reader.Read())
+                    {
+                        proLobbyOwner.Add(new TBProLobbyOwner
+                        {
+                            ProLobbyOwner_Id = int.Parse(reader["ProLobbyOwner_Id"].ToString()),
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            Phone_number = reader["Phone_number"].ToString(),
+                            Email = reader["Email"].ToString()
+                        });
+                    }
+                    return proLobbyOwner;
                 }
-                return proLobbyOwner;
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
             }
             return null;
         }
 
         public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
         {
-            command.Parameters.AddWithValue($"@{key}", value);
+            try
+            {
+                command.Parameters.AddWithValue($"@{key}", value);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
 
         /// <summary>   The owner of the insert pro lobby. </summary>
@@ -54,7 +74,16 @@ namespace ProLobbyCompanyProject.Data.Sql
         {
             SqlQuery sqlQuery1 = new SqlQuery();
             List<TBProLobbyOwner> ProLobbyOwnerList = null;
-            object listProLobbyOwner = sqlQuery1.RunCommand(insertProLobbyOwner, AddProLobbyOwnerInformation, SetValues, "User_Id", IdUser, null, null); ;
+            object listProLobbyOwner;
+            try
+            {
+                listProLobbyOwner = sqlQuery1.RunCommand(insertProLobbyOwner, AddProLobbyOwnerInformation, SetValues, "User_Id", IdUser, null, null); ;
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
 
             if (listProLobbyOwner is List<TBProLobbyOwner>)
             {

@@ -1,79 +1,80 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	NonProfitOrganizations\DSNonProfitOrganizationsPost.cs
-//
-// summary:	Implements the ds non profit organizations post class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using ProLobbyCompanyProject.Dal;
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   The ds non profit organizations post. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public class DSNonProfitOrganizationsPost
+    public class DSNonProfitOrganizationsPost: BaseDataSql
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        SqlQueryPost sqlQuery = new SqlQueryPost();
+        public DSNonProfitOrganizationsPost(Logger Logger) : base(Logger)
+        {
+            sqlQuery = new SqlQueryPost();
+        }
 
-        public DSNonProfitOrganizationsPost() { }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Adds a user data to 'command'. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="userData"> Information describing the user. </param>
-        /// <param name="command">  The command. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Entering data of the organization representative
         public void AddUserData(object userData, System.Data.SqlClient.SqlCommand command)
         {
+            Logger.LogEvent("Enter into AddUserData function");
+
             if (userData is TBNonProfitOrganization)
             {
-                TBNonProfitOrganization nonProfitOrganization = (TBNonProfitOrganization)userData;
+                Logger.LogEvent("Entering data of the organization representative");
 
-                command.Parameters.AddWithValue("@NonProfitOrganizationName", nonProfitOrganization.NonProfitOrganizationName);
-                command.Parameters.AddWithValue("@Url", nonProfitOrganization.Url);
-                command.Parameters.AddWithValue("@decreption", nonProfitOrganization.decreption);
-                command.Parameters.AddWithValue("@Email", nonProfitOrganization.Email);
-                command.Parameters.AddWithValue("@RepresentativeFirstName", nonProfitOrganization.RepresentativeFirstName);
-                command.Parameters.AddWithValue("@RepresentativeLastName", nonProfitOrganization.RepresentativeLastName);
-                command.Parameters.AddWithValue("@Phone_number", nonProfitOrganization.Phone_number);
-                //  command.Parameters.AddWithValue("@Logo", null);
-                command.Parameters.AddWithValue("@User_Id", nonProfitOrganization.User_Id);
+                try
+                {
+                    TBNonProfitOrganization nonProfitOrganization = (TBNonProfitOrganization)userData;
+
+                    command.Parameters.AddWithValue("@NonProfitOrganizationName", nonProfitOrganization.NonProfitOrganizationName);
+                    command.Parameters.AddWithValue("@Url", nonProfitOrganization.Url);
+                    command.Parameters.AddWithValue("@decreption", nonProfitOrganization.decreption);
+                    command.Parameters.AddWithValue("@Email", nonProfitOrganization.Email);
+                    command.Parameters.AddWithValue("@RepresentativeFirstName", nonProfitOrganization.RepresentativeFirstName);
+                    command.Parameters.AddWithValue("@RepresentativeLastName", nonProfitOrganization.RepresentativeLastName);
+                    command.Parameters.AddWithValue("@Phone_number", nonProfitOrganization.Phone_number);
+                    command.Parameters.AddWithValue("@User_Id", nonProfitOrganization.User_Id);
+
+                    int rows = command.ExecuteNonQuery();
+
+                    Logger.LogEvent("End AddUserData function successfully");
+
+                }
+                catch (SqlException EX)
+                {
+
+                    throw;
+                }
+                catch (System.Exception EX)
+                {
+
+                    throw;
+                }
             }
-            int rows = command.ExecuteNonQuery();
         }
 
         /// <summary>   The insert. </summary>
         string insert = "insert into [dbo].[TBNonProfitOrganizations] ([NonProfitOrganizationName],[Url],[decreption],[Email],[RepresentativeFirstName],[RepresentativeLastName],[Phone_number],[User_Id],[Date])\r\nvalues (@NonProfitOrganizationName,@Url,@decreption,@Email,@RepresentativeFirstName,\r\n@RepresentativeLastName,@Phone_number,@User_Id,getdate())";
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Posts the users data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="userNonProfitOrganization">    The user non profit organization. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Entering data of the organization representative
+        //Sending to dal file
         public void PostUsersData(TBNonProfitOrganization userNonProfitOrganization)
         {
-            SqlQueryPost sqlQuery = new SqlQueryPost();
-            sqlQuery.RunAddUser(insert, AddUserData, userNonProfitOrganization);
+            Logger.LogEvent("Enter into PostUsersData function");
+
+            try
+            {
+                sqlQuery.RunAddUser(insert, AddUserData, userNonProfitOrganization);
+
+                Logger.LogEvent("End PostUsersData function successfully");
+
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
     }
 }

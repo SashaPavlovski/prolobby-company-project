@@ -1,21 +1,15 @@
-﻿
-using ProLobbyCompanyProject.Dal.SqlQueryClasses;
+﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 // file:	ProLobbyOwner\DSProLobbyOwnerUpdate.cs
 // summary:	Implements the ds pro lobby owner update class
 
 namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
 {
-    public class DSProLobbyOwnerUpdate
+    public class DSProLobbyOwnerUpdate: BaseDataSql
     {
-
-        public DSProLobbyOwnerUpdate() { }
+        public DSProLobbyOwnerUpdate(Logger Logger) : base(Logger) { }
 
         /// <summary>   Updates the new data. </summary>
         /// <param name="command">      The command. </param>
@@ -27,16 +21,23 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
             {
                 if (newUserData is TBProLobbyOwner)
                 {
-                    TBProLobbyOwner proLobbyOwnerPost = (TBProLobbyOwner)newUserData;
-                    command.Parameters.AddWithValue("@ProLobbyOwner_Id", proLobbyOwnerPost.ProLobbyOwner_Id);
-                    command.Parameters.AddWithValue("@FirstName", proLobbyOwnerPost.FirstName);
-                    command.Parameters.AddWithValue("@LastName", proLobbyOwnerPost.LastName);
-                    command.Parameters.AddWithValue("@Email", proLobbyOwnerPost.Email);
-                    command.Parameters.AddWithValue("@Phone_number", proLobbyOwnerPost.Phone_number);
+                    try
+                    {
+                        TBProLobbyOwner proLobbyOwnerPost = (TBProLobbyOwner)newUserData;
+                        command.Parameters.AddWithValue("@ProLobbyOwner_Id", proLobbyOwnerPost.ProLobbyOwner_Id);
+                        command.Parameters.AddWithValue("@FirstName", proLobbyOwnerPost.FirstName);
+                        command.Parameters.AddWithValue("@LastName", proLobbyOwnerPost.LastName);
+                        command.Parameters.AddWithValue("@Email", proLobbyOwnerPost.Email);
+                        command.Parameters.AddWithValue("@Phone_number", proLobbyOwnerPost.Phone_number);
+                        int rows = command.ExecuteNonQuery();
+                    }
+                    catch (System.Exception EX)
+                    {
 
+                        throw;
+                    }
                 }
             }
-            int rows = command.ExecuteNonQuery();
         }
 
 
@@ -48,8 +49,16 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
         /// <param name="NewData">  Information describing the new. </param>
         public void UpdateUsersData(TBProLobbyOwner NewData)
         {
-            SqlQueryUpdate sqlQuery = new SqlQueryUpdate();
-            sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
+            try
+            {
+                SqlQueryUpdate sqlQuery = new SqlQueryUpdate();
+                sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
         }
     }
 }

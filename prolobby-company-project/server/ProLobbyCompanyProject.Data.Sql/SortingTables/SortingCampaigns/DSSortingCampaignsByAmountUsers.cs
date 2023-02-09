@@ -5,22 +5,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
 {
-    public class DSSortingCampaignsByAmountUsers
+    public class DSSortingCampaignsByAmountUsers: BaseDataSql
     {
         //Sorting campaigns according to the number of users who follow the campaign
-        public DSSortingCampaignsByAmountUsers() { }
+        public DSSortingCampaignsByAmountUsers(Logger Logger) : base(Logger) { }
         public object AddSortingCampaigns(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
         {
             List<TBSortingCampaigns> sortingCampaigns = new List<TBSortingCampaigns>();
             if (reader.HasRows)
             {
-                while (reader.Read())
+                try
                 {
-                    sortingCampaigns.Add(new TBSortingCampaigns() { Campaigns_Name = reader["Campaigns_Name"].ToString(), ActivistAmount = int.Parse(reader["ActivistAmount"].ToString()) });
+                    while (reader.Read())
+                    {
+                        sortingCampaigns.Add(new TBSortingCampaigns
+                        {
+                            Campaigns_Name = reader["Campaigns_Name"].ToString(),
+                            ActivistAmount = int.Parse(reader["ActivistAmount"].ToString())
+                        });
+                    }
+                }
+                catch (Exception EX)
+                {
 
+                    throw;
                 }
                 return sortingCampaigns;
             }
@@ -42,7 +54,17 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
             SqlQuery sqlQuery1 = new SqlQuery();
             List<TBSortingCampaigns> sortingCampaigns = null;
 
-            object listSortingCampaigns = sqlQuery1.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
+            object listSortingCampaigns;
+            try
+            {
+                listSortingCampaigns = sqlQuery1.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
             if (listSortingCampaigns != null)
             {
 
