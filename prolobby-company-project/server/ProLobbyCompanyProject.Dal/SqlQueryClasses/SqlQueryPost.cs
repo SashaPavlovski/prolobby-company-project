@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -18,12 +17,6 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
 
         /// <summary>   The open connection. </summary>
         OpenConnection openConnection = new OpenConnection();
-
-        /// <summary>   Creates the tables. </summary>
-        public void CreateTables()
-        {
-            ConnectionWithSql._ConnectionWithSql.CreateTables();
-        }
 
 
         /// <summary>   Posts a data delegate. </summary>
@@ -57,15 +50,42 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
         /// <param name="userData">     Information describing the user. </param>
         public void RunAddUser(string sqlQuerey, PostData_delegate func, object userData)
         {
-            if (!(openConnection.Connect())) return;
-            string insert = sqlQuerey;
-            ;
-            using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+            try
             {
-                func(userData, command);
-
+                if (!(openConnection.Connect())) return;
             }
-            if (!(openConnection.CloseConnect())) return;
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+            try
+            {
+                string insert = sqlQuerey;
+                ;
+                using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+                {
+                    func(userData, command);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+            try
+            {
+                if (!(openConnection.CloseConnect())) return;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
 
@@ -78,16 +98,42 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
 
         public int? RunAdd(string sqlQuerey, TestPostData_delegate func, object userData)
         {
-            if (!(openConnection.Connect())) return null;
+            try
+            {
+                if (!(openConnection.Connect())) return null;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
             int? answer = null;
             string insert = sqlQuerey;
-            
-            using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
-            {
-                answer = func(userData, command);
 
+            try
+            {
+                using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+                {
+                    answer = func(userData, command);
+                }
             }
-            if (!(openConnection.CloseConnect())) return null;
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            try
+            {
+                if (!(openConnection.CloseConnect())) return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             return answer;
         }
 
@@ -102,18 +148,44 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
 
         public string RunAddData(string sqlQuerey, Post_delegate func, object userData)
         {
-            if (!(openConnection.Connect())) return null;
+            try
+            {
+                if (!(openConnection.Connect())) return null;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
             string answer = null;
             string insert = sqlQuerey;
-            ;
-            using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
-            {
-                answer = func(userData, command);
 
+            try
+            {
+                using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+                {
+                    answer = func(userData, command);
+                }
             }
-            if (!(openConnection.CloseConnect())) return null;
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
+
+            try
+            {
+                if (!(openConnection.CloseConnect())) return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             return answer;
         }
-
     }
 }

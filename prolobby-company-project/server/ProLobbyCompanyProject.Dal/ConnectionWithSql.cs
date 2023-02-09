@@ -1,11 +1,5 @@
-﻿
-using ProLobbyCompanyProject.Model;
-using ProLobbyCompanyProject.Model.Tables;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 // ConnectionWithSql.cs
 // Implements the connection with SQL class
@@ -32,22 +26,18 @@ namespace ProLobbyCompanyProject.Dal
         /// <summary>   Creates the tables. </summary>
         public void CreateTables()
         {
-            List<TBBusinessCompanyRepresentative> BusinessCompanyRepresentative1 = CreateSqlTables.Data.BusinessCompanyRepresentative.ToList();
+            //Logger.LogEvent("Enter into Init function");
 
-            List<TBCampaigns> Campaigns1 = CreateSqlTables.Data.Campaigns.ToList();
-
-            List<TBDonatedProducts> DonatedProducts1 = CreateSqlTables.Data.DonatedProducts.ToList();
-            List<TBMoneyTracking> MoneyTracking1 = CreateSqlTables.Data.MoneyTracking.ToList();
-
-            List<TBNonProfitOrganization> NonProfitOrganization1 = CreateSqlTables.Data.NonProfitOrganization.ToList();
-
-            List<TBProLobbyOwner> ProLobbyOwner1 = CreateSqlTables.Data.ProLobbyOwner.ToList();
-
-            List<TBShippers> Shippers1 = CreateSqlTables.Data.Shippers.ToList();
-
-            List<TBSocialActivists> SocialActivists1 = CreateSqlTables.Data.SocialActivists.ToList();
-
-            List<TBPostsTracking> PostsTracking1 = CreateSqlTables.Data.PostsTracking.ToList();
+            try
+            {
+                CreateSqlTables.Data.ProLobbyOwner.ToList();
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine(Ex.Message);
+                Console.WriteLine(Ex.StackTrace);
+                return;
+            }
         }
     }
 }

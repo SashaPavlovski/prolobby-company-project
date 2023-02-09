@@ -1,13 +1,4 @@
-﻿
-
-
-using ProLobbyCompanyProject.Model;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 
 //SqlQueryClasses\SqlQuery.cs
 //Implements the SQL query class
@@ -17,13 +8,6 @@ namespace ProLobbyCompanyProject.Dal
     {
         /// <summary>   The open connection. </summary>
         OpenConnection openConnection = new OpenConnection();
-
-
-        /// <summary>   Creates the tables. </summary>
-        public void CreateTables()
-        {
-            ConnectionWithSql._ConnectionWithSql.CreateTables();
-        }
 
 
         /// <param name="reader">   The reader. </param>
@@ -54,19 +38,61 @@ namespace ProLobbyCompanyProject.Dal
         /// <returns>   An object. </returns>
         public object RunCommand(string sqlQuerey, SetDataReader_delegate func, SetValues_delegate setValues, string key, string userID, string key2, string value)
         {
-            if (!(openConnection.Connect())) return null;
+            try
+            {
+                if (!(openConnection.Connect())) return null;
+            }
+            catch (SqlException EX)
+            {
+
+                throw;
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
             object userList = null;
 
             string insert = sqlQuerey;
 
-
-            using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+            try
             {
-                setValues(command, key, userID, key2, value);
+                using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+                {
+                    setValues(command, key, userID, key2, value);
 
-                using (SqlDataReader reader = command.ExecuteReader()) userList = func(reader, command, userID);
+                    using (SqlDataReader reader = command.ExecuteReader()) userList = func(reader, command, userID);
+                }
             }
-            if (!(openConnection.CloseConnect())) return null;
+            catch (SqlException EX)
+            {
+
+                throw;
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
+
+
+            try
+            {
+                if (!(openConnection.CloseConnect())) return null;
+
+            }
+            catch (SqlException EX)
+            {
+
+                throw;
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
+
             return userList;
         }
 

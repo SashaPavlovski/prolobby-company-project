@@ -48,10 +48,12 @@
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlClient, Version=4.6.1.5, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SqlClient.4.8.5\lib\net461\System.Data.SqlClient.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -82,6 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDal.cs" />
     <Compile Include="CreateSqlTables.cs" />
     <Compile Include="OpenConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +99,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\cs\Utilities\Utilities\Utilities.csproj">
+      <Project>{A034B5CF-625B-499B-AFD9-25DCD6E24A90}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProLobbyCompanyProject.Model\ProLobbyCompanyProject.Model.csproj">
       <Project>{634ae03c-1751-4965-b22e-8f8c5493fef5}</Project>
       <Name>ProLobbyCompanyProject.Model</Name>

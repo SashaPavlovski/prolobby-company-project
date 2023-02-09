@@ -1,17 +1,11 @@
-﻿
-
-using ProLobbyCompanyProject.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 // SqlQueryClasses\SqlQueryUpdate.cs
 //Implements the SQL query update class
 namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
 {
-
     /// <summary>   A SQL query update. </summary>
     public class SqlQueryUpdate
     {
@@ -19,13 +13,6 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
         public SqlQueryUpdate() { }
         /// <summary>   The open connection. </summary>
         OpenConnection openConnection = new OpenConnection();
-
-        /// <summary>   Creates the tables. </summary>
-        public void CreateTables()
-        {
-            ConnectionWithSql._ConnectionWithSql.CreateTables();
-        }
-
 
         /// <summary>   Updates the user delegate. </summary>
 
@@ -43,16 +30,41 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
         /// <param name="updateData">   Information describing the update. </param>
         public void RunUpdateData(string sqlQuerey, UpdateUser_delegate func, object updateData)
         {
-            if (!openConnection.Connect()) return;
+            try
+            {
+                if (!openConnection.Connect()) return;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
             string insert = sqlQuerey;
 
-            using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+            try
             {
-                func(command, updateData);
-
+                using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+                {
+                    func(command, updateData);
+                }
             }
-            if (!(openConnection.CloseConnect())) return;
+            catch (Exception EX)
+            {
 
+                throw;
+            }
+            
+
+            try
+            {
+                if (!(openConnection.CloseConnect())) return;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 
 //SqlQueryClasses\SqlQueryDelete.cs
 //Implements the SQL query delete class
@@ -19,14 +13,6 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
         /// <summary>   The open connection. </summary>
         OpenConnection openConnection = new OpenConnection();
 
-
-        // <summary>   Creates the tables. </summary>
-        public void CreateTables()
-        {
-            ConnectionWithSql._ConnectionWithSql.CreateTables();
-        }
-
-
         // <summary>   Function delegate. </summary>
         /// <param name="command">      The command. </param>
         /// <param name="UpdateData">   Information describing the update. </param>
@@ -39,14 +25,50 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
         /// <param name="func">         The function. </param>
         public void RunData(string sqlQuerey, string selector, func_delegate func)
         {
-            if (!openConnection.Connect()) return;
+            try
+            {
+                if (!openConnection.Connect()) return;
+            }
+            catch (SqlException SE)
+            {
+
+                throw;
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
             string insert = sqlQuerey;
 
-            using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+            try
             {
-                func(command, selector);
+                using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
+                {
+                    func(command, selector);
+                }
             }
-            if (!(openConnection.CloseConnect())) return;
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+            try
+            {
+                if (!(openConnection.CloseConnect())) return;
+            }
+            catch (SqlException SE)
+            {
+
+                throw;
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
 
         }
     }
