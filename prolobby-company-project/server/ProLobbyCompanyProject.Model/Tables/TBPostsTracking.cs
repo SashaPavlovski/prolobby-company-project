@@ -11,11 +11,15 @@ namespace ProLobbyCompanyProject.Model.Tables
     {
         [Key]
         public int PostsTracking_Id { get; set; }
+        public int MoneyTracking_Id { get; set; }
         public int Campaigns_Id { get; set; }
         public int SocialActivists_Id { get; set; }
-        public int Amount_publications { get; set; }
+        // public int Amount_publications { get; set; }
         public DateTime Date { get; set; }
         public bool Active { get; set; }
+        public string Tweets_Message { get; set; }
+        public int Retweets_Count { get; set; }
+        public string Tweets_Message_Id { get; set; }
 
     }
 }

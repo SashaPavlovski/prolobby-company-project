@@ -14,6 +14,10 @@ namespace ProLobbyCompanyProject.Model.Twitter
         public string Twitter_user { get; set; }
         public string Hashtag { get; set; }
         public double Accumulated_money { get; set; }
+        public DateTime? Date { get; set; }//יותר משבוע אז לא מחזירים
+        public string Answer { get; set; }
+        public string Tweets_Message_Id { get; set; }
+
 
     }
 }
