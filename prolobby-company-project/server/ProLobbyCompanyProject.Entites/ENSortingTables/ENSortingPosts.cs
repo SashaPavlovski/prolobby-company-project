@@ -1,21 +1,22 @@
-﻿using ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns;
-using ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts;
-using ProLobbyCompanyProject.Model.SortingTables.SortingCampaigns;
+﻿using ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts;
+using ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers;
+using ProLobbyCompanyProject.Entites;
 using ProLobbyCompanyProject.Model.SortingTables.SortingPosts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
-namespace ProLobbyCompanyProject.Entites.ENSortingTables
+namespace ProLobbyCompanyProject
 {
-    public class ENSortingPosts
+    public partial class Twitter : BaseEntity
     {
-        public ENSortingPosts() { dSSortingPostsDefault = new DSSortingPostsDefault(); }
-
         DSSortingPostsDefault dSSortingPostsDefault;
-
+        public Twitter(Logger logger) : base(logger)
+        {
+            dSSortingPostsDefault = new DSSortingPostsDefault(base.Logger);
+            dSSortingUsersDefault = new DSSortingUsersDefault(base.Logger);
+            dSSortingUsersByCompany = new DSSortingUsersByCompany(base.Logger);
+            dSSortingUsersByOrganization = new DSSortingUsersByOrganization(base.Logger);
+        }
         public List<TBSortingPosts> GetSortingPosts(string CaseOf)
         {
             if (CaseOf == "1") return dSSortingPostsDefault.GetByDate();

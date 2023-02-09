@@ -1,19 +1,11 @@
-﻿using ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns;
-using ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers;
-using ProLobbyCompanyProject.Model.SortingTables.SortingCampaigns;
+﻿using ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers;
 using ProLobbyCompanyProject.Model.SortingTables.SortingUsers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProLobbyCompanyProject.Entites.ENSortingTables
+namespace ProLobbyCompanyProject
 {
-    public class ENSortingUsers
+    public partial class Twitter
     {
-        public ENSortingUsers() { dSSortingUsersDefault = new DSSortingUsersDefault(); dSSortingUsersByCompany = new DSSortingUsersByCompany(); dSSortingUsersByOrganization = new DSSortingUsersByOrganization(); }
-
         DSSortingUsersDefault dSSortingUsersDefault;
         DSSortingUsersByCompany dSSortingUsersByCompany;
         DSSortingUsersByOrganization dSSortingUsersByOrganization;

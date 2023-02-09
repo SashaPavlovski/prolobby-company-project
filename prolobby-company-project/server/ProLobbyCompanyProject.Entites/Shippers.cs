@@ -1,72 +1,60 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	Shippers.cs
-//
-// summary:	Implements the shippers class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
-using ProLobbyCompanyProject.Data.Sql.Shippers;
-using ProLobbyCompanyProject.Data.Sql.Twitter;
-using ProLobbyCompanyProject.Model.MoneyTracking;
+﻿using ProLobbyCompanyProject.Data.Sql.Shippers;
 using ProLobbyCompanyProject.Model.Shippers;
-using ProLobbyCompanyProject.Model.Twitter;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProLobbyCompanyProject.Entites
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   A shippers. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public class Shippers
+    public partial class BusinessCompanyRepresentatives: BaseEntity
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public Shippers() { }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Posts a product. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="productData">  Information describing the product. </param>
-        ///
-        /// <returns>   A string. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        DSShippersBuy dSShippersBuy;
+        DSShippersDonated dSShippersDonated;
+        DSShippersDeliveryListGet dsShippersDeliveryListGet;
+        DSShippersDeliveryProductSet dsShippersDeliveryProductSet;
 
         public string PostProduct(MAbuyProduct productData)
         {
-            if (productData == null) return null;
-            DSShippersBuy dSShippersBuy = new DSShippersBuy();
+            Logger.LogEvent("Enter into PostProduct function");
+
+            if (productData == null)
+            {
+                Logger.LogError("The received MAbuyProduct class is not valid in PostProduct function");
+
+                return null;
+            } 
+
             return dSShippersBuy.PostProduct(productData);
         }
 
         public string PostDonationProduct(MAbuyProduct productData)
         {
-            if (productData == null) return null;
-            DSShippersDonated dSShippersDonated = new DSShippersDonated();
+            Logger.LogEvent("Enter into PostDonationProduct function");
+
+            if (productData == null)
+            {
+                Logger.LogError("The received MAbuyProduct class is not valid in PostDonationProduct function");
+
+                return null;
+            }
+
             return dSShippersDonated.PostDonatedProduct(productData);
         }
 
         public List<MADeliveryProductList> GetDeliveryList()
         {
-            DSShippersDeliveryListGet dsShippersDeliveryListGet = new DSShippersDeliveryListGet();
+            Logger.LogEvent("Enter into GetDeliveryList function");
+
             return dsShippersDeliveryListGet.GetDeliveryListProduct();
         }
 
         public void SetProductDelivery(string idUser)
         {
-            DSShippersDeliveryProductSet dsShippersDeliveryProductSet = new DSShippersDeliveryProductSet();
+            Logger.LogEvent("Enter into SetProductDelivery function");
+
+            if (idUser == null)
+            {
+                Logger.LogError("The received idUser is not valid in SetProductDelivery function");
+            }
+
             dsShippersDeliveryProductSet.SendingDeliveryProduct(idUser);
         }
     }

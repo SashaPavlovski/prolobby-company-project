@@ -1,51 +1,25 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	ProLobbyOwner.cs
-//
-// summary:	Implements the pro lobby owner class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-using ProLobbyCompanyProject.Data.Sql;
+﻿using ProLobbyCompanyProject.Data.Sql;
 using ProLobbyCompanyProject.Data.Sql.ProLobbyOwner;
-using ProLobbyCompanyProject.Data.Sql.SocialActivists;
 using ProLobbyCompanyProject.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Entites
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   A pro lobby owner. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public class ProLobbyOwner
+    public class ProLobbyOwner: BaseEntity
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        DSProLobbyOwnerGet dSUserData;
+        DSProLobbyOwnerPost userOwnerPost;
+        DSProLobbyOwnerUpdate usersNewData;
 
-        public ProLobbyOwner() { }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Checking if exist user. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="UI">   The user interface. </param>
-        ///
-        /// <returns>   A List&lt;TBProLobbyOwner&gt; </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        public ProLobbyOwner(Logger logger):base(logger)
+        {
+            DSProLobbyOwnerGet dSUserData = new DSProLobbyOwnerGet(base.Logger);
+            DSProLobbyOwnerPost userOwnerPost = new DSProLobbyOwnerPost(base.Logger);
+            DSProLobbyOwnerUpdate usersNewData = new DSProLobbyOwnerUpdate(base.Logger);
+        }
         public List<TBProLobbyOwner> CheckingIfExistUser(string UI)
         {
-            DSProLobbyOwnerGet dSUserData = new DSProLobbyOwnerGet();
             return dSUserData.GetProLobbyOwnerUserRow(UI);
         }
 
@@ -59,7 +33,6 @@ namespace ProLobbyCompanyProject.Entites
 
         public void PostUsersOwner(TBProLobbyOwner userOwnerData)
         {
-            DSProLobbyOwnerPost userOwnerPost = new DSProLobbyOwnerPost();
             userOwnerPost.PostUsersData(userOwnerData);
         }
 
@@ -73,7 +46,6 @@ namespace ProLobbyCompanyProject.Entites
 
         public void UpdateActivist(TBProLobbyOwner updateUserData)
         {
-            DSProLobbyOwnerUpdate usersNewData = new DSProLobbyOwnerUpdate();
             usersNewData.UpdateUsersData(updateUserData);
         }
     }

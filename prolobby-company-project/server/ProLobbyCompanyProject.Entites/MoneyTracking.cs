@@ -1,63 +1,45 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	MoneyTracking.cs
-//
-// summary:	Implements the money tracking class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+﻿using ProLobbyCompanyProject.Data.Sql;
 using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
+using ProLobbyCompanyProject.Data.Sql.SocialActivists;
 using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.MoneyTracking;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Entites
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   A money tracking. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public class MoneyTracking
+    public partial class SocialActivists: BaseEntity
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Default constructor. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public MoneyTracking() { }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Posts a data tracking. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="moneyTracking">    The money tracking. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public void PostDataTracking(TBMoneyTracking moneyTracking)
+        DSMoneyTrackingPost newData;
+        DSMoneyTrackingGetUserMoney dSMoneyTrackingGetUserMoney;
+        public SocialActivists(Logger logger) : base(logger)
         {
-            DSMoneyTrackingPost newData = new DSMoneyTrackingPost();
-            newData.PostMoneyTracking(moneyTracking);
+            newData = new DSMoneyTrackingPost(base.Logger);
+            dSMoneyTrackingGetUserMoney = new DSMoneyTrackingGetUserMoney(base.Logger);
+            dSUserData = new DSSocialActivistsGet(base.Logger);
+            usersComments = new DSSocialActivistsPost(base.Logger);
+            usersNewData = new DSSocialActivistsUpdate(base.Logger);
+
+            Logger.LogEvent("initialization of classes in SocialActivists constructor");
+
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Gets money data. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="idUser">   The identifier user. </param>
-        ///
-        /// <returns>   The money data. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Entering financial data of the social activists
+        public void PostDataTracking(TBMoneyTracking moneyTracking)
+        {
+            Logger.LogEvent("Enter into PostDataTracking function");
 
+            newData.PostMoneyTracking(moneyTracking);
+
+            Logger.LogEvent("End PostDataTracking function");
+
+        }
+
+        //Receiving financial data of the social activists
         public List<MAMoneyTracking> GetMoneyData(string idUser)
         {
-            DSMoneyTrackingGetUserMoney dSMoneyTrackingGetUserMoney = new DSMoneyTrackingGetUserMoney();
+            Logger.LogEvent("Enter into GetMoneyData function");
+
             return dSMoneyTrackingGetUserMoney.GetMonetDataRow(idUser);
         }
     }

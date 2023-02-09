@@ -1,71 +1,44 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-// file:	NonProfitOrganizations.cs
-//
-// summary:	Implements the non profit organizations class
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using ProLobbyCompanyProject.Data.Sql;
+﻿using ProLobbyCompanyProject.Data.Sql;
 using ProLobbyCompanyProject.Data.Sql.NonProfitOrganizations;
-using ProLobbyCompanyProject.Data.Sql.ProLobbyOwner;
 using ProLobbyCompanyProject.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProLobbyCompanyProject.Entites
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>   A non profit organizations. </summary>
-    ///
-    /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public class NonProfitOrganizations
+    public partial class NonProfitOrganizations: BaseEntity
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Checking if exist user. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="UI">   The user interface. </param>
-        ///
-        /// <returns>   A List&lt;TBNonProfitOrganization&gt; </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        DSNonProfitOrganizationsGet dSUserData;
+        DSNonProfitOrganizationsPost usersComments;
+        DSNonProfitOrganizationsUpdate usersNewData;
 
+        //Checking whether there is a user representative of an organization
         public List<TBNonProfitOrganization> CheckingIfExistUser(string UI)
         {
-            DSNonProfitOrganizationsGet dSUserData = new DSNonProfitOrganizationsGet();
+            Logger.LogEvent("Enter into CheckingIfExistUser function");
+
             return dSUserData.GetNonProfitUserRow(UI);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Posts the users organization. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="userOrganizationData"> Information describing the user organization. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Entering data of an organization representative
         public void PostUsersOrganization(TBNonProfitOrganization userOrganizationData)
         {
-            DSNonProfitOrganizationsPost usersComments = new DSNonProfitOrganizationsPost();
+            Logger.LogEvent("Enter into PostUsersOrganization function");
+
             usersComments.PostUsersData(userOrganizationData);
+
+            Logger.LogEvent("End PostUsersOrganization function");
+
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Updates the activist described by updateUserData. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="updateUserData">   Information describing the update user. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Updating data of an organization representative
         public void UpdateActivist(TBNonProfitOrganization updateUserData)
         {
-            DSNonProfitOrganizationsUpdate usersNewData = new DSNonProfitOrganizationsUpdate();
+            Logger.LogEvent("Enter into UpdateActivist function");
+
             usersNewData.UpdateUsersData(updateUserData);
+
+            Logger.LogEvent("End UpdateActivist function");
+
         }
 
     }

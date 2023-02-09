@@ -1,57 +1,56 @@
-﻿
-using ProLobbyCompanyProject.Data.Sql;
-using ProLobbyCompanyProject.Data.Sql.Campaigns;
-using ProLobbyCompanyProject.Data.Sql.DonatedProducts;
-using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
+﻿using ProLobbyCompanyProject.Data.Sql.Campaigns;
 using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Campaigns;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 // file:	Campaigns.cs
 // summary:	Implements the campaigns class
 
 namespace ProLobbyCompanyProject.Entites
 {
-    public class Campaigns
+    public partial class NonProfitOrganizations: BaseEntity
     {
-
-        public Campaigns() { }
+        DSCampaignsGet dSCampaignsGet;
+        DSCampaignsPost dSCampaignsPost;
+        DSCampaignsByIdGet dSCampaignsByIdGet;
+        DSCampaignsDelete dSCampaignsDelete;
 
 
         /// <summary>   Gets campaign name and Check if it exists. </summary>
         /// <returns>   The answer if it exists. </returns>
-
         public string GetCampaignName(TBCampaigns Campaign)
         {
-            DSCampaignsGet dSCampaignsGet = new DSCampaignsGet();
-            DSCampaignsPost dSCampaignsPost = new DSCampaignsPost();
-            List<TBCampaigns> CampaignsList = dSCampaignsGet.GetCampaignRow(Campaign);
+            Logger.LogEvent("Enter into GetCampaignName function");
 
-
-            if (CampaignsList == null)
+            if (Campaign != null)
             {
-                int? answer = dSCampaignsPost.PostCampaignRow(Campaign);
-                if (answer != null && answer == -1) return "Exists";
-                else if (answer != null && answer == 1) return "Not exists";
+                List<TBCampaigns> CampaignsList = dSCampaignsGet.GetCampaignRow(Campaign);
+
+                if (CampaignsList == null)
+                {
+                    int? answer = dSCampaignsPost.PostCampaignRow(Campaign);
+                    if (answer != null && answer == -1) return "Exists";
+                    else if (answer != null && answer == 1) return "Not exists";
+                }
+                else if (CampaignsList != null) return "Exists";
             }
-            else if (CampaignsList != null) return "Exists";
+
+            Logger.LogError("End GetCampaignName function and TBCampaigns class is null");
 
             return null;
-
         }
 
         /// <summary>   Gets the campaigns. </summary>
         /// <returns>   The campaigns. </returns>
         public List<TBCampaigns> GetCampaigns()
         {
-            DSCampaignsGet dSCampaignsGet = new DSCampaignsGet();
-            List<TBCampaigns> CampaignsList = dSCampaignsGet.GetCampaignList();
-            return CampaignsList;
+            Logger.LogEvent("Enter into GetCampaigns function");
 
+            List<TBCampaigns> CampaignsList = dSCampaignsGet.GetCampaignList();
+
+            Logger.LogEvent("End GetCampaigns function");
+
+            return CampaignsList;
         }
 
         /// <summary>   Gets about campaign. </summary>
@@ -59,24 +58,55 @@ namespace ProLobbyCompanyProject.Entites
         /// <returns>   The about campaign. </returns>
         public MAboutCampaign GetAboutCampaign(string campaignId)
         {
-            DSCampaignsGet dSCampaignsGet = new DSCampaignsGet();
-            return dSCampaignsGet.GetDataAboutCampaign(campaignId);
+            if (campaignId != null)
+            {
+                Logger.LogEvent("Enter into GetAboutCampaign function");
+
+                return dSCampaignsGet.GetDataAboutCampaign(campaignId);
+            }
+
+            Logger.LogError("End GetAboutCampaign function ang get null in campaignId");
+
+            return null;
         }
 
         /// <summary>   Removes the campaign data described by campaignId. </summary>
         /// <param name="campaignId">   Identifier for the campaign. </param>
         public void RemoveCampaignData(string campaignId)
         {
-            DSCampaignsDelete dSCampaignsDelete = new DSCampaignsDelete();
-            dSCampaignsDelete.DeleteDataCampaign(campaignId);
+            Logger.LogEvent("Enter into RemoveCampaignData function");
+
+            if (campaignId != null)
+            {
+                dSCampaignsDelete.DeleteDataCampaign(campaignId);
+
+                Logger.LogEvent("End RemoveCampaignData function");
+
+                return;
+            }
+
+            Logger.LogError("End RemoveCampaignData function and campaignId is null");
+
         }
 
         //Acceptance of the campaigns by id
         public List<TBCampaigns> GetByIdCampaigns(string organizationId)
         {
-            DSCampaignsByIdGet dSCampaignsByIdGet = new DSCampaignsByIdGet();
-            List<TBCampaigns> CampaignsList = dSCampaignsByIdGet.GetCampaignsById(organizationId);
-            return CampaignsList;
+            Logger.LogEvent("Enter into GetByIdCampaigns function");
+
+            if (organizationId != null)
+            {
+                List<TBCampaigns> CampaignsList = dSCampaignsByIdGet.GetCampaignsById(organizationId);
+
+                Logger.LogEvent("End GetByIdCampaigns function");
+
+                return CampaignsList;
+            }
+
+            Logger.LogError("End GetByIdCampaigns function and organizationId is null");
+
+            return null;
+
         }
     }
 
