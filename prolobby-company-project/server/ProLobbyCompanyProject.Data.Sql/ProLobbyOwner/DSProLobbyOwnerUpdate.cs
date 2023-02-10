@@ -1,5 +1,6 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 // file:	ProLobbyOwner\DSProLobbyOwnerUpdate.cs
@@ -9,18 +10,25 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
 {
     public class DSProLobbyOwnerUpdate: BaseDataSql
     {
-        public DSProLobbyOwnerUpdate(Logger Logger) : base(Logger) { }
+        SqlQueryUpdate sqlQuery;
+        public DSProLobbyOwnerUpdate(Logger Logger) : base(Logger)
+        {
+            sqlQuery = new SqlQueryUpdate();
+        }
 
         /// <summary>   Updates the new data. </summary>
-        /// <param name="command">      The command. </param>
-        /// <param name="newUserData">  Information describing the new user. </param>
+        /// <param name="command">  SQL connection. </param>
+        /// <param name="newUserData">  The new data of the owner. </param>
         public void UpdateNewData(System.Data.SqlClient.SqlCommand command, object newUserData)
         {
+            Logger.LogEvent("Enter into UpdateNewData function");
 
-            if (command == null && (newUserData == null)) return;
+            if (command != null && (newUserData != null))
             {
                 if (newUserData is TBProLobbyOwner)
                 {
+                    Logger.LogEvent("Updates the new data");
+
                     try
                     {
                         TBProLobbyOwner proLobbyOwnerPost = (TBProLobbyOwner)newUserData;
@@ -29,7 +37,16 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
                         command.Parameters.AddWithValue("@LastName", proLobbyOwnerPost.LastName);
                         command.Parameters.AddWithValue("@Email", proLobbyOwnerPost.Email);
                         command.Parameters.AddWithValue("@Phone_number", proLobbyOwnerPost.Phone_number);
+
                         int rows = command.ExecuteNonQuery();
+
+                        Logger.LogEvent("End UpdateNewData function successfully");
+
+                    }
+                    catch (SqlException EX)
+                    {
+
+                        throw;
                     }
                     catch (System.Exception EX)
                     {
@@ -41,18 +58,22 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
         }
 
 
-        /// <summary>   The pro lobby owner id]. </summary>
+        /// <summary>  sql query. </summary>
         string insertUpdate = "update [dbo].[TBProLobbyOwners] set [FirstName] = @FirstName , [LastName] = @LastName,\r\n[Email]=@Email,[Phone_number] = @Phone_number \r\nwhere [ProLobbyOwner_Id] =  @ProLobbyOwner_Id";
 
 
-        /// <summary>   Updates the users data described by NewData. </summary>
-        /// <param name="NewData">  Information describing the new. </param>
+        /// <summary>   Updates the users data. </summary>
+        /// <param name="NewData"> New information user data. </param>
         public void UpdateUsersData(TBProLobbyOwner NewData)
         {
+            Logger.LogEvent("Enter into UpdateUsersData function");
+
             try
             {
-                SqlQueryUpdate sqlQuery = new SqlQueryUpdate();
                 sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
+
+                Logger.LogEvent("End UpdateUsersData function successfully");
+
             }
             catch (System.Exception EX)
             {

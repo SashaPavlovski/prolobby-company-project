@@ -2,8 +2,8 @@
 using ProLobbyCompanyProject.Model;
 using Utilities.Logger;
 
-// file:	SocialActivists\DSSocialActivistsPost.cs
-// summary:	Implements the ds social activists post class
+/// file:	SocialActivists\DSSocialActivistsPost.cs
+/// summary:	Implements the ds social activists post class
 
 namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
 {
@@ -55,7 +55,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
 
         }
 
-        /// <summary>   The insert. </summary>
+        /// <summary>   sql query insert social activist data. </summary>
         string insert = "insert into [dbo].[TBSocialActivists] values (@FirstName,@LastName,@Address,@Email,@Twitter_user,@Phone_number,@User_Id,getdate())";
 
         /// <summary>   Posts the users data. </summary>

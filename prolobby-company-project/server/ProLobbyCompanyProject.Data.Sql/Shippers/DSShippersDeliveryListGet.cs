@@ -1,55 +1,103 @@
 ﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model.Shippers;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.Shippers
 {
     public class DSShippersDeliveryListGet: BaseDataSql
     {
-        //Receiving a shipment schedule
-        public DSShippersDeliveryListGet(Logger Logger) : base(Logger) { }
-        public object AddDeliveryList(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
-        {
-            List<MADeliveryProductList> DeliveryListData = new List<MADeliveryProductList>();
-            if (reader.HasRows)
-            {
-                try
-                {
-                    while (reader.Read())
-                    {
-                        DeliveryListData.Add(new MADeliveryProductList() { Shippers_Id = int.Parse(reader["Shippers_Id"].ToString()), FullName = reader["Full_Name"].ToString(), Product_Name = reader["Product_Name"].ToString(), Phone_number = reader["Phone_number"].ToString(), Email = reader["Email"].ToString(), Address = reader["Address"].ToString(), Sent = bool.Parse(reader["Sent"].ToString()) });
-                    }
-                }
-                catch (System.Exception EX)
-                {
+        SqlQuery SqlQuery;
 
-                    throw;
-                }
-                return DeliveryListData;
-            }
-            return null;
+        public DSShippersDeliveryListGet(Logger Logger) : base(Logger)
+        {
+            SqlQuery = new SqlQuery();
         }
 
 
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        /// <summary>
+        /// Get list of delivery details.
+        /// </summary>
+        /// <param name="reader"> Get data from the sql. </param>
+        /// <param name="command"> SQL connection. </param>
+        /// <param name="UserId"></param>
+        /// <returns> list of delivery details. </returns>
+        public object AddDeliveryList(SqlDataReader reader, SqlCommand command, string UserId)
+        {
+            Logger.LogEvent("Enter into AddDeliveryList function");
+
+            List<MADeliveryProductList> DeliveryListData = new List<MADeliveryProductList>();
+
+            try
+            {
+                if (reader.HasRows)
+                {
+                    Logger.LogEvent("Start get list of delivery details.");
+
+                    while (reader.Read())
+                    {
+                        DeliveryListData.Add(new MADeliveryProductList
+                        {
+                            Shippers_Id = int.Parse(reader["Shippers_Id"].ToString()),
+                            FullName = reader["Full_Name"].ToString(),
+                            Product_Name = reader["Product_Name"].ToString(),
+                            Phone_number = reader["Phone_number"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Address = reader["Address"].ToString(),
+                            Sent = bool.Parse(reader["Sent"].ToString())
+                        });
+                    }
+
+                    Logger.LogEvent("End AddDeliveryList function, return list of delivery.");
+
+                    return DeliveryListData;
+                }
+
+                Logger.LogEvent("End AddDeliveryList function, return null.");
+
+                return null;
+            }
+            catch (SqlException EX)
+            {
+
+                throw;
+            }
+            catch (System.Exception EX)
+            {
+
+                throw;
+            }
+        }
+
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             return;
         }
 
-        //Creating a shipping table
+        /// <summary>
+        /// sql query that get data of the shipments
+        /// </summary>
         string insertGetData = "select TB2.Shippers_Id,TB3.Product_Name,TB1.FirstName +' ' +TB1.LastName AS 'Full_Name',TB1.Email,\r\nTB1.Phone_number,TB1.Address,TB2.Sent\r\nfrom [dbo].[TBSocialActivists] TB1 inner join [dbo].[TBShippers] TB2\r\non TB1.SocialActivists_Id =  TB2.SocialActivists_Id inner join [dbo].[TBDonatedProducts] TB3 \r\non TB2.DonatedProducts_Id = TB3.DonatedProducts_Id";
 
-        //Sending to dal
-        //Receiving a list of Delivery
+
+        /// <summary>
+        /// Get delivery details of social activists
+        /// </summary>
+        /// <returns> List of Delivery data. </returns>
         public List<MADeliveryProductList> GetDeliveryListProduct()
         {
-            SqlQuery sqlQuery1 = new SqlQuery();
+            Logger.LogEvent("Enter into GetDeliveryListProduct function");
+
             List<MADeliveryProductList> newData = null;
             object listNewData;
+
             try
             {
-                listNewData = sqlQuery1.RunCommand(insertGetData, AddDeliveryList, SetValues, null, null, null, null);
+                listNewData = SqlQuery.RunCommand(insertGetData, AddDeliveryList, SetValues, null, null, null, null);
+
+                Logger.LogEvent("The operation of receiving the details of the shipments was done successfully");
+
             }
             catch (System.Exception EX)
             {
@@ -57,10 +105,19 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
                 throw;
             }
 
-            if (listNewData is List<MADeliveryProductList>)
+            if (listNewData != null && listNewData is List<MADeliveryProductList>)
             {
                 newData = (List<MADeliveryProductList>)listNewData;
+
+                Logger.LogEvent("End GetDeliveryListProduct function, return Delivery list");
+
+
+                return newData;
+
             }
+
+            Logger.LogEvent("End GetDeliveryListProduct function, return null");
+
             return newData;
         }
 

@@ -2,24 +2,39 @@
 using ProLobbyCompanyProject.Model.SortingTables.SortingCampaigns;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
 {
-    public class DSSortingCampaignsByAmountUsers: BaseDataSql
+    public class DSSortingCampaignsByAmountUsers : BaseDataSql
     {
-        //Sorting campaigns according to the number of users who follow the campaign
-        public DSSortingCampaignsByAmountUsers(Logger Logger) : base(Logger) { }
-        public object AddSortingCampaigns(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
+        SqlQuery SqlQuery;
+
+        public DSSortingCampaignsByAmountUsers(Logger Logger) : base(Logger)
         {
+            SqlQuery = new SqlQuery();
+        }
+
+        /// <summary>
+        /// Sorting campaigns according to the number of users who follow the campaign
+        /// </summary>
+        /// <param name="reader"> Get data from sql. </param>
+        /// <param name="command"> SQL connection. </param>
+        /// <param name="campaignName"></param>
+        /// <returns> List of reports sorting campaigns by activists. </returns>
+        public object AddSortingCampaigns(SqlDataReader reader, SqlCommand command, string campaignName)
+        {
+            Logger.LogEvent("Enter into AddSortingCampaigns function");
+
             List<TBSortingCampaigns> sortingCampaigns = new List<TBSortingCampaigns>();
+
             if (reader.HasRows)
             {
                 try
                 {
+                    Logger.LogEvent("Starting sorting campaigns according to the number of users who follow the campaign");
+
                     while (reader.Read())
                     {
                         sortingCampaigns.Add(new TBSortingCampaigns
@@ -28,36 +43,57 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
                             ActivistAmount = int.Parse(reader["ActivistAmount"].ToString())
                         });
                     }
+
+                    Logger.LogEvent("End AddSortingCampaigns function, return campaign list");
+
+                    return sortingCampaigns;
+                }
+                catch (SqlException EX)
+                {
+
+                    throw;
                 }
                 catch (Exception EX)
                 {
 
                     throw;
                 }
-                return sortingCampaigns;
+
             }
+
+            Logger.LogEvent("End AddSortingCampaigns function, return null");
+
             return null;
         }
 
 
 
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             return;
         }
 
-            string insert = "select COUNT([SocialActivists_Id]) as ActivistAmount,\r\n[dbo].[TBCampaigns].Campaigns_Name\r\nfrom [dbo].[TBMoneyTrackings] inner join [dbo].[TBCampaigns]\r\non [dbo].[TBMoneyTrackings].Campaigns_Id = [dbo].[TBCampaigns].Campaigns_Id\r\ngroup by [dbo].[TBCampaigns].Campaigns_Name \r\nORDER BY COUNT([SocialActivists_Id]) desc";
-     
 
+        /// <summary>
+        /// sql query ngroup by activists.
+        /// </summary>
+        string insert = "select COUNT([SocialActivists_Id]) as ActivistAmount,\r\n[dbo].[TBCampaigns].Campaigns_Name\r\nfrom [dbo].[TBMoneyTrackings] inner join [dbo].[TBCampaigns]\r\non [dbo].[TBMoneyTrackings].Campaigns_Id = [dbo].[TBCampaigns].Campaigns_Id\r\ngroup by [dbo].[TBCampaigns].Campaigns_Name \r\nORDER BY COUNT([SocialActivists_Id]) desc";
+
+        /// <summary>
+        /// Sorting the reports of the campaigns by activists.
+        /// </summary>
+        /// <returns> List of reports sorting campaigns by activists. </returns>
         public List<TBSortingCampaigns> GetSortingCampaignsByAmountUsers()
         {
-            SqlQuery sqlQuery1 = new SqlQuery();
+            Logger.LogEvent("Enter into GetSortingCampaignsByAmountUsers function");
+
             List<TBSortingCampaigns> sortingCampaigns = null;
 
             object listSortingCampaigns;
+
             try
             {
-                listSortingCampaigns = sqlQuery1.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
+                listSortingCampaigns = SqlQuery.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
             }
             catch (Exception EX)
             {
@@ -72,7 +108,14 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
                 {
                     sortingCampaigns = (List<TBSortingCampaigns>)listSortingCampaigns;
                 }
+
+                Logger.LogEvent("End GetSortingCampaignsByAmountUsers function, return campaign list");
+
+                return sortingCampaigns;
             }
+
+            Logger.LogEvent("End GetSortingCampaignsByAmountUsers function, return null");
+
             return sortingCampaigns;
         }
     }

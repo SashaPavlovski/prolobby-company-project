@@ -1,6 +1,7 @@
 ﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using Utilities.Logger;
 
@@ -49,6 +50,11 @@ namespace ProLobbyCompanyProject.Data.Sql
                         Logger.LogEvent("The data was received successfully");
 
                     }
+                    catch (SqlException EX)
+                    {
+
+                        throw;
+                    }
                     catch (System.Exception EX)
                     {
 
@@ -83,6 +89,11 @@ namespace ProLobbyCompanyProject.Data.Sql
 
                 Logger.LogEvent("Done successfully");
 
+            }
+            catch (SqlException EX)
+            {
+
+                throw;
             }
             catch (System.Exception EX)
             {

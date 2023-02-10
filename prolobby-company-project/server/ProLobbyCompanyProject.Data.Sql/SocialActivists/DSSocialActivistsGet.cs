@@ -1,6 +1,7 @@
 ﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 // file:SocialActivists\DSSocialActivistsGet.cs
@@ -21,7 +22,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <param name="command">  The command. </param>
         /// <param name="UserId">   Identifier for the user. </param>
         /// <returns>   An object TBSocialActivists List . </returns>
-        public object AddSocialActivistsInformation(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
+        public object AddSocialActivistsInformation(SqlDataReader reader, SqlCommand command, string UserId)
         {
             Logger.LogEvent("Enter into AddSocialActivistsInformation function");
 
@@ -47,6 +48,11 @@ namespace ProLobbyCompanyProject.Data.Sql
                         });
                     }
                 }
+                catch (SqlException EX)
+                {
+
+                    throw;
+                }
                 catch (System.Exception EX)
                 {
 
@@ -64,7 +70,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         }
 
 
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             Logger.LogEvent("Enter into SetValues function");
 
@@ -74,6 +80,11 @@ namespace ProLobbyCompanyProject.Data.Sql
             {
                 command.Parameters.AddWithValue($"@{key}", value);
             }
+            catch (SqlException EX)
+            {
+
+                throw;
+            }
             catch (System.Exception EX)
             {
 
@@ -81,8 +92,9 @@ namespace ProLobbyCompanyProject.Data.Sql
             }
         }
 
-        /// <summary>   The insert social activists. </summary>
+        /// <summary>  sql query. </summary>
         string insertSocialActivists = "if exists (select  [User_Id]  from [dbo].[TBSocialActivists] where [User_Id] = @User_Id)\r\nbegin\r\n       select SocialActivists_Id,[FirstName],[LastName],[Address],[Email],[Twitter_user],[Phone_number]\r\n\t   from [dbo].[TBSocialActivists]\r\n\t   where [User_Id] = @User_Id\r\nend";
+
 
         /// <summary>   Gets social activists row. </summary>
         /// <param name="IdUser">   The identifier user. </param>

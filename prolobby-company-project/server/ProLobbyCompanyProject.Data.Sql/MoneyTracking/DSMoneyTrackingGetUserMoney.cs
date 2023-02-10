@@ -2,6 +2,7 @@
 using ProLobbyCompanyProject.Model.MoneyTracking;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 
@@ -60,6 +61,11 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
                         return moneyTracking;
 
                     }
+                    catch (SqlException EX)
+                    {
+
+                        throw;
+                    }
                     catch (Exception EX)
                     {
 
@@ -99,6 +105,11 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
 
                 Logger.LogEvent("End SetValues function");
 
+            }
+            catch (SqlException EX)
+            {
+
+                throw;
             }
             catch (Exception EX)
             {

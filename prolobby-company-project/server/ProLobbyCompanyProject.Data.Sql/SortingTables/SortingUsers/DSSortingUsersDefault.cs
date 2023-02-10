@@ -2,6 +2,7 @@
 using ProLobbyCompanyProject.Model.SortingTables.SortingUsers;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
@@ -9,20 +10,18 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
     public class DSSortingUsersDefault: BaseDataSql
     {
 
-        SqlQuery sqlQuery1;
+        SqlQuery SqlQuery;
+
         List<TBSortingUsers> sortingUsers = null;
 
         //Sorting of users by social activists or by an owner
         public DSSortingUsersDefault(Logger Logger) : base(Logger)
         {
-            sqlQuery1 = new SqlQuery();
+            SqlQuery = new SqlQuery();
         }
 
 
-        string insertByProLobbyOwners = "select [FirstName] + ' ' + [LastName] as 'FullName',\r\nCONVERT(NVARCHAR(10), [Date],3) AS [Date],[Phone_number],[Email] \r\nfrom [dbo].[TBProLobbyOwners] ORDER BY [Date]";
-
-        string insertBySocialActivists = "select [FirstName] + ' ' + [LastName] as 'FullName',\r\nCONVERT(NVARCHAR(10), [Date],3) AS [Date],[Phone_number],[Email] \r\nfrom [dbo].[TBSocialActivists] ORDER BY [Date]";
-        public object AddSortingProducts(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
+        public object AddSortingProducts(SqlDataReader reader, SqlCommand command, string campaignName)
         {
             List<TBSortingUsers> SortingUsers = new List<TBSortingUsers>();
             if (reader.HasRows)
@@ -42,6 +41,11 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
                         });
                     }
                 }
+                catch (SqlException EX)
+                {
+
+                    throw;
+                }
                 catch (Exception EX)
                 {
 
@@ -54,17 +58,22 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
 
 
 
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             return;
         }
 
+        string insertByProLobbyOwners = "select [FirstName] + ' ' + [LastName] as 'FullName',\r\nCONVERT(NVARCHAR(10), [Date],3) AS [Date],[Phone_number],[Email] \r\nfrom [dbo].[TBProLobbyOwners] ORDER BY [Date]";
+
+        string insertBySocialActivists = "select [FirstName] + ' ' + [LastName] as 'FullName',\r\nCONVERT(NVARCHAR(10), [Date],3) AS [Date],[Phone_number],[Email] \r\nfrom [dbo].[TBSocialActivists] ORDER BY [Date]";
+
         public List<TBSortingUsers> GetByProLobbyOwners()
         {
             object listSortingUsers;
+
             try
             {
-                listSortingUsers = sqlQuery1.RunCommand(insertByProLobbyOwners, AddSortingProducts, SetValues, null, null, null, null);
+                listSortingUsers = SqlQuery.RunCommand(insertByProLobbyOwners, AddSortingProducts, SetValues, null, null, null, null);
             }
             catch (Exception EX)
             {
@@ -78,6 +87,9 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
                 if (listSortingUsers is List<TBSortingUsers>)
                 {
                     sortingUsers = (List<TBSortingUsers>)listSortingUsers;
+
+                    return sortingUsers;
+
                 }
             }
             return sortingUsers;
@@ -85,9 +97,10 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
         public List<TBSortingUsers> GetBySocialActivists()
         {
             object listSortingUsers;
+
             try
             {
-                listSortingUsers = sqlQuery1.RunCommand(insertBySocialActivists, AddSortingProducts, SetValues, null, null, null, null);
+                listSortingUsers = SqlQuery.RunCommand(insertBySocialActivists, AddSortingProducts, SetValues, null, null, null, null);
             }
             catch (Exception EX)
             {
@@ -101,6 +114,9 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
                 if (listSortingUsers is List<TBSortingUsers>)
                 {
                     sortingUsers = (List<TBSortingUsers>)listSortingUsers;
+
+                    return sortingUsers;
+
                 }
             }
             return sortingUsers;
