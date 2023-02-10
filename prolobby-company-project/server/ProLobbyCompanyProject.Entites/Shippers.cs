@@ -11,20 +11,38 @@ namespace ProLobbyCompanyProject.Entites
         DSShippersDeliveryListGet dsShippersDeliveryListGet;
         DSShippersDeliveryProductSet dsShippersDeliveryProductSet;
 
-        public string PostProduct(MAbuyProduct productData)
+        /// <summary>
+        /// Buying a product by a social activist.
+        /// </summary>
+        /// <param name="productData"> Data on the operator. </param>
+        /// <returns> 
+        /// Operation done successfully,
+        /// Not Enough Money,
+        /// Did not join the campaign.
+        /// </returns>
+        public string BuyProduct(MAbuyProduct productData)
         {
-            Logger.LogEvent("Enter into PostProduct function");
+            Logger.LogEvent("Enter into buyProduct function");
 
             if (productData == null)
             {
-                Logger.LogError("The received MAbuyProduct class is not valid in PostProduct function");
+                Logger.LogError("The received MAbuyProduct class is not valid in BuyProduct function");
 
                 return null;
             } 
 
-            return dSShippersBuy.PostProduct(productData);
+            return dSShippersBuy.ActivistBuyProduct(productData);
         }
 
+        /// <summary>
+        /// Donation a product by a social activist.
+        /// </summary>
+        /// <param name="productData"> Data on the operator. </param>
+        /// <returns> 
+        /// Operation done successfully,
+        /// Not Enough Money,
+        /// Did not join the campaign.
+        /// </returns>
         public string PostDonationProduct(MAbuyProduct productData)
         {
             Logger.LogEvent("Enter into PostDonationProduct function");
@@ -39,6 +57,10 @@ namespace ProLobbyCompanyProject.Entites
             return dSShippersDonated.PostDonatedProduct(productData);
         }
 
+        /// <summary>
+        /// Get delivery list
+        /// </summary>
+        /// <returns> List of Delivery data. </returns>
         public List<MADeliveryProductList> GetDeliveryList()
         {
             Logger.LogEvent("Enter into GetDeliveryList function");
@@ -46,6 +68,10 @@ namespace ProLobbyCompanyProject.Entites
             return dsShippersDeliveryListGet.GetDeliveryListProduct();
         }
 
+        /// <summary>
+        /// Updating the database on sending the product by the representative of a business company.
+        /// </summary>
+        /// <param name="idUser"> Shipper id - Data about the donated product and who bought it. </param>
         public void SetProductDelivery(string idUser)
         {
             Logger.LogEvent("Enter into SetProductDelivery function");

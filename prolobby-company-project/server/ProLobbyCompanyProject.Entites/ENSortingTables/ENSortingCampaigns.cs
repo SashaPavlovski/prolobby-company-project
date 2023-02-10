@@ -10,6 +10,11 @@ namespace ProLobbyCompanyProject.Entites
 {
     public partial class NonProfitOrganizations: BaseEntity
     {
+
+        DSSortingCampaignsDefault dSSortingCampaignsDefault;
+        DSSortingCampaignsByAmountUsers dSSortingCampaignsByAmountUsers;
+        DSSortingCampaignsByAmountProducts dSSortingCampaignsByAmountProducts;
+
         public NonProfitOrganizations(Logger logger) : base(logger)
         {
             dSSortingCampaignsDefault = new DSSortingCampaignsDefault(base.Logger);
@@ -22,16 +27,20 @@ namespace ProLobbyCompanyProject.Entites
             dSUserData = new DSNonProfitOrganizationsGet(base.Logger);
             usersComments = new DSNonProfitOrganizationsPost(base.Logger);
             usersNewData = new DSNonProfitOrganizationsUpdate(base.Logger);
+
+            Logger.LogEvent("Initializing the classes in NonProfitOrganizations constructor");
+
         }
 
-        
-
-        DSSortingCampaignsDefault dSSortingCampaignsDefault;
-        DSSortingCampaignsByAmountUsers dSSortingCampaignsByAmountUsers;
-        DSSortingCampaignsByAmountProducts dSSortingCampaignsByAmountProducts;
-
+        /// <summary>
+        /// Get the reports by sorting.
+        /// </summary>
+        /// <param name="CaseOf"> Sort type from the client </param>
+        /// <returns> list of reports by sorting. </returns>
         public List<TBSortingCampaigns> GetSortingCampaigns(string CaseOf)
         {
+            Logger.LogEvent("Enter into GetSortingCampaigns function");
+
             if (CaseOf == "2") return dSSortingCampaignsDefault.GetByDate();
 
             else if (CaseOf == "4") return dSSortingCampaignsDefault.GetByOrganization();

@@ -12,41 +12,45 @@ namespace ProLobbyCompanyProject.Entites
         DSProLobbyOwnerPost userOwnerPost;
         DSProLobbyOwnerUpdate usersNewData;
 
-        public ProLobbyOwner(Logger logger):base(logger)
+        public ProLobbyOwner(Logger logger) : base(logger)
         {
-            DSProLobbyOwnerGet dSUserData = new DSProLobbyOwnerGet(base.Logger);
-            DSProLobbyOwnerPost userOwnerPost = new DSProLobbyOwnerPost(base.Logger);
-            DSProLobbyOwnerUpdate usersNewData = new DSProLobbyOwnerUpdate(base.Logger);
-        }
-        public List<TBProLobbyOwner> CheckingIfExistUser(string UI)
-        {
-            return dSUserData.GetProLobbyOwnerUserRow(UI);
+            dSUserData = new DSProLobbyOwnerGet(base.Logger);
+            userOwnerPost = new DSProLobbyOwnerPost(base.Logger);
+            usersNewData = new DSProLobbyOwnerUpdate(base.Logger);
+
+            Logger.LogEvent("Initializing the data in the constructor");
+
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Posts the users owner. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="userOwnerData">    Information describing the user owner. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Checking if the proLobby owner exists
+        //Gets the manager's id
+        public List<TBProLobbyOwner> CheckingIfExistUser(string id)
+        {
+            Logger.LogEvent("Enter into CheckingIfExistUser function");
 
+            return dSUserData.GetProLobbyOwnerUserRow(id);
+        }
+
+        //Entering proLobby owner data 
         public void PostUsersOwner(TBProLobbyOwner userOwnerData)
         {
+            Logger.LogEvent("Enter into PostUsersOwner function");
+
             userOwnerPost.PostUsersData(userOwnerData);
+
+            Logger.LogEvent("End PostUsersOwner function");
+
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Updates the activist described by updateUserData. </summary>
-        ///
-        /// <remarks>   Sasha Pavlovski, 1/12/2023. </remarks>
-        ///
-        /// <param name="updateUserData">   Information describing the update user. </param>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public void UpdateActivist(TBProLobbyOwner updateUserData)
+        //Updating the data of proLobby owner
+        public void UpdateUsersOwner(TBProLobbyOwner updateUserData)
         {
+            Logger.LogEvent("Enter into UpdateUsersOwner function");
+
             usersNewData.UpdateUsersData(updateUserData);
+
+            Logger.LogEvent("End UpdateUsersOwner function");
+
         }
     }
 }

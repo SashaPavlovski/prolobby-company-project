@@ -8,13 +8,13 @@ namespace ProLobbyCompanyProject.Entites
 {
     public partial class BusinessCompanyRepresentatives: BaseEntity
     {
-        /// <summary> Checking if exist user. </summary>
-        /// <param name="UI">   The user interface. </param>
         
         DSBusinessCompanyRepresentativesGet dSUserData;
         DSBusinessCompanyRepresentativesPost usersComments;
         DSBusinessCompanyRepresentativesUpdate usersNewData;
 
+        /// <summary> Checking if exist user. </summary>
+        /// <param name="UI">   The user interface. </param>
 
         public List<TBBusinessCompanyRepresentative> CheckingIfExistUser(string UI)
         {

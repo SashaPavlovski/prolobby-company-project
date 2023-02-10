@@ -9,6 +9,5 @@ namespace ProLobbyCompanyProject.Entites
         {
             Logger = logger;
         }
-
     }
 }

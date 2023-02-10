@@ -16,9 +16,20 @@ namespace ProLobbyCompanyProject
             dSSortingUsersDefault = new DSSortingUsersDefault(base.Logger);
             dSSortingUsersByCompany = new DSSortingUsersByCompany(base.Logger);
             dSSortingUsersByOrganization = new DSSortingUsersByOrganization(base.Logger);
+
+            Logger.LogEvent("Initializing the classes in twitter constructor");
+
         }
+
+        /// <summary>
+        /// Get the reports by sorting.
+        /// </summary>
+        /// <param name="CaseOf"> Sort type from the client </param>
+        /// <returns> list of reports by sorting. </returns>
         public List<TBSortingPosts> GetSortingPosts(string CaseOf)
         {
+            Logger.LogEvent("Enter into GetSortingPosts function");
+
             if (CaseOf == "1") return dSSortingPostsDefault.GetByDate();
 
             else if (CaseOf == "2") return dSSortingPostsDefault.GetByTweets();
