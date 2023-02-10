@@ -125,7 +125,7 @@ namespace ProLobbyCompanyProject.MicroServices
                             TBProLobbyOwner UserOwnerData = System.Text.Json.JsonSerializer.Deserialize<TBProLobbyOwner>(requestOwnerBody);
                             if (UserOwnerData.ProLobbyOwner_Id != 0 && UserOwnerData.FirstName != null && UserOwnerData.LastName != null && UserOwnerData.Email != null && UserOwnerData.Phone_number != null)
                             {
-                                MainManager.INSTANCE.ProLobbyOwner.UpdateActivist(UserOwnerData);
+                                MainManager.INSTANCE.ProLobbyOwner.UpdateUsersOwner(UserOwnerData);
                                 return new OkObjectResult("The operation was successful");
                             }
                             return new OkObjectResult("The operation failed");
@@ -350,17 +350,24 @@ namespace ProLobbyCompanyProject.MicroServices
 
                             if (buyProduct != null)
                             {
-                                string answer = MainManager.INSTANCE.BusinessCompanyRepresentatives.PostProduct(buyProduct);
+                                string answer = MainManager.INSTANCE.BusinessCompanyRepresentatives.BuyProduct(buyProduct);
+
                                 if (answer == null) return new OkObjectResult("The operation failed");
+
                                 if (answer.Contains("Succeeded"))
                                 {
                                     var userClient = new TwitterClient(Keys.ApiKey, Keys.ApiKeySecret, Keys.AccessToken, Keys.AccessTokenSecret);
+
                                     await userClient.Users.GetAuthenticatedUserAsync();
+
                                     await userClient.Tweets.PublishTweetAsync($"A product number {buyProduct.DonatedProducts_Id} has been purchased on the website");
+
                                     return new OkObjectResult("The operation was carried out successfully, the package passes through the delivery person");
                                 }
                                 else if (answer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
+
                                 else if (answer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to buy the product you must join the campaign");
+
                                 return new OkObjectResult("failedNotFollowing");
                             }
                             return new OkObjectResult("The operation failed");
@@ -392,11 +399,14 @@ namespace ProLobbyCompanyProject.MicroServices
                                 string answer = MainManager.INSTANCE.BusinessCompanyRepresentatives.PostDonationProduct(donationProduct);
 
                                 if (answer.Contains("Succeeded")) return new OkObjectResult("The operation was carried out successfully,Thanks for the donation");
+
                                 else if (answer.Contains("you do not have enough money")) return new OkObjectResult("We're sorry you don't have enough money for the product");
+
                                 else if (answer.Contains("You are not following the campaign")) return new OkObjectResult("We are sorry, to donate a product you must join the campaign");
 
                                 return new OkObjectResult("failedNotFollowing");
                             }
+
                             return new OkObjectResult("The operation failed");
 
 
