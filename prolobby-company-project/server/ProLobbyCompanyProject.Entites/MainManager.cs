@@ -1,5 +1,6 @@
 ﻿using CommunicationSocial;
 using ProLobbyCompanyProject.Dal;
+using ProLobbyCompanyProject.Entites.Commands;
 using System.Configuration;
 using Utilities.Logger;
 
@@ -21,21 +22,23 @@ namespace ProLobbyCompanyProject.Entites
             get { return _INSTANCE; }
         }
 
-        readonly string ProviderType  = ConfigurationManager.AppSettings["ProviderType"];
-        /// <summary>   The second business company representatives. </summary>
+        readonly string ProviderType  = "LogConsole";
+
         public BusinessCompanyRepresentatives BusinessCompanyRepresentatives;
-        /// <summary>   The second pro lobby owner. </summary>
+
         public ProLobbyOwner ProLobbyOwner;
-        /// <summary>   The second social activists. </summary>
+
         public SocialActivists SocialActivists;
-        /// <summary>   The second non profit organizations. </summary>
+
         public NonProfitOrganizations NonProfitOrganizations;
-        /// <summary>   The second twitter. </summary>
+
         public Twitter Twitter;
 
-        Logger Logger;
+        public CommandsManager CommandsManager;
 
-        AddTwitter AddTwitter;
+        private Logger Logger;
+
+        private AddTwitter AddTwitter;
 
         public void Init()
         {
@@ -43,12 +46,13 @@ namespace ProLobbyCompanyProject.Entites
 
             try
             {
-                Logger.LogEvent("Create DB table");
+                Logger.LogEvent("\n\nCreate DB table");
 
                 ConnectionWithSql._ConnectionWithSql.CreateTables();
             }
             catch (System.Exception EX)
             {
+                Logger.LogException(EX.Message, EX);
 
                 throw;
             }
@@ -57,7 +61,6 @@ namespace ProLobbyCompanyProject.Entites
         /// <summary>   Init classes. </summary>
         public void InitClasses()
         {
-
             Logger = new Logger(ProviderType);
             BusinessCompanyRepresentatives = new BusinessCompanyRepresentatives(Logger);
             ProLobbyOwner = new ProLobbyOwner(Logger);
@@ -65,6 +68,7 @@ namespace ProLobbyCompanyProject.Entites
             NonProfitOrganizations = new NonProfitOrganizations(Logger);
             Twitter = new Twitter(Logger);
             AddTwitter = new AddTwitter(Logger);
+            CommandsManager = new CommandsManager();
 
             Logger.LogEvent("Initialize the entities classes");
         }

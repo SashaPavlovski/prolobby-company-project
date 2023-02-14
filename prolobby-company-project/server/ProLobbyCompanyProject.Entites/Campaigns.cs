@@ -20,7 +20,7 @@ namespace ProLobbyCompanyProject.Entites
         /// <returns>   The answer if it exists. </returns>
         public string GetCampaignName(TBCampaigns Campaign)
         {
-            Logger.LogEvent("Enter into GetCampaignName function");
+            Logger.LogEvent("\n\nEnter into GetCampaignName function");
 
             if (Campaign != null)
             {
@@ -44,7 +44,7 @@ namespace ProLobbyCompanyProject.Entites
         /// <returns>   The campaigns. </returns>
         public List<TBCampaigns> GetCampaigns()
         {
-            Logger.LogEvent("Enter into GetCampaigns function");
+            Logger.LogEvent("\n\nEnter into GetCampaigns function");
 
             List<TBCampaigns> CampaignsList = dSCampaignsGet.GetCampaignList();
 
@@ -60,7 +60,7 @@ namespace ProLobbyCompanyProject.Entites
         {
             if (campaignId != null)
             {
-                Logger.LogEvent("Enter into GetAboutCampaign function");
+                Logger.LogEvent("\n\nEnter into GetAboutCampaign function");
 
                 return dSCampaignsGet.GetDataAboutCampaign(campaignId);
             }
@@ -74,7 +74,7 @@ namespace ProLobbyCompanyProject.Entites
         /// <param name="campaignId">   Identifier for the campaign. </param>
         public void RemoveCampaignData(string campaignId)
         {
-            Logger.LogEvent("Enter into RemoveCampaignData function");
+            Logger.LogEvent("\n\nEnter into RemoveCampaignData function");
 
             if (campaignId != null)
             {
@@ -92,7 +92,7 @@ namespace ProLobbyCompanyProject.Entites
         //Acceptance of the campaigns by id
         public List<TBCampaigns> GetByIdCampaigns(string organizationId)
         {
-            Logger.LogEvent("Enter into GetByIdCampaigns function");
+            Logger.LogEvent("\n\nEnter into GetByIdCampaigns function");
 
             if (organizationId != null)
             {

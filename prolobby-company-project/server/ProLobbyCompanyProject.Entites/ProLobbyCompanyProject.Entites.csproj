@@ -186,6 +186,38 @@
     <Compile Include="BasePromotionObject.cs" />
     <Compile Include="BusinessCompanyRepresentatives.cs" />
     <Compile Include="Campaigns.cs" />
+    <Compile Include="Commands\BaseCommands.cs" />
+    <Compile Include="Commands\BusinessCompany\BAddDataCommand.cs" />
+    <Compile Include="Commands\BusinessCompany\BUpdateDataCommand.cs" />
+    <Compile Include="Commands\BusinessCompany\BUserDataCommand.cs" />
+    <Compile Include="Commands\Campaigns\CAddData.cs" />
+    <Compile Include="Commands\Campaigns\CDeleteData.cs" />
+    <Compile Include="Commands\Campaigns\CGetData.cs" />
+    <Compile Include="Commands\Campaigns\CGetDataById.cs" />
+    <Compile Include="Commands\Campaigns\CGetOneData.cs" />
+    <Compile Include="Commands\CommandsManager.cs" />
+    <Compile Include="Commands\DonatedProducts\DAddData.cs" />
+    <Compile Include="Commands\DonatedProducts\DGetData.cs" />
+    <Compile Include="Commands\MoneyTracking\MAddTrack.cs" />
+    <Compile Include="Commands\MoneyTracking\MGetDataMoney.cs" />
+    <Compile Include="Commands\NonProfitOrganization\NAddData.cs" />
+    <Compile Include="Commands\NonProfitOrganization\NUpdateData.cs" />
+    <Compile Include="Commands\NonProfitOrganization\NUserData.cs" />
+    <Compile Include="Commands\ProLobbyOwner\PAddData.cs" />
+    <Compile Include="Commands\ProLobbyOwner\PUpdateData.cs" />
+    <Compile Include="Commands\ProLobbyOwner\PUserData.cs" />
+    <Compile Include="Commands\Reports\RByCampaign.cs" />
+    <Compile Include="Commands\Reports\RByPosts.cs" />
+    <Compile Include="Commands\Reports\RByProducts.cs" />
+    <Compile Include="Commands\Reports\RByUsers.cs" />
+    <Compile Include="Commands\Shippers\SBuyProduct.cs" />
+    <Compile Include="Commands\Shippers\SDonationProduct.cs" />
+    <Compile Include="Commands\Shippers\SGetDeliveryList.cs" />
+    <Compile Include="Commands\Shippers\SGetProductById.cs" />
+    <Compile Include="Commands\Shippers\SSendProduct.cs" />
+    <Compile Include="Commands\SocialActivists\SAddData.cs" />
+    <Compile Include="Commands\SocialActivists\SUpdateData.cs" />
+    <Compile Include="Commands\SocialActivists\SUserData.cs" />
     <Compile Include="DonatedProducts.cs" />
     <Compile Include="ENSortingTables\ENSortingCampaigns.cs" />
     <Compile Include="ENSortingTables\ENSortingPosts.cs" />
@@ -225,6 +257,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

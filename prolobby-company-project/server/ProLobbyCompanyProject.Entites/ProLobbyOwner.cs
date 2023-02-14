@@ -19,14 +19,13 @@ namespace ProLobbyCompanyProject.Entites
             usersNewData = new DSProLobbyOwnerUpdate(base.Logger);
 
             Logger.LogEvent("Initializing the data in the constructor");
-
         }
 
         //Checking if the proLobby owner exists
         //Gets the manager's id
         public List<TBProLobbyOwner> CheckingIfExistUser(string id)
         {
-            Logger.LogEvent("Enter into CheckingIfExistUser function");
+            Logger.LogEvent("\n\nEnter into CheckingIfExistUser function");
 
             return dSUserData.GetProLobbyOwnerUserRow(id);
         }
@@ -34,7 +33,7 @@ namespace ProLobbyCompanyProject.Entites
         //Entering proLobby owner data 
         public void PostUsersOwner(TBProLobbyOwner userOwnerData)
         {
-            Logger.LogEvent("Enter into PostUsersOwner function");
+            Logger.LogEvent("\n\nEnter into PostUsersOwner function");
 
             userOwnerPost.PostUsersData(userOwnerData);
 
@@ -45,7 +44,7 @@ namespace ProLobbyCompanyProject.Entites
         //Updating the data of proLobby owner
         public void UpdateUsersOwner(TBProLobbyOwner updateUserData)
         {
-            Logger.LogEvent("Enter into UpdateUsersOwner function");
+            Logger.LogEvent("\n\nEnter into UpdateUsersOwner function");
 
             usersNewData.UpdateUsersData(updateUserData);
 

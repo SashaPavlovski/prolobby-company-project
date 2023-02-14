@@ -22,7 +22,7 @@ namespace ProLobbyCompanyProject.Entites
         /// </returns>
         public string BuyProduct(MAbuyProduct productData)
         {
-            Logger.LogEvent("Enter into buyProduct function");
+            Logger.LogEvent("\n\nEnter into buyProduct function");
 
             if (productData == null)
             {
@@ -45,7 +45,7 @@ namespace ProLobbyCompanyProject.Entites
         /// </returns>
         public string PostDonationProduct(MAbuyProduct productData)
         {
-            Logger.LogEvent("Enter into PostDonationProduct function");
+            Logger.LogEvent("\n\nEnter into PostDonationProduct function");
 
             if (productData == null)
             {
@@ -63,7 +63,7 @@ namespace ProLobbyCompanyProject.Entites
         /// <returns> List of Delivery data. </returns>
         public List<MADeliveryProductList> GetDeliveryList()
         {
-            Logger.LogEvent("Enter into GetDeliveryList function");
+            Logger.LogEvent("\n\nEnter into GetDeliveryList function");
 
             return dsShippersDeliveryListGet.GetDeliveryListProduct();
         }
@@ -74,7 +74,7 @@ namespace ProLobbyCompanyProject.Entites
         /// <param name="idUser"> Shipper id - Data about the donated product and who bought it. </param>
         public void SetProductDelivery(string idUser)
         {
-            Logger.LogEvent("Enter into SetProductDelivery function");
+            Logger.LogEvent("\n\nEnter into SetProductDelivery function");
 
             if (idUser == null)
             {

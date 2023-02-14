@@ -20,7 +20,7 @@ namespace ProLobbyCompanyProject.Entites
 
         public List<TBDonatedProducts> GetCampaignProducts(string campaignId)
         {
-            Logger.LogEvent("Enter into GetCampaignProducts function");
+            Logger.LogEvent("\n\nEnter into GetCampaignProducts function");
 
             if (campaignId == null)
             {
@@ -40,7 +40,7 @@ namespace ProLobbyCompanyProject.Entites
 
         public void PostProduct(TBDonatedProducts donatedProduct)
         {
-            Logger.LogEvent("Enter into PostProduct function");
+            Logger.LogEvent("\n\nEnter into PostProduct function");
 
             newProduct.PostNewProduct(donatedProduct);
 
@@ -51,7 +51,7 @@ namespace ProLobbyCompanyProject.Entites
         //Receiving all products of a user
         public List<TBDonatedProducts> GetByUserIdProducts(string userId)
         {
-            Logger.LogEvent("Enter into GetByUserIdProducts function");
+            Logger.LogEvent("\n\nEnter into GetByUserIdProducts function");
 
             List<TBDonatedProducts> DonatedProduct = dSDonatedProductsGetById.GetProductsByUserId(userId);
 

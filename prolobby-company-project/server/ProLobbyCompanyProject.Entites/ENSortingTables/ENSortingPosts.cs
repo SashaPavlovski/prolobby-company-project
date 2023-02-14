@@ -28,11 +28,15 @@ namespace ProLobbyCompanyProject
         /// <returns> list of reports by sorting. </returns>
         public List<TBSortingPosts> GetSortingPosts(string CaseOf)
         {
-            Logger.LogEvent("Enter into GetSortingPosts function");
+            Logger.LogEvent("\n\nEnter into GetSortingPosts function");
 
-            if (CaseOf == "1") return dSSortingPostsDefault.GetByDate();
+            if (CaseOf == "0") return dSSortingPostsDefault.GetByAll();
+
+            else if(CaseOf == "1") return dSSortingPostsDefault.GetByDate();
 
             else if (CaseOf == "2") return dSSortingPostsDefault.GetByTweets();
+
+            else if (CaseOf == "3") return dSSortingPostsDefault.GetByRetweetsCount();
 
             else return null;
         }

@@ -1,7 +1,9 @@
 ﻿using ProLobbyCompanyProject.Data.Sql;
+using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
 using ProLobbyCompanyProject.Data.Sql.SocialActivists;
 using ProLobbyCompanyProject.Model;
 using System.Collections.Generic;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Entites
 {
@@ -10,6 +12,18 @@ namespace ProLobbyCompanyProject.Entites
         DSSocialActivistsGet dSUserData;
         DSSocialActivistsPost usersComments;
         DSSocialActivistsUpdate usersNewData;
+
+
+        public SocialActivists(Logger logger) : base(logger)
+        {
+            newData = new DSMoneyTrackingPost(base.Logger);
+            dSMoneyTrackingGetUserMoney = new DSMoneyTrackingGetUserMoney(base.Logger);
+            dSUserData = new DSSocialActivistsGet(base.Logger);
+            usersComments = new DSSocialActivistsPost(base.Logger);
+            usersNewData = new DSSocialActivistsUpdate(base.Logger);
+
+            Logger.LogEvent("initialization of classes in SocialActivists constructor");
+        }
 
         /// <summary>
         /// Checking whether social activist is existing 
@@ -21,7 +35,7 @@ namespace ProLobbyCompanyProject.Entites
         /// </returns>
         public List<TBSocialActivists> CheckingIfExistUser(string userId)
         {
-            Logger.LogEvent("Enter into CheckingIfExistUser function");
+            Logger.LogEvent("\n\nEnter into CheckingIfExistUser function");
 
             return dSUserData.GetSocialActivistsRow(userId);
         }
@@ -32,7 +46,7 @@ namespace ProLobbyCompanyProject.Entites
         /// <param name="userActivistsData"> data of social activist. </param>
         public void PostUsersActivists(TBSocialActivists userActivistsData)
         {
-            Logger.LogEvent("Enter into PostUsersActivists function");
+            Logger.LogEvent("\n\nEnter into PostUsersActivists function");
 
             usersComments.PostUsersData(userActivistsData);
 
@@ -46,7 +60,7 @@ namespace ProLobbyCompanyProject.Entites
         /// <param name="updateUserData"> New data of social activist. </param>
         public void UpdateActivist(TBSocialActivists updateUserData)
         {
-            Logger.LogEvent("Enter into UpdateActivist function");
+            Logger.LogEvent("\n\nEnter into UpdateActivist function");
 
             usersNewData.UpdateUsersData(updateUserData);
 
