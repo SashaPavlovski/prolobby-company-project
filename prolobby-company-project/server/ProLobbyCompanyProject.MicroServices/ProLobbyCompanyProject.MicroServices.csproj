@@ -4,6 +4,11 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Campaigns_permissions\**" />
+    <EmbeddedResource Remove="Campaigns_permissions\**" />
+    <None Remove="Campaigns_permissions\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.3" />
