@@ -64,7 +64,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             try
             {
                 string insert = sqlQuerey;
-                ;
+                
                 using (SqlCommand command = new SqlCommand(insert, openConnection.connection))
                 {
                     func(userData, command);
@@ -81,7 +81,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.CloseConnect())) return;
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
 
                 throw;
@@ -118,7 +118,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
                     answer = func(userData, command);
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
 
                 throw;
@@ -128,7 +128,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.CloseConnect())) return null;
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
 
                 throw;
@@ -179,7 +179,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.CloseConnect())) return null;
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
 
                 throw;

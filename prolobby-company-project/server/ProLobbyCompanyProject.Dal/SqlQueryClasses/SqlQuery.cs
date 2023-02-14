@@ -1,4 +1,6 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
+using Utilities.Logger;
 
 //SqlQueryClasses\SqlQuery.cs
 //Implements the SQL query class
@@ -42,12 +44,12 @@ namespace ProLobbyCompanyProject.Dal
             {
                 if (!(openConnection.Connect())) return null;
             }
-            catch (SqlException EX)
+            catch (SqlException Ex)
             {
 
                 throw;
             }
-            catch (System.Exception EX)
+            catch (Exception Ex)
             {
 
                 throw;
@@ -70,10 +72,10 @@ namespace ProLobbyCompanyProject.Dal
 
                 throw;
             }
-            catch (System.Exception EX)
+            catch (Exception EX)
             {
 
-                throw;
+               throw;
             }
 
 
@@ -87,7 +89,7 @@ namespace ProLobbyCompanyProject.Dal
 
                 throw;
             }
-            catch (System.Exception EX)
+            catch (Exception EX)
             {
 
                 throw;
@@ -95,6 +97,5 @@ namespace ProLobbyCompanyProject.Dal
 
             return userList;
         }
-
     }
 }

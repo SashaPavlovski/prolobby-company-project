@@ -45,7 +45,7 @@ namespace ProLobbyCompanyProject.Dal
                     if (data == null) data = new CreateSqlTables();
                     return data;
                 }
-                catch (Exception)
+                catch (Exception Ex)
                 {
 
                     return null;

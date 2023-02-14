@@ -34,7 +34,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
 
                 throw;
             }
-            catch (System.Exception)
+            catch (System.Exception Ex)
             {
 
                 throw;
@@ -49,7 +49,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
                     func(command, selector);
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception Ex)
             {
 
                 throw;
@@ -64,7 +64,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
 
                 throw;
             }
-            catch (System.Exception)
+            catch (System.Exception Ex)
             {
 
                 throw;

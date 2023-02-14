@@ -36,7 +36,7 @@ namespace ProLobbyCompanyProject.Dal
             {
                 Console.WriteLine(Ex.Message);
                 Console.WriteLine(Ex.StackTrace);
-                return;
+                throw;
             }
         }
     }

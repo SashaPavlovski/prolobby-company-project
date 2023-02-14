@@ -9,7 +9,11 @@ namespace ProLobbyCompanyProject.Dal
     public class OpenConnection
     {
         /// <summary> Creating a new database </summary>
-        public static string connectionString = ConfigurationManager.AppSettings["connectionString"];
+        public static string connectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ProLobbyCompanyProject;Data Source=localhost\\SQLEXPRESS";
+
+       // public static string connectionString = ConfigurationManager.AppSettings["connectionString"];
+
+
         /// <summary> The connection. </summary>
         public SqlConnection connection;
 
