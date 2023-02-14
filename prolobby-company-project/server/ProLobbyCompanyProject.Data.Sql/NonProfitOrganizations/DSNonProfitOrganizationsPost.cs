@@ -15,11 +15,11 @@ namespace ProLobbyCompanyProject.Data.Sql
         }
 
         //Entering data of the organization representative
-        public void AddUserData(object userData, System.Data.SqlClient.SqlCommand command)
+        public void AddUserData(object userData, SqlCommand command)
         {
             Logger.LogEvent("Enter into AddUserData function");
 
-            if (userData is TBNonProfitOrganization)
+            if (userData!= null && userData is TBNonProfitOrganization)
             {
                 Logger.LogEvent("Entering data of the organization representative");
 
@@ -41,16 +41,8 @@ namespace ProLobbyCompanyProject.Data.Sql
                     Logger.LogEvent("End AddUserData function successfully");
 
                 }
-                catch (SqlException EX)
-                {
-
-                    throw;
-                }
-                catch (System.Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
             }
         }
 
@@ -61,7 +53,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         //Sending to dal file
         public void PostUsersData(TBNonProfitOrganization userNonProfitOrganization)
         {
-            Logger.LogEvent("Enter into PostUsersData function");
+            Logger.LogEvent("\n\nEnter into PostUsersData function");
 
             try
             {
@@ -70,11 +62,7 @@ namespace ProLobbyCompanyProject.Data.Sql
                 Logger.LogEvent("End PostUsersData function successfully");
 
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
     }
 }

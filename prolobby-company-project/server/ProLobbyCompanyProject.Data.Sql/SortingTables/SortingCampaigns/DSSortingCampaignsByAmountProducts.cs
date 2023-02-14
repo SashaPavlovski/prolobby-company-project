@@ -54,17 +54,18 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
                     return sortingCampaigns;
 
                 }
-                catch (SqlException EX)
+                catch (SqlException Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
-                catch (System.Exception EX)
+                catch (System.Exception Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
-
             }
 
             Logger.LogEvent("End AddSortingCampaigns function, return null");
@@ -92,7 +93,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
         /// <returns> List of reports sorting campaigns by product amount. </returns>
         public List<TBSortingCampaigns> GetSortingCampaignsByProductAmount()
         {
-            Logger.LogEvent("Enter into GetSortingCampaignsByProductAmount function");
+            Logger.LogEvent("\n\nEnter into GetSortingCampaignsByProductAmount function");
 
             List<TBSortingCampaigns> sortingCampaigns = null;
 
@@ -102,11 +103,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
             {
                 listSortingCampaigns = SqlQuery.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             if (listSortingCampaigns != null)
             {

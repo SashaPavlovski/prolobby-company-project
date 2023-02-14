@@ -1,6 +1,7 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
 using System;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 // file:	MoneyTracking\DSMoneyTrackingPost.cs
@@ -19,7 +20,7 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
             SqlQuery = new SqlQueryPost();
         }
         // Entering the details of moneyTracking
-        public void AddUserData(object newData, System.Data.SqlClient.SqlCommand command)
+        public void AddUserData(object newData, SqlCommand command)
         {
             Logger.LogEvent("Enter into AddUserData function");
 
@@ -41,11 +42,8 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
                     Logger.LogEvent("End AddUserData function successfully");
 
                 }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
             }
 
             Logger.LogError("End AddUserData function, invalid value was received");
@@ -53,13 +51,12 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
         }
 
 
-
         /// <summary>   Information describing the insert new. </summary>
         string insertNewData = "if not exists (select * from [dbo].[TBMoneyTrackings] where [SocialActivists_Id] = @SocialActivists_Id  and [Campaigns_Id] = @Campaigns_Id)\r\nbegin\r\ninsert into [dbo].[TBMoneyTrackings]\r\nvalues (@SocialActivists_Id ,@Campaigns_Id ,0,1,getdate())\r\nend";
 
         public void PostMoneyTracking(TBMoneyTracking moneyTracking)
         {
-            Logger.LogEvent("Enter into PostMoneyTracking function");
+            Logger.LogEvent("\n\nEnter into PostMoneyTracking function");
 
             try
             {
@@ -68,8 +65,9 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
                 Logger.LogEvent("End PostMoneyTracking function Successfully");
 
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }

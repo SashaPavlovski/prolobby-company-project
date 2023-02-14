@@ -32,16 +32,8 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
                 Logger.LogEvent("End SendDeliveryProduct function, done successfully");
 
             }
-            catch (SqlException EX)
-            {
-
-                throw;
-            }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
 
 
@@ -55,7 +47,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
         /// <param name="IdUser"> Shipper id - Data about the donated product and who bought it. </param>
         public void SendingDeliveryProduct(string IdUser)
         {
-            Logger.LogEvent("Enter into SendingDeliveryProduct function");
+            Logger.LogEvent("\n\nEnter into SendingDeliveryProduct function");
 
             try
             {
@@ -64,11 +56,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
                 Logger.LogEvent("End SendingDeliveryProduct function, successfully");
 
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
     }
 }

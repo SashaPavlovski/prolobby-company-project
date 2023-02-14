@@ -19,7 +19,7 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
         /// <summary>   Updates the new data. </summary>
         /// <param name="command">  SQL connection. </param>
         /// <param name="newUserData">  The new data of the owner. </param>
-        public void UpdateNewData(System.Data.SqlClient.SqlCommand command, object newUserData)
+        public void UpdateNewData(SqlCommand command, object newUserData)
         {
             Logger.LogEvent("Enter into UpdateNewData function");
 
@@ -43,13 +43,15 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
                         Logger.LogEvent("End UpdateNewData function successfully");
 
                     }
-                    catch (SqlException EX)
+                    catch (SqlException Ex)
                     {
+                        Logger.LogException(Ex.Message, Ex);
 
                         throw;
                     }
-                    catch (System.Exception EX)
+                    catch (System.Exception Ex)
                     {
+                        Logger.LogException(Ex.Message, Ex);
 
                         throw;
                     }
@@ -66,7 +68,7 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
         /// <param name="NewData"> New information user data. </param>
         public void UpdateUsersData(TBProLobbyOwner NewData)
         {
-            Logger.LogEvent("Enter into UpdateUsersData function");
+            Logger.LogEvent("\n\nEnter into UpdateUsersData function");
 
             try
             {
@@ -75,8 +77,9 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
                 Logger.LogEvent("End UpdateUsersData function successfully");
 
             }
-            catch (System.Exception EX)
+            catch (System.Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }

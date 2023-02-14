@@ -17,12 +17,22 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
             SqlQuery = new SqlQuery();
         }
 
-       
-        public object AddSortingProducts(SqlDataReader reader, SqlCommand command, string campaignName)
+        /// <summary>
+        /// Get all the data about organization representative according to the query
+        /// </summary>
+        /// <param name="reader"> Get data from sql. </param>
+        /// <param name="command"> SQL connection </param>
+        /// <param name="campaignName"></param>
+        /// <returns> List of details about organization representative </returns>
+        public object AddSortingUsers(SqlDataReader reader, SqlCommand command, string campaignName)
         {
+            Logger.LogEvent("Enter into AddSortingUsers function");
+
             List<TBSortingUsers> SortingUsers = new List<TBSortingUsers>();
             if (reader.HasRows)
             {
+                Logger.LogEvent("Starting sorting the report table of the organization representative");
+
                 try
                 {
                     while (reader.Read())
@@ -38,20 +48,27 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
                         });
                     }
 
+                    Logger.LogEvent("End AddSortingUsers function, return user report list");
+
                     return SortingUsers;
 
                 }
-                catch (SqlException EX)
+                catch (SqlException Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
+
                 }
-                catch (Exception EX)
+                catch (Exception Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
             }
+
+            Logger.LogEvent("End AddSortingUsers function, return null");
 
             return null;
         }
@@ -63,20 +80,29 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
             return;
         }
 
-
+        /// <summary>
+        /// sql query select all details about all organization operators sorted by date
+        /// </summary>
         string insertByOrganizations = "select [RepresentativeFirstName] + ' ' + [RepresentativeLastName] as 'FullName',\r\n[NonProfitOrganizationName],CONVERT(NVARCHAR(10), [Date],3) AS [Date],[Phone_number],[Email] \r\nfrom [dbo].[TBNonProfitOrganizations] ORDER BY [Date]";
 
 
+        /// <summary>
+        /// Get details of the organization representative
+        /// </summary>
+        /// <returns> A report of details about all organization operators </returns>
         public List<TBSortingUsers> GetByOrganizations()
         {
+            Logger.LogEvent("\n\nEnter into GetByOrganizations function");
+
             object listSortingUsers;
 
             try
             {
-                listSortingUsers = SqlQuery.RunCommand(insertByOrganizations, AddSortingProducts, SetValues, null, null, null, null);
+                listSortingUsers = SqlQuery.RunCommand(insertByOrganizations, AddSortingUsers, SetValues, null, null, null, null);
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
@@ -88,10 +114,14 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
                 {
                     sortingUsers = (List<TBSortingUsers>)listSortingUsers;
 
+                    Logger.LogEvent("End GetByOrganizations function successfully");
+
                     return sortingUsers;
 
                 }
             }
+
+            Logger.LogEvent("End GetByOrganizations function, return null");
 
             return sortingUsers;
         }

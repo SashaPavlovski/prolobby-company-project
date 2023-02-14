@@ -2,6 +2,7 @@
 using ProLobbyCompanyProject.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 // file:	DonatedProducts\DSDonatedProductsGet.cs
@@ -51,8 +52,15 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
                     return donatedProducts;
                 }
             }
-            catch (Exception)
+            catch (SqlException Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
+
+                throw;
+            }
+            catch (Exception Ex)
+            {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
@@ -68,7 +76,7 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
         /// <param name="value">    The value. </param>
         /// <param name="key2">     The second key. </param>
         /// <param name="value2">   The second value. </param>
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             Logger.LogEvent("Enter into SetValues function");
 
@@ -80,8 +88,9 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
 
                 Logger.LogEvent("Done successfully");
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
@@ -95,7 +104,7 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
         /// <returns>   The products campaign list. </returns>
         public List<TBDonatedProducts> GetProductsCampaign(string campaignId)
         {
-            Logger.LogEvent("Enter into GetProductsCampaign function");
+            Logger.LogEvent("\n\nEnter into GetProductsCampaign function");
 
             if (campaignId == null)
             {
@@ -112,8 +121,9 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
             {
                 listProducts = SqlQuery.RunCommand(insertDonatedProducts, AddDonatedProducts, SetValues, "Campaigns_Id", campaignId, null, null);
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }

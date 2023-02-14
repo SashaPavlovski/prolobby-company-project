@@ -2,10 +2,11 @@
 using ProLobbyCompanyProject.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
-// file:	BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesGet.cs
-// summary:	Implements the ds business company representatives get class
+/// file:	BusinessCompanyRepresentatives\DSBusinessCompanyRepresentativesGet.cs
+/// summary:	Implements the ds business company representatives get class
 namespace ProLobbyCompanyProject.Data.Sql
 {
     /// <summary>   The ds business company representatives get. </summary>
@@ -25,8 +26,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <param name="command">  The command. </param>
         /// <param name="UserId">   Identifier for the user. </param>
         /// <returns>   An object of business company </returns>
-
-        public object AddBusinessCompanyInformation(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
+        public object AddBusinessCompanyInformation(SqlDataReader reader, SqlCommand command, string UserId)
         {
             Logger.LogEvent("Enter into AddBusinessCompanyInformation function");
 
@@ -57,12 +57,19 @@ namespace ProLobbyCompanyProject.Data.Sql
                     return businessCompanyRepresentative;
                 }
             }
+            catch (SqlException Ex)
+            {
+                Logger.LogException(Ex.Message, Ex);
+
+                throw;
+            }
             catch (Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
-                Console.WriteLine(Ex.StackTrace);
+                Logger.LogException(Ex.Message, Ex);
+
+                throw;
             }
-           
+
             return null;
         }
 
@@ -72,7 +79,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <param name="value">    The value. </param>
         /// <param name="key2">     The second key. </param>
         /// <param name="value2">   The second value. </param>
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             try
             {
@@ -82,7 +89,7 @@ namespace ProLobbyCompanyProject.Data.Sql
             }
             catch (Exception Ex)
             {
-               Console.WriteLine(Ex.Message);
+                Logger.LogException(Ex.Message, Ex);
             }
         }
         /// <summary>   The insert business company. </summary>
@@ -94,7 +101,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <returns> The business company user row. </returns>
         public List<TBBusinessCompanyRepresentative> GetBusinessCompanyUserRow(string IdUser)
         {
-            Logger.LogEvent("Enter into GetBusinessCompanyUserRow function");
+            Logger.LogEvent("\n\nEnter into GetBusinessCompanyUserRow function");
 
             List<TBBusinessCompanyRepresentative> BusinessCompanyList = null;
 
@@ -109,8 +116,9 @@ namespace ProLobbyCompanyProject.Data.Sql
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
-                Console.WriteLine(Ex.StackTrace);
+                Logger.LogException(Ex.Message, Ex);
+
+                throw;
             }
 
             Logger.LogEvent("End GetBusinessCompanyUserRow function");

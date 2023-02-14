@@ -28,7 +28,7 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
         /// <param name="command">  The command. </param>
         /// <param name="UserId">   Identifier for the user. </param>
         /// <returns>   An object with MAMoneyTracking List . </returns>
-        public object AddMoneyData(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
+        public object AddMoneyData(SqlDataReader reader, SqlCommand command, string UserId)
         {
             Logger.LogEvent("Enter into AddMoneyData function");
 
@@ -61,13 +61,15 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
                         return moneyTracking;
 
                     }
-                    catch (SqlException EX)
+                    catch (SqlException Ex)
                     {
+                        Logger.LogException(Ex.Message, Ex);
 
                         throw;
                     }
-                    catch (Exception EX)
+                    catch (Exception Ex)
                     {
+                        Logger.LogException(Ex.Message, Ex);
 
                         throw;
                     }
@@ -78,11 +80,7 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
                 return null;
 
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
 
         /// <summary>   Sets the values. </summary>
@@ -91,7 +89,7 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
         /// <param name="value">    The value. </param>
         /// <param name="key2">     The second key. </param>
         /// <param name="value2">   The second value. </param>
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             Logger.LogEvent("Enter into SetValues function");
 
@@ -106,16 +104,8 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
                 Logger.LogEvent("End SetValues function");
 
             }
-            catch (SqlException EX)
-            {
-
-                throw;
-            }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
 
         /// <summary>   Information describing the insertget money. </summary>
@@ -126,7 +116,7 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
         /// <returns>   The monet data row in List. </returns>
         public List<MAMoneyTracking> GetMonetDataRow(string IdUser)
         {
-            Logger.LogEvent("Enter into GetMonetDataRow function");
+            Logger.LogEvent("\n\nEnter into GetMonetDataRow function");
 
             List<MAMoneyTracking> moneyTrackingList = null;
 
@@ -135,11 +125,7 @@ namespace ProLobbyCompanyProject.Data.Sql.MoneyTracking
             {
                 listData = SqlQuery.RunCommand(insertgetMoneyData, AddMoneyData, SetValues, "SocialActivists_Id", IdUser, null, null);
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             if (listData is List<MAMoneyTracking>)
             {

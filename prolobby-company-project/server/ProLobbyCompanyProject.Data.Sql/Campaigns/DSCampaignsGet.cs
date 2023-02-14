@@ -3,6 +3,7 @@ using ProLobbyCompanyProject.Model;
 using ProLobbyCompanyProject.Model.Campaigns;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 // file:	Campaigns\DSCampaignsGet.cs
@@ -56,18 +57,11 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
                         return campaigns;
                     }
-                    catch (Exception EX)
-                    {
-
-                        throw;
-                    }
+                    catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                    catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
                 }
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             Logger.LogEvent("End AddCampaign function and No information received");
 
@@ -79,7 +73,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         /// <param name="command">      The command. </param>
         /// <param name="campaignName"> Name of the campaign. </param>
         /// <returns>   An object of about campaign. </returns>
-        public object AddCampaignAboutData(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
+        public object AddCampaignAboutData(SqlDataReader reader, SqlCommand command, string campaignName)
         {
             Logger.LogEvent("Enter into AddCampaignAboutData function");
 
@@ -95,7 +89,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                     {
                         try
                         {
-                            aboutCampaigns = new MAboutCampaign()
+                            aboutCampaigns = new MAboutCampaign
                             {
                                 NonProfitOrganizationName = reader["NonProfitOrganizationName"].ToString(),
                                 NonProfitOrganizationDecreption = reader["decreption"].ToString(),
@@ -107,8 +101,15 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                             };
 
                         }
-                        catch (Exception EX)
+                        catch (SqlException Ex)
                         {
+                            Logger.LogException(Ex.Message, Ex);
+
+                            throw;
+                        }
+                        catch (Exception Ex)
+                        {
+                            Logger.LogException(Ex.Message, Ex);
 
                             throw;
                         }
@@ -120,11 +121,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                     return aboutCampaigns;
                 }
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             Logger.LogEvent("End AddCampaignAboutData function and No information received");
 
@@ -138,7 +135,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         /// <param name="key2">     The second key. </param>
         /// <param name="value2">   The second value. </param>
 
-        public void Set2Values(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void Set2Values(SqlCommand command, string key, string value, string key2, string value2)
         {
             Logger.LogEvent("Enter into Set2Values function");
 
@@ -152,11 +149,8 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                     command.Parameters.AddWithValue($"@{key2}", value2);
 
                 }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
             }
 
             Logger.LogEvent("End Set2Values function");
@@ -169,7 +163,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         /// <param name="value">    The value. </param>
         /// <param name="key2">     The second key. </param>
         /// <param name="value2">   The second value. </param>
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             Logger.LogEvent("Enter into SetValues function");
 
@@ -181,8 +175,15 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                 {
                     command.Parameters.AddWithValue($"@{key}", value);
                 }
-                catch (Exception)
+                catch (SqlException Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
+
+                    throw;
+                }
+                catch (Exception Ex)
+                {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
@@ -218,11 +219,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
             {
                 listCampign = sqlQuery1.RunCommand(insert, AddCampaign, Set2Values, key, value, key2, value2); ;
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
 
             if (listCampign != null)
@@ -244,7 +241,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         public List<TBCampaigns> GetCampaignRow(TBCampaigns campaign)
         {
-            Logger.LogEvent("Enter into GetCampaignRow function");
+            Logger.LogEvent("\n\nEnter into GetCampaignRow function");
 
             Logger.LogEvent("Checking if the name of the campaign or the hashtag exists and returning an answer");
 
@@ -255,7 +252,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         /// <returns>   The campaign list. </returns>
         public List<TBCampaigns> GetCampaignList()
         {
-            Logger.LogEvent("Enter into GetCampaignList function");
+            Logger.LogEvent("\n\nEnter into GetCampaignList function");
 
             Logger.LogEvent("Get all the data of all the campaigns");
 
@@ -269,11 +266,10 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         public MAboutCampaign GetDataAboutCampaign(string campaignsId)
         {
-            Logger.LogEvent("Enter into GetDataAboutCampaign function");
+            Logger.LogEvent("\n\nEnter into GetDataAboutCampaign function");
 
             Logger.LogEvent("Getting all the information about a specific campaign with ID");
 
-            SqlQuery sqlQuery1 = new SqlQuery();
             MAboutCampaign aboutCampaign = null;
             object aboutCampaignData = null;
 
@@ -291,8 +287,9 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                 }
 
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }

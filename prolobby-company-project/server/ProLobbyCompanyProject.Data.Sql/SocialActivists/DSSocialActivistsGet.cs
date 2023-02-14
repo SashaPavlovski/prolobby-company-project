@@ -1,11 +1,12 @@
 ﻿using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Utilities.Logger;
 
-// file:SocialActivists\DSSocialActivistsGet.cs
-// summary:	Implements the ds social activists get class
+/// file:SocialActivists\DSSocialActivistsGet.cs
+/// summary:	Implements the ds social activists get class
 
 namespace ProLobbyCompanyProject.Data.Sql
 {
@@ -48,16 +49,8 @@ namespace ProLobbyCompanyProject.Data.Sql
                         });
                     }
                 }
-                catch (SqlException EX)
-                {
-
-                    throw;
-                }
-                catch (System.Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
                 Logger.LogEvent("End AddSocialActivistsInformation function and the data has been sent");
                 
@@ -80,16 +73,8 @@ namespace ProLobbyCompanyProject.Data.Sql
             {
                 command.Parameters.AddWithValue($"@{key}", value);
             }
-            catch (SqlException EX)
-            {
-
-                throw;
-            }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
 
         /// <summary>  sql query. </summary>
@@ -101,7 +86,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <returns>   The social activists row. </returns>
         public List<TBSocialActivists> GetSocialActivistsRow(string IdUser)
         {
-            Logger.LogEvent("Enter into GetSocialActivistsRow function");
+            Logger.LogEvent("\n\nEnter into GetSocialActivistsRow function");
 
             List<TBSocialActivists> SocialActivists = null;
 
@@ -111,13 +96,14 @@ namespace ProLobbyCompanyProject.Data.Sql
             {
                 listSocialActivists = SqlQuery.RunCommand(insertSocialActivists, AddSocialActivistsInformation, SetValues, "User_Id", IdUser, null, null);
             }
-            catch (System.Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
 
-            if (listSocialActivists is List<TBSocialActivists>)
+            if (listSocialActivists!= null && listSocialActivists is List<TBSocialActivists>)
             {
                 SocialActivists = (List<TBSocialActivists>)listSocialActivists;
 

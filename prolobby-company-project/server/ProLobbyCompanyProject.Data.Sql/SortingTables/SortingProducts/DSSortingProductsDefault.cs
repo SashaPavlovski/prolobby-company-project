@@ -2,6 +2,7 @@
 using ProLobbyCompanyProject.Model.SortingTables.SortingProducts;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
@@ -18,7 +19,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
             SqlQuery = new SqlQuery();
         }
 
-        private object AddSortingProducts(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string campaignName)
+        private object AddSortingProducts(SqlDataReader reader,SqlCommand command, string campaignName)
         {
             Logger.LogEvent("Enter into AddSortingProducts function");
 
@@ -44,11 +45,8 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
                         });
                     }
                 }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
                 Logger.LogEvent("End AddSortingProducts function and end get the data of the products");
 
@@ -60,7 +58,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
             return null;
         }
 
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             return;
         }
@@ -97,8 +95,9 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
                 {
                     listSortingProducts = SqlQuery.RunCommand(insert, AddSortingProducts, SetValues, null, null, null, null);
                 }
-                catch (Exception EX)
+                catch (Exception Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
@@ -123,7 +122,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
         }
         public List<TBSortingProducts> GetByDate()
         {
-            Logger.LogEvent("Enter into GetByDate function");
+            Logger.LogEvent("\n\nEnter into GetByDate function");
 
             Logger.LogEvent("Sort the products by date");
 
@@ -131,15 +130,16 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
             {
                 return GetSortingProductsDefault(EnteringValueToInsert("TB1.Date desc"));
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
         }
         public List<TBSortingProducts> GetByStatus()
         {
-            Logger.LogEvent("Enter into GetByStatus function");
+            Logger.LogEvent("\n\nEnter into GetByStatus function");
 
             Logger.LogEvent("Sort the products by status");
 
@@ -147,15 +147,16 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
             {
                 return GetSortingProductsDefault(EnteringValueToInsert("TB1.Status_Product"));
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
         }
         public List<TBSortingProducts> GetByPrice()
         {
-            Logger.LogEvent("Enter into GetByPrice function");
+            Logger.LogEvent("\n\nEnter into GetByPrice function");
 
             Logger.LogEvent("Sort the products by price");
 
@@ -163,15 +164,16 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
             {
                 return GetSortingProductsDefault(EnteringValueToInsert("TB1.Price desc"));
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
         }
         public List<TBSortingProducts> GetByCampaignsName()
         {
-            Logger.LogEvent("Enter into GetByCampaignsName function");
+            Logger.LogEvent("\n\nEnter into GetByCampaignsName function");
 
             Logger.LogEvent("Sort the products by CampaignsName");
 
@@ -179,8 +181,9 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingProducts
             {
                 return GetSortingProductsDefault(EnteringValueToInsert("TB3.Campaigns_Name"));
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }

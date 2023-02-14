@@ -1,5 +1,7 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
+using System;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 /// file:	SocialActivists\DSSocialActivistsPost.cs
@@ -19,13 +21,13 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
         /// <summary>   Adds a user data to TBSocialActivists. </summary>
         /// <param name="userData"> Information describing the user. </param>
         /// <param name="command">  The command. </param>
-        public void AddUserData(object userData, System.Data.SqlClient.SqlCommand command)
+        public void AddUserData(object userData, SqlCommand command)
         {
             Logger.LogEvent("Enter into AddUserData function");
 
             Logger.LogEvent("Entering social activist data into SQL");
 
-            if (userData is TBSocialActivists)
+            if (userData!= null && userData is TBSocialActivists)
             {
                 try
                 {
@@ -44,8 +46,15 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
                     Logger.LogEvent("The operation was performed successfully");
 
                 }
-                catch (System.Exception EX)
+                catch (SqlException Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
+
+                    throw;
+                }
+                catch (Exception Ex)
+                {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
@@ -63,14 +72,15 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
 
         public void PostUsersData(TBSocialActivists userSocialActivists)
         {
-            Logger.LogEvent("Enter into PostUsersData function");
+            Logger.LogEvent("\n\nEnter into PostUsersData function");
 
             try
             {
                 sqlQuery.RunAddUser(insert, AddUserData, userSocialActivists);
             }
-            catch (System.Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }

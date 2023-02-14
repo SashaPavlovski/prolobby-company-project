@@ -2,6 +2,7 @@
 using ProLobbyCompanyProject.Model.Twitter;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 
@@ -12,93 +13,158 @@ namespace ProLobbyCompanyProject.Data.Sql.Twitter
 {
     public class DSTwitterGet: BaseDataSql
     {
-        public DSTwitterGet(Logger Logger) : base(Logger) { }
-
-        //Add data about the user for the list
-        //Checks if the user has already tweeted
-        //And what is the date of the last tweet?
-        //or the date of joining if no tweet was made
-        public object AddTwitterUserRow(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
+        SqlQuery SqlQuery = new SqlQuery();
+        public DSTwitterGet(Logger Logger) : base(Logger)
         {
+            SqlQuery = new SqlQuery();
+        }
+
+        /// <summary>
+        /// Add data about the user for the list
+        /// Checks if the user has already tweeted
+        /// And what is the date of the last tweet?
+        /// Or the date of joining if no tweet was made
+        /// </summary>
+        /// <param name="reader"> Getting details from the sql. </param>
+        /// <param name="command"> sql connection</param>
+        /// <param name="UserId"></param>
+        /// <returns> The twitter user list details. </returns>
+
+        public object AddTwitterUserRow(SqlDataReader reader, SqlCommand command, string UserId)
+        {
+            Logger.LogEvent("\n\nEnter into AddTwitterUserRow function");
+
             List<MATwitter> twitterData = new List<MATwitter>();
             twitterData.Clear();
 
             bool Flag = true;
-            
+
+            Logger.LogEvent("Gets all the details of the users who follow at least one campaign");
+
             while (Flag)
             {
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        string Answer = reader["Answer"].ToString();
-                        switch (Answer)
+                        try
                         {
+                            string Answer = reader["Answer"].ToString();
 
-                            case "No tweets and valid":
+                            if (Answer == null)
+                            {
+                                Logger.LogError("End AddTwitterUserRow function,The Answer of type of tweets is null");
 
-                                try
-                                {
-                                    DateTime? DateTweetsValid = DateTime.Parse(reader["MoneyDateActive"].ToString());
-                                    string AnswerTweetsValid = reader["Answer"].ToString();
-                                    SetTwitterDataValues(reader, twitterData, DateTweetsValid, AnswerTweetsValid);
-                                }
-                                catch (Exception EX)
-                                {
+                                return null;
+                            }
 
-                                    throw;
-                                }
+                            switch (Answer)
+                            {
 
-                                break;
+                                case "No tweets and valid":
 
-                            case "No tweets and invalid":
+                                    try
+                                    {
+                                        DateTime? DateTweetsValid = DateTime.Parse(reader["MoneyDateActive"].ToString());
+                                        string AnswerTweetsValid = reader["Answer"].ToString();
+                                        SetTwitterDataValues(reader, twitterData, DateTweetsValid, AnswerTweetsValid);
+                                    }
+                                    catch (SqlException Ex)
+                                    {
+                                        Logger.LogException(Ex.Message, Ex);
 
-                                try
-                                {
-                                    DateTime? DatTweetsInvalide = null;
-                                    string AnswerTweetsInvalide = reader["Answer"].ToString();
-                                    SetTwitterDataValues(reader, twitterData, DatTweetsInvalide, AnswerTweetsInvalide);
-                                }
-                                catch (Exception EX)
-                                {
+                                        throw;
+                                    }
+                                    catch (Exception Ex)
+                                    {
+                                        Logger.LogException(Ex.Message, Ex);
 
-                                    throw;
-                                }
+                                        throw;
+                                    }
 
-                                break;
+                                    break;
 
-                            case "Exist tweets and valid":
+                                case "No tweets and invalid":
 
-                                try
-                                {
-                                    DateTime? DatExistTweetsValid = DateTime.Parse(reader["PostsDateActive"].ToString());
-                                    string AnswerExistTweetsValid = reader["Answer"].ToString();
-                                    SetTwitterDataValues(reader, twitterData, DatExistTweetsValid, AnswerExistTweetsValid);
-                                }
-                                catch (Exception EX)
-                                {
+                                    try
+                                    {
+                                        DateTime? DatTweetsInvalide = null;
+                                        string AnswerTweetsInvalide = reader["Answer"].ToString();
+                                        SetTwitterDataValues(reader, twitterData, DatTweetsInvalide, AnswerTweetsInvalide);
+                                    }
+                                    catch (SqlException Ex)
+                                    {
+                                        Logger.LogException(Ex.Message, Ex);
 
-                                    throw;
-                                }
+                                        throw;
+                                    }
+                                    catch (Exception Ex)
+                                    {
+                                        Logger.LogException(Ex.Message, Ex);
 
-                                break;
+                                        throw;
+                                    }
 
-                            case "Exist tweets and invalid":
+                                    break;
 
-                                try
-                                {
-                                    DateTime? DatExistTweetsInvalid = null;
-                                    string AnswerExistTweetsInvalid = reader["Answer"].ToString();
-                                    SetTwitterDataValues(reader, twitterData, DatExistTweetsInvalid, AnswerExistTweetsInvalid);
-                                }
-                                catch (Exception EX)
-                                {
+                                case "Exist tweets and valid":
 
-                                    throw;
-                                }
+                                    try
+                                    {
+                                        DateTime? DatExistTweetsValid = DateTime.Parse(reader["PostsDateActive"].ToString());
+                                        string AnswerExistTweetsValid = reader["Answer"].ToString();
+                                        SetTwitterDataValues(reader, twitterData, DatExistTweetsValid, AnswerExistTweetsValid);
+                                    }
+                                    catch (SqlException Ex)
+                                    { 
+                                        Logger.LogException(Ex.Message, Ex);
 
-                                break;
+                                        throw;
+                                    }
+                                    catch (Exception Ex)
+                                    {
+                                        Logger.LogException(Ex.Message, Ex);
 
+                                        throw;
+                                    }
+
+                                    break;
+
+                                case "Exist tweets and invalid":
+
+                                    try
+                                    {
+                                        DateTime? DatExistTweetsInvalid = null;
+                                        string AnswerExistTweetsInvalid = reader["Answer"].ToString();
+                                        SetTwitterDataValues(reader, twitterData, DatExistTweetsInvalid, AnswerExistTweetsInvalid);
+                                    }
+                                    catch (SqlException Ex)
+                                    {
+                                        Logger.LogException(Ex.Message, Ex);
+
+                                        throw;
+                                    }
+                                    catch (Exception Ex)
+                                    {
+                                        Logger.LogException(Ex.Message, Ex);
+
+                                        throw;
+                                    }
+
+                                    break;
+                            }
+                        }
+                        catch (SqlException Ex)
+                        {
+                            Logger.LogException(Ex.Message, Ex);
+
+                            throw;
+                        }
+                        catch (Exception Ex)
+                        {
+                            Logger.LogException(Ex.Message, Ex);
+
+                            throw;
                         }
                     }
                 }
@@ -106,16 +172,32 @@ namespace ProLobbyCompanyProject.Data.Sql.Twitter
                 if (!reader.NextResult())
                 {
                     Flag = false;
+
+                    Logger.LogEvent("End AddTwitterUserRow function successfully");
+
                     return twitterData;
 
                 }
             }
+
+            Logger.LogEvent("End AddTwitterUserRow function, return null");
+
             return null;
         }
 
-        //Add data about the user for the list
-        public void SetTwitterDataValues(System.Data.SqlClient.SqlDataReader reader,List<MATwitter> twitterData , DateTime? data,string answer)
+        /// <summary>
+        /// Add data about the user for the list
+        /// </summary>
+        /// <param name="reader"> Getting details from the sql. </param>
+        /// <param name="twitterData"> A list containing the details. </param>
+        /// <param name="date"> The date of the tweet. </param>
+        /// <param name="answer"> Information about the tweet. </param>
+        public void SetTwitterDataValues(SqlDataReader reader,List<MATwitter> twitterData , DateTime? date,string answer)
         {
+            Logger.LogEvent("\n\nEnter into SetTwitterDataValues function");
+
+            Logger.LogEvent("Gets all the details about activists posts that are shared with each other");
+
             if (reader.HasRows)
             {
                 try
@@ -129,53 +211,71 @@ namespace ProLobbyCompanyProject.Data.Sql.Twitter
                         Hashtag = reader["Hashtag"].ToString(),
                         Accumulated_money = double.Parse(reader["Accumulated_money"].ToString()),
                         Answer = answer,
-                        Date = data
+                        Date = date
                     });
+
+                    Logger.LogEvent("End SetTwitterDataValues function successfully");
+
                 }
-                catch (Exception EX)
+                catch (SqlException Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
+
+                    throw;
+                }
+                catch (Exception Ex)
+                {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
             }
-            return;
         }
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
-            //command.CommandType = CommandType.StoredProcedure;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
             return;
         }
 
-
-        /// <summary>   Identifier for the terabytes 3. campaigns. </summary>
+        /// <summary>
+        /// sql procedure name - Receiving all the details of the users who follow at least one campaign.
+        /// </summary>
         string insertGetData = "AllUserDetails";
 
 
-        /// <summary>   Gets twitter user row. </summary>
-        /// <returns>   The twitter user List row. </returns>
+        /// <summary>   Gets all the details of the users who follow at least one campaign </summary>
+        /// <returns>   The twitter user list details. </returns>
         public List<MATwitter> GetTwitterUserRow()
         {
-            SqlQuery sqlQuery1 = new SqlQuery();
+            Logger.LogEvent("Enter into GetTwitterUserRow function");
+
             List<MATwitter> newData = null;
 
             try
             {
-                object listNewData = sqlQuery1.RunCommand(insertGetData, AddTwitterUserRow, SetValues, null, null, null, null);
+                object listNewData = SqlQuery.RunCommand(insertGetData, AddTwitterUserRow, SetValues, null, null, null, null);
 
-                if (listNewData is List<MATwitter>)
+                if (listNewData!= null && listNewData is List<MATwitter>)
                 {
                     newData = (List<MATwitter>)listNewData;
+
+                    Logger.LogEvent("End GetTwitterUserRow function successfully");
+
+                    return newData;
                 }
+
+                Logger.LogEvent("End GetTwitterUserRow function, return null");
+
+                return newData;
+
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
-
-            return newData;
         }
-
-
     }
 }

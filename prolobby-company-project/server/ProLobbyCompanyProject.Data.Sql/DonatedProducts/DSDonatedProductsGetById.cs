@@ -2,6 +2,7 @@
 using ProLobbyCompanyProject.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
@@ -43,11 +44,8 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
                     return donatedProducts;
                 }
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             Logger.LogEvent("End AddDonatedProductsByUserId function and raturn null");
 
@@ -66,11 +64,7 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
 
                     command.Parameters.AddWithValue($"@{key}", int.Parse(value));
                 }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
             }
 
             Logger.LogEvent("End SetValues function");
@@ -83,7 +77,7 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
         //Moves the products using a list
         public List<TBDonatedProducts> GetProductsByUserId(string userId)
         {
-            Logger.LogEvent("Enter into GetProductsByUserId function");
+            Logger.LogEvent("\n\nEnter into GetProductsByUserId function");
 
             Logger.LogEvent("Get the data on the donated product");
 
@@ -102,11 +96,7 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
             {
                 listProducts = SqlQuery.RunCommand(insertProductById, AddDonatedProductsByUserId, SetValues, "SocialActivists_Id", userId, null, null);
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             if (listProducts is List<TBDonatedProducts>)
             {

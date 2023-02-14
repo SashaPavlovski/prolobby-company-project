@@ -42,16 +42,8 @@ namespace ProLobbyCompanyProject.Data.Sql.NonProfitOrganizations
                         Logger.LogEvent("End UpdateNewData function successfully");
 
                     }
-                    catch (SqlException EX)
-                    {
-
-                        throw;
-                    }
-                    catch (System.Exception EX)
-                    {
-
-                        throw;
-                    }
+                    catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                    catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
                 }
             }
         }
@@ -64,7 +56,7 @@ namespace ProLobbyCompanyProject.Data.Sql.NonProfitOrganizations
         //Sending the data to a Dal file 
         public void UpdateUsersData(TBNonProfitOrganization NewData)
         {
-            Logger.LogEvent("Enter into UpdateUsersData function");
+            Logger.LogEvent("\n\nEnter into UpdateUsersData function");
 
             try
             {
@@ -73,11 +65,7 @@ namespace ProLobbyCompanyProject.Data.Sql.NonProfitOrganizations
                 Logger.LogEvent("End UpdateUsersData function successfully");
 
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
     }
 }

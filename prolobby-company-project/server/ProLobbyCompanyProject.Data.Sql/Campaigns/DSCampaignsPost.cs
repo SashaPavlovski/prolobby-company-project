@@ -1,6 +1,7 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
 using System;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 // file:Campaigns\DSCampaignsPost.cs
@@ -54,11 +55,8 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
                     return rows;
                 }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
             }
 
             Logger.LogError("End AddCampaignData function and Invalid data received ");
@@ -75,7 +73,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
         public int? PostCampaignRow(TBCampaigns campaign)
         {
-            Logger.LogEvent("Enter into PostCampaignRow function");
+            Logger.LogEvent("\n\nEnter into PostCampaignRow function");
 
             if (campaign == null)
             {
@@ -90,11 +88,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
             {
                 answer = sqlQuery.RunAdd(insertCampign, AddCampaignData, campaign);
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             Logger.LogEvent("End PostCampaignRow function and sending a answer");
 

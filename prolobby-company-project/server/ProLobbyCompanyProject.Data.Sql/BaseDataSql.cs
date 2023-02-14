@@ -8,6 +8,10 @@ namespace ProLobbyCompanyProject.Data.Sql
         public BaseDataSql(Logger logger)
         {
             Logger=logger;
+
+            Logger.LogEvent("The Logger initialization operation was performed successfully");
+
+            Logger.LogEvent("In the BaseDataSql constructor");
         }
     }
 }

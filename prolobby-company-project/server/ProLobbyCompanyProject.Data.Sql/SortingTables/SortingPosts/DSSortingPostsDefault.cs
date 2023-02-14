@@ -7,7 +7,7 @@ using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
 {
-    public class DSSortingPostsDefault: BaseDataSql
+    public class DSSortingPostsDefault : BaseDataSql
     {
 
         SqlQuery SqlQuery;
@@ -23,9 +23,9 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
         /// </summary>
         /// <param name="reader"> Get the data from the sql. </param>
         /// <param name="command"> SQL connection. </param>
-        /// <param name="campaignName"></param>
+        /// <param name="selectBy"> Checking according to what sort. </param>
         /// <returns> List of reports sorting posts. </returns>
-        public object AddSortingPosts(SqlDataReader reader, SqlCommand command, string campaignName)
+        public object AddSortingPosts(SqlDataReader reader, SqlCommand command, string selectBy)
         {
             Logger.LogEvent("Enter into AddSortingPosts function");
 
@@ -33,21 +33,53 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
 
             sortingPosts.Clear();
 
-            if (reader.HasRows)
+
+            if (selectBy != null && reader.HasRows)
             {
                 try
                 {
-                    while (reader.Read())
+                    if (selectBy.Contains("Tweets_Message_Count"))
                     {
-                        sortingPosts.Add(new TBSortingPosts
+                        while (reader.Read())
                         {
-                            Campaigns_Name = reader["Campaigns_Name"].ToString(),
-                            Twitter_user = reader["Twitter_user"].ToString(),
-                            Date = DateTime.Parse(reader["Date"].ToString()),
-                            Amount_publications = int.Parse(reader["Amount_publications"].ToString()),
-                            NonProfitOrganizationName = reader["NonProfitOrganizationName"].ToString(),
-                            Active = reader["Active"].ToString()
-                        });
+                            sortingPosts.Add(new TBSortingPosts
+                            {
+                                Amount_publications = int.Parse(reader["Tweets_Message_Count"].ToString()),
+                                Twitter_user = reader["Twitter_user"].ToString()
+                            });
+                        }
+                    }
+                    else if (selectBy.Contains("Retweets_Count") || selectBy.Contains("Date"))
+                    {
+                        while (reader.Read())
+                        {
+                            sortingPosts.Add(new TBSortingPosts
+                            {
+                                Campaigns_Name = reader["Campaigns_Name"].ToString(),
+                                Twitter_user = reader["Twitter_user"].ToString(),
+                                Date = DateTime.Parse(reader["Date"].ToString()),
+                                NonProfitOrganizationName = reader["NonProfitOrganizationName"].ToString(),
+                                Active = reader["Active"].ToString(),
+                                Tweets_Message = reader["Tweets_Message"].ToString(),
+                                Retweets_Count = int.Parse(reader["Retweets_Count"].ToString())
+                            });
+                        }
+                    }
+                    else
+                    {
+                        while (reader.Read())
+                        {
+                            sortingPosts.Add(new TBSortingPosts
+                            {
+                                Campaigns_Name = reader["Campaigns_Name"].ToString(),
+                                Twitter_user = reader["Twitter_user"].ToString(),
+                                Date = DateTime.Parse(reader["Date"].ToString()),
+                                NonProfitOrganizationName = reader["NonProfitOrganizationName"].ToString(),
+                                Active = reader["Active"].ToString(),
+                                Tweets_Message = reader["Tweets_Message"].ToString(),
+                                Retweets_Count = int.Parse(reader["Retweets_Count"].ToString())
+                            });
+                        }
                     }
 
                     Logger.LogEvent("End AddSortingPosts function, return list posts");
@@ -55,16 +87,8 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
                     return sortingPosts;
 
                 }
-                catch (SqlException EX)
-                {
-
-                    throw;
-                }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             }
 
@@ -74,44 +98,32 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
         }
 
 
-
+        /// <summary>
+        /// Entering values ​​and starting a procedure.
+        /// </summary>
+        /// <param name="command"> sql connection. </param>
+        /// <param name="key"> null </param>
+        /// <param name="value"> select by value. </param>
+        /// <param name="key2"> null </param>
+        /// <param name="value2"> null </param>
         public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
-            return;
-        }
-
-        /// <summary>
-        /// Creating a Sql query
-        /// </summary>
-        /// <param name="value"> Order by value </param>
-        /// <returns> Sql query with order by value  </returns>
-        public string EnteringValueToInsert(string value)
-        {
-            Logger.LogEvent("Enter into EnteringValueToInsert function");
-
-            string insert = null;
-
-            if (value != null)
+            if (command != null && value != null)
             {
-                insert = $"select CONVERT(NVARCHAR(10), TB1.[Date],3) AS [Date],TB1.Amount_publications,\r\ncase when TB1.Active = 0 then 'inactive'\r\nelse 'active'end as 'Active',\r\nTB2.Twitter_user,\r\nTB3.Campaigns_Name,TB4.NonProfitOrganizationName\r\nfrom [dbo].[TBPostsTrackings] TB1 inner join [dbo].[TBSocialActivists] TB2\r\non  TB1.SocialActivists_Id = TB2.SocialActivists_Id inner join [dbo].[TBCampaigns] TB3\r\non  TB1.Campaigns_Id = TB3.Campaigns_Id inner join [dbo].[TBNonProfitOrganizations] TB4\r\non  TB3.NonProfitOrganization_Id = TB4.NonProfitOrganization_Id ORDER BY {value}";
-
-                Logger.LogEvent("End EnteringValueToInsert function, return sql query");
-
-                return insert;
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@OrderByMsg", value);
             }
 
-            Logger.LogError("End EnteringValueToInsert function,get in value null.");
-
-            return insert;
+            return;
         }
 
 
         /// <summary>
         /// Get list of reports by sorting Date.
         /// </summary>
-        /// <param name="insert"> sql query with sorting value. </param>
+        /// <param name="sortBy"> sorting value. </param>
         /// <returns> List of reports sorting posts. </returns>
-        public List<TBSortingPosts> GetSortingPostsDefault(string insert)
+        public List<TBSortingPosts> GetSortingPostsDefault(string sortBy)
         {
             Logger.LogEvent("Enter into GetSortingPostsDefault function");
 
@@ -119,15 +131,14 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
 
             object listSortingPosts;
 
+            /// <summary> Sql procedure name - Sort by value. </summary>
+            string insert = "TweetReportOrderBy";
+
             try
             {
-                listSortingPosts = SqlQuery.RunCommand(insert, AddSortingPosts, SetValues, null, null, null, null);
+                listSortingPosts = SqlQuery.RunCommand(insert, AddSortingPosts, SetValues, null, sortBy, null, null);
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             if (listSortingPosts != null)
             {
@@ -150,15 +161,39 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
 
 
         /// <summary>
+        /// Get list of reports.
+        /// </summary>
+        /// <returns> List of reports sorting posts. </returns>
+        public List<TBSortingPosts> GetByAll()
+        {
+            Logger.LogEvent("\n\nEnter into GetByAll function");
+
+            return GetSortingPostsDefault("GetByAll");
+        }
+
+
+        /// <summary>
         /// Get list of reports by sorting date.
         /// </summary>
         /// <returns> List of reports sorting posts by date. </returns>
         public List<TBSortingPosts> GetByDate()
         {
-            Logger.LogEvent("Enter into GetByDate function");
+            Logger.LogEvent("\n\nEnter into GetByDate function");
 
-            return GetSortingPostsDefault(EnteringValueToInsert("TB1.[Date]"));
+            return GetSortingPostsDefault("Date");
         }
+
+        /// <summary>
+        /// Get list of reports by sorting retweets count.
+        /// </summary>
+        /// <returns> List of reports sorting posts by retweets count. </returns>
+        public List<TBSortingPosts> GetByRetweetsCount()
+        {
+            Logger.LogEvent("\n\nEnter into GetByRetweetsCount function");
+
+            return GetSortingPostsDefault("Retweets_Count");
+        }
+
 
         /// <summary>
         /// Get list of reports by sorting tweets.
@@ -166,9 +201,9 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingPosts
         /// <returns> List of reports sorting posts by tweets. </returns>
         public List<TBSortingPosts> GetByTweets()
         {
-            Logger.LogEvent("Enter into GetByTweets function");
+            Logger.LogEvent("\n\nEnter into GetByTweets function");
 
-            return GetSortingPostsDefault(EnteringValueToInsert("TB1.Amount_publications desc"));
+            return GetSortingPostsDefault("Tweets_Message_Count");
         }
     }
 }

@@ -2,6 +2,7 @@
 using ProLobbyCompanyProject.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Data.Sql.Campaigns
@@ -42,8 +43,15 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
 
                         }
                     }
-                    catch (Exception EX)
+                    catch (SqlException Ex)
                     {
+                        Logger.LogException(Ex.Message, Ex);
+
+                        throw;
+                    }
+                    catch (Exception Ex)
+                    {
+                        Logger.LogException(Ex.Message, Ex);
 
                         throw;
                     }
@@ -53,8 +61,9 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                     return campaigns;
                 }
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
@@ -93,7 +102,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
         //Enter the details of the campaign into a list
         public List<TBCampaigns> GetCampaignsById(string organizationId )
         {
-            Logger.LogEvent("Enter into GetCampaignsById function");
+            Logger.LogEvent("\n\nEnter into GetCampaignsById function");
 
             List<TBCampaigns> campaignsById = null;
 

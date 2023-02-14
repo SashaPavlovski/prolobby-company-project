@@ -9,23 +9,38 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
 {
     public class DSSortingUsersDefault: BaseDataSql
     {
+        /// <summary>
+        /// Sorting of users by social activists or by an owner
+        /// </summary>
+
 
         SqlQuery SqlQuery;
 
         List<TBSortingUsers> sortingUsers = null;
 
-        //Sorting of users by social activists or by an owner
         public DSSortingUsersDefault(Logger Logger) : base(Logger)
         {
             SqlQuery = new SqlQuery();
         }
 
 
-        public object AddSortingProducts(SqlDataReader reader, SqlCommand command, string campaignName)
+        /// <summary>
+        /// Get all the data about social activists or proLobby owners according to the query
+        /// </summary>
+        /// <param name="reader"> Get data from sql. </param>
+        /// <param name="command"> SQL connection </param>
+        /// <param name="campaignName"></param>
+        /// <returns> List of details about social activists or proLobby owners. </returns>
+        public object AddSortingUsers(SqlDataReader reader, SqlCommand command, string campaignName)
         {
+            Logger.LogEvent("Enter into AddSortingUsers function");
+
             List<TBSortingUsers> SortingUsers = new List<TBSortingUsers>();
+
             if (reader.HasRows)
             {
+                Logger.LogEvent("Starting sorting the report table of the social activists or proLobby owners");
+
                 try
                 {
                     while (reader.Read())
@@ -40,19 +55,28 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
                             NonProfitOrganizationName = null
                         });
                     }
+
+                    Logger.LogEvent("End AddSortingUsers function, return user report list");
+
+                    return SortingUsers;
+
                 }
-                catch (SqlException EX)
+                catch (SqlException Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
-                catch (Exception EX)
+                catch (Exception Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
-                return SortingUsers;
             }
+
+            Logger.LogEvent("End AddSortingUsers function, return null");
+
             return null;
         }
 
@@ -63,20 +87,38 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
             return;
         }
 
+
+
+        /// <summary>
+        /// sql query select all details about all proLobby owners sorted by date
+        /// </summary>
         string insertByProLobbyOwners = "select [FirstName] + ' ' + [LastName] as 'FullName',\r\nCONVERT(NVARCHAR(10), [Date],3) AS [Date],[Phone_number],[Email] \r\nfrom [dbo].[TBProLobbyOwners] ORDER BY [Date]";
 
+
+
+        /// <summary>
+        /// sql query select all details about all  social activists sorted by date
+        /// </summary>
         string insertBySocialActivists = "select [FirstName] + ' ' + [LastName] as 'FullName',\r\nCONVERT(NVARCHAR(10), [Date],3) AS [Date],[Phone_number],[Email] \r\nfrom [dbo].[TBSocialActivists] ORDER BY [Date]";
 
+
+        /// <summary>
+        /// Get details of the proLobby owners.
+        /// </summary>
+        /// <returns> A report of details about proLobby owners. </returns>
         public List<TBSortingUsers> GetByProLobbyOwners()
         {
+            Logger.LogEvent("\n\nEnter into GetByProLobbyOwners function");
+
             object listSortingUsers;
 
             try
             {
-                listSortingUsers = SqlQuery.RunCommand(insertByProLobbyOwners, AddSortingProducts, SetValues, null, null, null, null);
+                listSortingUsers = SqlQuery.RunCommand(insertByProLobbyOwners, AddSortingUsers, SetValues, null, null, null, null);
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
@@ -88,22 +130,36 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
                 {
                     sortingUsers = (List<TBSortingUsers>)listSortingUsers;
 
+                    Logger.LogEvent("End GetByProLobbyOwners function successfully");
+
                     return sortingUsers;
 
                 }
             }
+
+            Logger.LogEvent("End GetByProLobbyOwners function, return null");
+
             return sortingUsers;
         }
+
+
+        /// <summary>
+        /// Get details of the social activists.
+        /// </summary>
+        /// <returns> A report of details about social activists. </returns>
         public List<TBSortingUsers> GetBySocialActivists()
         {
+            Logger.LogEvent("\n\nEnter into GetBySocialActivists function");
+
             object listSortingUsers;
 
             try
             {
-                listSortingUsers = SqlQuery.RunCommand(insertBySocialActivists, AddSortingProducts, SetValues, null, null, null, null);
+                listSortingUsers = SqlQuery.RunCommand(insertBySocialActivists, AddSortingUsers, SetValues, null, null, null, null);
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
@@ -115,10 +171,15 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingUsers
                 {
                     sortingUsers = (List<TBSortingUsers>)listSortingUsers;
 
+                    Logger.LogEvent("End GetBySocialActivists function successfully");
+
                     return sortingUsers;
 
                 }
             }
+
+            Logger.LogEvent("End GetBySocialActivists function, return null");
+
             return sortingUsers;
         }
 

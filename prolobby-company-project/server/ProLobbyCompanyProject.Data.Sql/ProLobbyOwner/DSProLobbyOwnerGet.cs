@@ -57,16 +57,8 @@ namespace ProLobbyCompanyProject.Data.Sql
                     return proLobbyOwner;
                 }
             }
-            catch (SqlException EX)
-            {
-
-                throw;
-            }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             Logger.LogEvent("End PostUsersOrganization function return null");
 
@@ -86,16 +78,8 @@ namespace ProLobbyCompanyProject.Data.Sql
                 Logger.LogEvent("End SetValues function successfully");
 
             }
-            catch (SqlException EX)
-            {
-
-                throw;
-            }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
 
         /// <summary>   sql query. </summary>
@@ -107,7 +91,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         /// <returns>   The pro lobby owner user data. </returns>
         public List<TBProLobbyOwner> GetProLobbyOwnerUserRow(string IdUser)
         {
-            Logger.LogEvent("Enter into GetProLobbyOwnerUserRow function");
+            Logger.LogEvent("\n\nEnter into GetProLobbyOwnerUserRow function");
 
             List<TBProLobbyOwner> ProLobbyOwnerList = null;
 
@@ -129,17 +113,12 @@ namespace ProLobbyCompanyProject.Data.Sql
 
                 }
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             Logger.LogEvent("End GetProLobbyOwnerUserRow function, return null");
 
 
             return ProLobbyOwnerList;
         }
-
     }
 }

@@ -22,7 +22,7 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
         /// </summary>
         /// <param name="userData"> The data of the owner. </param>
         /// <param name="command"> SQL connection. </param>
-        public void AddUserData(object userData, System.Data.SqlClient.SqlCommand command)
+        public void AddUserData(object userData, SqlCommand command)
         {
             Logger.LogEvent("Enter into AddUserData function");
 
@@ -45,16 +45,13 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
                     Logger.LogEvent("End AddUserData function successfully");
 
                 }
-                catch (SqlException EX)
+                catch (SqlException Ex)
                 {
+                    Logger.LogException(Ex.Message, Ex);
 
                     throw;
                 }
-                catch (System.Exception EX)
-                {
-
-                    throw;
-                }
+                catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
             }
         }
 
@@ -69,7 +66,7 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
 
         public void PostUsersData(TBProLobbyOwner userProLobbyOwnerPost)
         {
-            Logger.LogEvent("Enter into PostUsersData function");
+            Logger.LogEvent("\n\nEnter into PostUsersData function");
 
             try
             {
@@ -78,11 +75,7 @@ namespace ProLobbyCompanyProject.Data.Sql.ProLobbyOwner
                 Logger.LogEvent("End PostUsersData function successfully");
 
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
     }
 }

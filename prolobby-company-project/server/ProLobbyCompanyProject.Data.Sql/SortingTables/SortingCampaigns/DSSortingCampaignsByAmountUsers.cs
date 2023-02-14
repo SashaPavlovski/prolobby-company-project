@@ -48,16 +48,8 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
 
                     return sortingCampaigns;
                 }
-                catch (SqlException EX)
-                {
-
-                    throw;
-                }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             }
 
@@ -85,7 +77,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
         /// <returns> List of reports sorting campaigns by activists. </returns>
         public List<TBSortingCampaigns> GetSortingCampaignsByAmountUsers()
         {
-            Logger.LogEvent("Enter into GetSortingCampaignsByAmountUsers function");
+            Logger.LogEvent("\n\nEnter into GetSortingCampaignsByAmountUsers function");
 
             List<TBSortingCampaigns> sortingCampaigns = null;
 
@@ -95,11 +87,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
             {
                 listSortingCampaigns = SqlQuery.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             if (listSortingCampaigns != null)
             {

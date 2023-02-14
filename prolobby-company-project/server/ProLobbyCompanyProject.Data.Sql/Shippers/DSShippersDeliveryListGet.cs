@@ -58,13 +58,15 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
 
                 return null;
             }
-            catch (SqlException EX)
+            catch (SqlException Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
-            catch (System.Exception EX)
+            catch (System.Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
@@ -87,7 +89,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
         /// <returns> List of Delivery data. </returns>
         public List<MADeliveryProductList> GetDeliveryListProduct()
         {
-            Logger.LogEvent("Enter into GetDeliveryListProduct function");
+            Logger.LogEvent("\n\nEnter into GetDeliveryListProduct function");
 
             List<MADeliveryProductList> newData = null;
             object listNewData;
@@ -99,11 +101,9 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
                 Logger.LogEvent("The operation of receiving the details of the shipments was done successfully");
 
             }
-            catch (System.Exception EX)
-            {
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
-                throw;
-            }
+
 
             if (listNewData != null && listNewData is List<MADeliveryProductList>)
             {
@@ -120,6 +120,5 @@ namespace ProLobbyCompanyProject.Data.Sql.Shippers
 
             return newData;
         }
-
     }
 }

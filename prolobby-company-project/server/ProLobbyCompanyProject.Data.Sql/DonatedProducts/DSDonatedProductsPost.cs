@@ -1,6 +1,7 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
 using System;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 
@@ -12,13 +13,18 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
     /// <summary>  post products . </summary>
     public class DSDonatedProductsPost: BaseDataSql
     {
+        SqlQueryPost sqlQuery;
+
         /// <summary>   Default constructor. </summary>
-        public DSDonatedProductsPost(Logger Logger) : base(Logger) { }
+        public DSDonatedProductsPost(Logger Logger) : base(Logger) 
+        {
+            sqlQuery = new SqlQueryPost();
+        }
 
         /// <summary>   Adds a user data to TBDonatedProducts. </summary>
         /// <param name="newProduct">   The new product. </param>
         /// <param name="command">      The command. </param>
-        public void AddNewProduct(object newProduct, System.Data.SqlClient.SqlCommand command)
+        public void AddNewProduct(object newProduct, SqlCommand command)
         {
             Logger.LogEvent("Enter into AddNewProduct function");
 
@@ -39,11 +45,8 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
                     Logger.LogEvent("The operation was performed successfully");
 
                 }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
             }
             Logger.LogEvent("End AddNewProduct function");
         }
@@ -55,20 +58,15 @@ namespace ProLobbyCompanyProject.Data.Sql.DonatedProducts
         /// <param name="donatedProduct">   The donated product. </param>
         public void PostNewProduct(TBDonatedProducts donatedProduct)
         {
-            Logger.LogEvent("Enter into PostNewProduct function");
+            Logger.LogEvent("\n\nEnter into PostNewProduct function");
 
             if (donatedProduct != null)
             {
                 try
                 {
-                    SqlQueryPost sqlQuery = new SqlQueryPost();
                     sqlQuery.RunAddUser(insertNewProduct, AddNewProduct, donatedProduct);
                 }
-                catch (Exception EX)
-                {
-
-                    throw;
-                }
+                catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
                 Logger.LogEvent("End PostNewProduct function and the operation was performed successfully");
 

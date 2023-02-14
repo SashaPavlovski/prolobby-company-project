@@ -1,5 +1,7 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
+using System;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 
@@ -19,7 +21,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
         /// <summary>   Updates the new data. </summary>
         /// <param name="command">      The command. </param>
         /// <param name="newUserData">  Information describing the new user. </param>
-        public void UpdateNewData(System.Data.SqlClient.SqlCommand command, object newUserData)
+        public void UpdateNewData(SqlCommand command, object newUserData)
         {
             Logger.LogEvent("Enter into UpdateNewData function");
 
@@ -45,11 +47,8 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
                         Logger.LogEvent("The operation was performed successfully");
 
                     }
-                    catch (System.Exception EX)
-                    {
-
-                        throw;
-                    }
+                    catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+                    catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
                 }
             }
 
@@ -65,17 +64,13 @@ namespace ProLobbyCompanyProject.Data.Sql.SocialActivists
         /// <param name="NewData">  Information describing the new. </param>
         public void UpdateUsersData(TBSocialActivists NewData)
         {
-            Logger.LogEvent("Enter into UpdateUsersData function");
+            Logger.LogEvent("\n\nEnter into UpdateUsersData function");
             
             try
             {
                 sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
     }
 }

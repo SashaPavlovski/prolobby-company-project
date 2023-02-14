@@ -1,5 +1,6 @@
 ﻿using ProLobbyCompanyProject.Dal.SqlQueryClasses;
 using ProLobbyCompanyProject.Model;
+using System.Data.SqlClient;
 using Utilities.Logger;
 
 
@@ -10,13 +11,19 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
     /// <summary>   The ds business company representatives update. </summary>
     public class DSBusinessCompanyRepresentativesUpdate: BaseDataSql
     {
+
+        SqlQueryUpdate sqlQuery;
+
         /// <summary>   Default constructor. </summary>
-        public DSBusinessCompanyRepresentativesUpdate(Logger Logger) : base(Logger) { }
+        public DSBusinessCompanyRepresentativesUpdate(Logger Logger) : base(Logger) 
+        {
+            sqlQuery = new SqlQueryUpdate();
+        }
 
         /// <summary>   Updates the new data. </summary>
         /// <param name="command">      The command. </param>
         /// <param name="newUserData">  Information describing the new user. </param>
-        public void UpdateNewData(System.Data.SqlClient.SqlCommand command, object newUserData)
+        public void UpdateNewData(SqlCommand command, object newUserData)
         {
             Logger.LogEvent("Enter into UpdateNewData function");
 
@@ -40,8 +47,15 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
 
                         int rows = command.ExecuteNonQuery();
                     }
-                    catch (System.Exception)
+                    catch (SqlException Ex)
                     {
+                        Logger.LogException(Ex.Message, Ex);
+
+                        throw;
+                    }
+                    catch (System.Exception Ex)
+                    {
+                        Logger.LogException(Ex.Message, Ex);
 
                         throw;
                     }
@@ -59,21 +73,20 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
         /// <param name="NewData">  Information describing the new. </param>
         public void UpdateUsersData(TBBusinessCompanyRepresentative NewData)
         {
-            Logger.LogEvent("Enter into UpdateUsersData function");
+            Logger.LogEvent("\n\nEnter into UpdateUsersData function");
 
             try
             {
-                SqlQueryUpdate sqlQuery = new SqlQueryUpdate();
                 sqlQuery.RunUpdateData(insertUpdate, UpdateNewData, NewData);
             }
-            catch (System.Exception)
+            catch (System.Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
 
             Logger.LogEvent("End UpdateUsersData function");
-
         }
     }
 }

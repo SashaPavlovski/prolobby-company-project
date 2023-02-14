@@ -12,9 +12,13 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
     /// <summary>   The business company representatives post login new data . </summary>
     public class DSBusinessCompanyRepresentativesPost: BaseDataSql
     {
+        SqlQueryPost sqlQuery;
 
         /// <summary>   Default constructor. </summary>
-        public DSBusinessCompanyRepresentativesPost(Logger Logger) : base(Logger) { }
+        public DSBusinessCompanyRepresentativesPost(Logger Logger) : base(Logger)
+        {
+            sqlQuery = new SqlQueryPost();
+        }
 
         /// <summary>   Adds a user data to DB. </summary>
         /// <param name="userData"> Information describing the user. </param>
@@ -45,11 +49,13 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
             }
             catch (SqlException Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
@@ -64,21 +70,20 @@ namespace ProLobbyCompanyProject.Data.Sql.BusinessCompanyRepresentatives
         /// <param name="userBusinessCompanyRepresentative">    The user business company new data. </param>
         public void PostUsersData(TBBusinessCompanyRepresentative userBusinessCompanyRepresentative)
         {
-            Logger.LogEvent("Enter into PostUsersData function");
+            Logger.LogEvent("\n\nEnter into PostUsersData function");
 
             try
             {
-                SqlQueryPost sqlQuery = new SqlQueryPost();
                 sqlQuery.RunAddUser(insert, AddUserData, userBusinessCompanyRepresentative);
             }
-            catch (Exception EX)
+            catch (Exception Ex)
             {
+                Logger.LogException(Ex.Message, Ex);
 
                 throw;
             }
 
             Logger.LogEvent("End PostUsersData function");
-
         }
     }
 }

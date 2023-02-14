@@ -84,7 +84,6 @@
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsPost.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsGet.cs" />
     <Compile Include="NonProfitOrganizations\DSNonProfitOrganizationsUpdate.cs" />
-    <Compile Include="PostsTracking\DSPostsTrackingIfExist.cs" />
     <Compile Include="PostsTracking\DSPostsTrackingPost.cs" />
     <Compile Include="ProLobbyOwner\DSProLobbyOwnerGet.cs" />
     <Compile Include="ProLobbyOwner\DSProLobbyOwnerPost.cs" />

@@ -17,7 +17,7 @@ namespace ProLobbyCompanyProject.Data.Sql
 
 
         //Receiving data from an organization representative
-        public object AddNonProfitOrganizationInformation(System.Data.SqlClient.SqlDataReader reader, System.Data.SqlClient.SqlCommand command, string UserId)
+        public object AddNonProfitOrganizationInformation(SqlDataReader reader, SqlCommand command, string UserId)
         {
             Logger.LogEvent("Enter into AddNonProfitOrganizationInformation function");
 
@@ -50,16 +50,17 @@ namespace ProLobbyCompanyProject.Data.Sql
                         Logger.LogEvent("The data was received successfully");
 
                     }
-                    catch (SqlException EX)
+                    catch (SqlException Ex)
                     {
+                        Logger.LogException(Ex.Message, Ex);
 
                         throw;
                     }
-                    catch (System.Exception EX)
+                    catch (System.Exception Ex)
                     {
+                        Logger.LogException(Ex.Message, Ex);
 
                         throw;
-
                     }
 
                     Logger.LogEvent("End AddNonProfitOrganizationInformation function and return nonProfitOrganization data ");
@@ -67,11 +68,7 @@ namespace ProLobbyCompanyProject.Data.Sql
                     return nonProfitOrganization;
                 }
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             Logger.LogEvent("End AddNonProfitOrganizationInformation function and return null");
 
@@ -79,7 +76,7 @@ namespace ProLobbyCompanyProject.Data.Sql
         }
 
         //Entering a value of id
-        public void SetValues(System.Data.SqlClient.SqlCommand command, string key, string value, string key2, string value2)
+        public void SetValues(SqlCommand command, string key, string value, string key2, string value2)
         {
             Logger.LogEvent("Enter into SetValues function");
 
@@ -90,16 +87,8 @@ namespace ProLobbyCompanyProject.Data.Sql
                 Logger.LogEvent("Done successfully");
 
             }
-            catch (SqlException EX)
-            {
-
-                throw;
-            }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
         }
 
         /// <summary>   declare @User_Id  nvarchar(max)\r\n. </summary>
@@ -108,7 +97,7 @@ namespace ProLobbyCompanyProject.Data.Sql
 
         public List<TBNonProfitOrganization> GetNonProfitUserRow(string IdUser)
         {
-            Logger.LogEvent("Enter into GetNonProfitUserRow function");
+            Logger.LogEvent("\n\nEnter into GetNonProfitUserRow function");
 
             List<TBNonProfitOrganization> NonProfitOrganization = null;
 
@@ -121,11 +110,7 @@ namespace ProLobbyCompanyProject.Data.Sql
                 Logger.LogEvent("The data was received successfully");
 
             }
-            catch (System.Exception EX)
-            {
-
-                throw;
-            }
+            catch (System.Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             if (listNonProfitOrganization is List<TBNonProfitOrganization>)
             {

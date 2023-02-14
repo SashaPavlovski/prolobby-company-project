@@ -50,16 +50,8 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
                     return sortingCampaigns;
                 }
             }
-            catch (SqlException EX)
-            {
-
-                throw;
-            }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (SqlException Ex) { Logger.LogException(Ex.Message, Ex); throw; }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             Logger.LogEvent("End AddSortingCampaigns function, return null");
 
@@ -115,11 +107,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
             {
                 listSortingCampaigns = SqlQuery.RunCommand(insert, AddSortingCampaigns, SetValues, null, null, null, null);
             }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
+            catch (Exception Ex) { Logger.LogException(Ex.Message, Ex); throw; }
 
             if (listSortingCampaigns != null)
             {
@@ -145,7 +133,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
         /// <returns> List of reports sorting campaigns by date. </returns>
         public List<TBSortingCampaigns> GetByDate()
         {
-            Logger.LogEvent("Enter into GetByDate function");
+            Logger.LogEvent("\n\nEnter into GetByDate function");
 
             return GetSortingCampaignsDefault(EnteringValueToInsert("TB1.[Date]"));
         }
@@ -157,7 +145,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
         /// <returns> List of reports sorting campaigns by Organization. </returns>
         public List<TBSortingCampaigns> GetByOrganization()
         {
-            Logger.LogEvent("Enter into GetByOrganization function");
+            Logger.LogEvent("\n\nEnter into GetByOrganization function");
 
             return GetSortingCampaignsDefault(EnteringValueToInsert("TB2.NonProfitOrganizationName"));
         }
@@ -169,7 +157,7 @@ namespace ProLobbyCompanyProject.Data.Sql.SortingTables.SortingCampaigns
         /// <returns> List of reports sorting campaigns by activity. </returns>
         public List<TBSortingCampaigns> GetByActivity()
         {
-            Logger.LogEvent("Enter into GetByActivity function");
+            Logger.LogEvent("\n\nEnter into GetByActivity function");
 
             return GetSortingCampaignsDefault(EnteringValueToInsert("TB1.Active"));
         }
