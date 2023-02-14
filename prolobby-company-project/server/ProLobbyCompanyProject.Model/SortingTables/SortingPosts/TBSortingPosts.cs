@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProLobbyCompanyProject.Model.SortingTables.SortingPosts
 {
@@ -15,5 +11,7 @@ namespace ProLobbyCompanyProject.Model.SortingTables.SortingPosts
         public string Campaigns_Name { get; set; }
         public string NonProfitOrganizationName { get; set; }
         public string Active { get; set; }
+        public string Tweets_Message { get; set; }
+        public int Retweets_Count { get; set; }
     }
 }

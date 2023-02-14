@@ -12,5 +12,6 @@ namespace ProLobbyCompanyProject.Model
         public double Accumulated_money { get; set; }
         public bool Active { get; set; }
         public DateTime Date { get; set; }
+       // public DateTime DateLastTweet { get; set; }
     }
 }
