@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using ProLobbyCompanyProject.Entites;
 using ProLobbyCompanyProject.Model;
-using System.Collections.Generic;
+using ProLobbyCompanyProject.Entites.Commands;
 
 namespace ProLobbyCompanyProject.MicroServices.User_permissions
 {
@@ -21,41 +20,38 @@ namespace ProLobbyCompanyProject.MicroServices.User_permissions
         {
 
             //User login with enter details
-            switch (action)
+            MainManager.INSTANCE.Logger.LogEvent("\n\nStarting SocialActivists function:");
+
+            try
             {
-                //Checks if the user exists
-                case "userData":
-                    List<TBSocialActivists> ListSocialActivists = MainManager.INSTANCE.SocialActivists.CheckingIfExistUser(userId);
-                    string responseMessageSA = System.Text.Json.JsonSerializer.Serialize(ListSocialActivists);
-                    Console.WriteLine(responseMessageSA);
-                    return new OkObjectResult(responseMessageSA);
+                TBSocialActivists User = null;
 
-                //Enters new data
-                case "addData":
+                string KeyCommand = $"SocialActivists/{action}";
 
+                if (req.ContentLength != null)
+                {
                     string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    TBSocialActivists userActivists = System.Text.Json.JsonSerializer.Deserialize<TBSocialActivists>(requestBody);
-                    if (userActivists.FirstName != null && userActivists.LastName != null && userActivists.Email != null && userActivists.Phone_number != null && userActivists.User_Id != null && userActivists.Address != null && userActivists.Twitter_user != null)
-                    {
-                        MainManager.INSTANCE.SocialActivists.PostUsersActivists(userActivists);
-                        return new OkObjectResult("The operation was successful");
-                    }
-                    return new OkObjectResult("The operation failed");
+                    User = System.Text.Json.JsonSerializer.Deserialize<TBSocialActivists>(requestBody);
+                }
 
-                //Updates the user's data
-                case "updateData":
+                ICommand Command = MainManager.INSTANCE.CommandsManager.CommandList[KeyCommand];
 
-                    string requestActivistsBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    TBSocialActivists UserActivistsData = System.Text.Json.JsonSerializer.Deserialize<TBSocialActivists>(requestActivistsBody);
-                    if (UserActivistsData.SocialActivists_Id != 0 && UserActivistsData.FirstName != null && UserActivistsData.LastName != null && UserActivistsData.Email != null && UserActivistsData.Phone_number != null && UserActivistsData.Address != null && UserActivistsData.Twitter_user != null)
-                    {
-                        MainManager.INSTANCE.SocialActivists.UpdateActivist(UserActivistsData);
-                        return new OkObjectResult("The operation was successful");
-                    }
-                    return new OkObjectResult("The operation failed");
+                object responseMessage = Command.Execute(userId, User);
+
+                if (responseMessage != null && responseMessage is string)
+                {
+                    string ResponseMessage = (string)responseMessage;
+
+                    return new OkObjectResult(ResponseMessage);
+                }
+
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
             }
-
-            return new OkObjectResult("");
+            catch (System.Exception Ex)
+            {
+                MainManager.INSTANCE.Logger.LogException(Ex.Message, Ex);
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
+            }
         }
     }
 }

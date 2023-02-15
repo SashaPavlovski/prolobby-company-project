@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,11 +5,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using ProLobbyCompanyProject.Entites;
 using ProLobbyCompanyProject.Model;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Routing;
+using ProLobbyCompanyProject.Entites.Commands;
 
 namespace ProLobbyCompanyProject.MicroServices
 {
@@ -21,32 +18,39 @@ namespace ProLobbyCompanyProject.MicroServices
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "delete", "post", "put", Route ="DonatedProducts/{action}/{userId?}")] HttpRequest req, string action, string userId,
             ILogger log)
         {
-            switch (action)
+            MainManager.INSTANCE.Logger.LogEvent("\n\nStarting DonatedProducts function:");
+
+            try
             {
+                TBDonatedProducts User = null;
 
-                //Receiving the products of a certain campaign according to ID
-                case "getData":
+                string KeyCommand = $"DonatedProducts/{action}";
 
-                    List<TBDonatedProducts> ListDonatedProducts = MainManager.INSTANCE.BusinessCompanyRepresentatives.GetCampaignProducts(userId);
-                    string responseMessageNP = System.Text.Json.JsonSerializer.Serialize(ListDonatedProducts);
-                    Console.WriteLine(responseMessageNP);
-                    return new OkObjectResult(responseMessageNP);
-
-
-                //Adding a new product
-                case "addData":
-
+                if (req.ContentLength != null)
+                {
                     string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    TBDonatedProducts donatedProduct = System.Text.Json.JsonSerializer.Deserialize<TBDonatedProducts>(requestBody);
-                    if (donatedProduct.Product_Name != null)
-                    {
-                        MainManager.INSTANCE.BusinessCompanyRepresentatives.PostProduct(donatedProduct);
-                        return new OkObjectResult("The operation was successful");
-                    }
-                    return new OkObjectResult("The operation failed");
+                    User = System.Text.Json.JsonSerializer.Deserialize<TBDonatedProducts>(requestBody);
+                }
+
+                ICommand Command = MainManager.INSTANCE.CommandsManager.CommandList[KeyCommand];
+
+                object responseMessage = Command.Execute(userId, User);
+
+                if (responseMessage != null && responseMessage is string)
+                {
+                    string ResponseMessage = (string)responseMessage;
+
+                    return new OkObjectResult(ResponseMessage);
+                }
+
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
 
             }
-            return new OkObjectResult("");
+            catch (System.Exception Ex)
+            {
+                MainManager.INSTANCE.Logger.LogException(Ex.Message, Ex);
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
+            }
         }
     }
 }

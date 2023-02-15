@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,10 +5,10 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using ProLobbyCompanyProject.Entites;
 using ProLobbyCompanyProject.Model;
-using System.Collections.Generic;
+using ProLobbyCompanyProject.Entites.Commands;
+using System;
 
 namespace ProLobbyCompanyProject.MicroServices.User_permissions
 {
@@ -20,47 +19,39 @@ namespace ProLobbyCompanyProject.MicroServices.User_permissions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "delete", "post", "put", Route = "NonProfitOrganization/{action}/{userId?}")] HttpRequest req, string action, string userId,
             ILogger log)
         {
+            MainManager.INSTANCE.Logger.LogEvent("\n\nStarting NonProfitOrganization function:");
 
-            //User login with enter details
-            switch (action)
+            try
             {
-                //Checks if the user exists
-                case "userData":
-                    List<TBNonProfitOrganization> ListNonProfitOrganization = MainManager.INSTANCE.NonProfitOrganizations.CheckingIfExistUser(userId);
-                    string responseMessageNP = System.Text.Json.JsonSerializer.Serialize(ListNonProfitOrganization);
-                    Console.WriteLine(responseMessageNP);
-                    return new OkObjectResult(responseMessageNP);
+                TBNonProfitOrganization User = null;
 
-                //Enters new data
-                case "addData":
-
+                if (req.ContentLength != null)
+                {
                     string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    TBNonProfitOrganization userOrganization = System.Text.Json.JsonSerializer.Deserialize<TBNonProfitOrganization>(requestBody);
-                    if (userOrganization.Url != null && userOrganization.decreption != null && userOrganization.NonProfitOrganizationName != null && userOrganization.RepresentativeFirstName != null && userOrganization.RepresentativeLastName != null && userOrganization.User_Id != null)
-                    {
-                        MainManager.INSTANCE.NonProfitOrganizations.PostUsersOrganization(userOrganization);
-                        return new OkObjectResult("The operation was successful");
-                    }
-                    return new OkObjectResult("The operation failed");
+                    User = System.Text.Json.JsonSerializer.Deserialize<TBNonProfitOrganization>(requestBody);
+                }
 
+                string KeyCommand = $"NonProfitOrganization/{action}";
 
+                ICommand Command = MainManager.INSTANCE.CommandsManager.CommandList[KeyCommand];
 
-                //Updates the user's data
-                case "updateData":
+                object responseMessage = Command.Execute(userId, User);
 
-                    string requestOrganizationBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    TBNonProfitOrganization UserOrganizationData = System.Text.Json.JsonSerializer.Deserialize<TBNonProfitOrganization>(requestOrganizationBody);
-                    if (UserOrganizationData.NonProfitOrganization_Id != 0 && UserOrganizationData.NonProfitOrganizationName != null && UserOrganizationData.RepresentativeLastName != null && UserOrganizationData.Email != null && UserOrganizationData.Phone_number != null && UserOrganizationData.RepresentativeFirstName != null && UserOrganizationData.decreption != null && UserOrganizationData.Url != null)
-                    {
-                        MainManager.INSTANCE.NonProfitOrganizations.UpdateActivist(UserOrganizationData);
-                        return new OkObjectResult("The operation was successful");
-                    }
-                    return new OkObjectResult("The operation failed");
+                if (responseMessage is string)
+                {
+                    string ResponseMessage = (string)responseMessage;
 
+                    return new OkObjectResult(ResponseMessage);
+                }
+
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
 
             }
-
-            return new OkObjectResult("");
+            catch (Exception Ex)
+            {
+                MainManager.INSTANCE.Logger.LogException(Ex.Message, Ex);
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
+            }
         }
     }
 }

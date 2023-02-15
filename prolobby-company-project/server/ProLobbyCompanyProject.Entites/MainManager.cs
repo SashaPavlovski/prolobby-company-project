@@ -1,7 +1,6 @@
 ﻿using CommunicationSocial;
 using ProLobbyCompanyProject.Dal;
 using ProLobbyCompanyProject.Entites.Commands;
-using System.Configuration;
 using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Entites
@@ -36,9 +35,13 @@ namespace ProLobbyCompanyProject.Entites
 
         public CommandsManager CommandsManager;
 
-        private Logger Logger;
+        public PostTwitter PostTwitter;
+
+        public Logger Logger;
 
         private AddTwitter AddTwitter;
+
+
 
         public void Init()
         {
@@ -68,7 +71,8 @@ namespace ProLobbyCompanyProject.Entites
             NonProfitOrganizations = new NonProfitOrganizations(Logger);
             Twitter = new Twitter(Logger);
             AddTwitter = new AddTwitter(Logger);
-            CommandsManager = new CommandsManager();
+            PostTwitter = new PostTwitter(Logger);
+            CommandsManager = new CommandsManager(Logger);
 
             Logger.LogEvent("Initialize the entities classes");
         }

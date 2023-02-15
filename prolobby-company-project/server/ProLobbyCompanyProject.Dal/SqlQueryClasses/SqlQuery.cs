@@ -44,12 +44,12 @@ namespace ProLobbyCompanyProject.Dal
             {
                 if (!(openConnection.Connect())) return null;
             }
-            catch (SqlException Ex)
+            catch (SqlException)
             {
 
                 throw;
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
 
                 throw;
@@ -67,12 +67,12 @@ namespace ProLobbyCompanyProject.Dal
                     using (SqlDataReader reader = command.ExecuteReader()) userList = func(reader, command, userID);
                 }
             }
-            catch (SqlException EX)
+            catch (SqlException)
             {
 
                 throw;
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                throw;
@@ -84,12 +84,12 @@ namespace ProLobbyCompanyProject.Dal
                 if (!(openConnection.CloseConnect())) return null;
 
             }
-            catch (SqlException EX)
+            catch (SqlException)
             {
 
                 throw;
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;

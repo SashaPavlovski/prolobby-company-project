@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,12 +5,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using ProLobbyCompanyProject.Entites;
-using ProLobbyCompanyProject.Model.MoneyTracking;
 using ProLobbyCompanyProject.Model;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Routing;
+using ProLobbyCompanyProject.Entites.Commands;
 
 namespace ProLobbyCompanyProject.MicroServices
 {
@@ -19,36 +15,42 @@ namespace ProLobbyCompanyProject.MicroServices
     {
         [FunctionName("MoneyTracking")]
         public static async Task<IActionResult> MoneyTrackingRunner(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "delete", "post", "put", Route= "MoneyTracking/{action}/{userId?}")] HttpRequest req, string action, string userId,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "delete", "post", "put", Route = "MoneyTracking/{action}/{userId?}")] HttpRequest req, string action, string userId,
             ILogger log)
         {
-            switch (action)
+            MainManager.INSTANCE.Logger.LogEvent("\n\nStarting MoneyTracking function:");
+
+            try
             {
-                //joining the campaign
-                //Adding the data into the table of the Money tracking
-                case "addTrack":
+                TBMoneyTracking User = null;
 
-                    string requestBodyTrack = await new StreamReader(req.Body).ReadToEndAsync();
-                    TBMoneyTracking moneyTracking = System.Text.Json.JsonSerializer.Deserialize<TBMoneyTracking>(requestBodyTrack);
+                string KeyCommand = $"MoneyTracking/{action}";
 
-                    if (moneyTracking != null)
-                    {
-                        MainManager.INSTANCE.SocialActivists.PostDataTracking(moneyTracking);
-                        return new OkObjectResult("The operation was successful");
-                    }
-                    return new OkObjectResult("The operation failed");
+                if (req.ContentLength != null)
+                {
+                    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                    User = System.Text.Json.JsonSerializer.Deserialize<TBMoneyTracking>(requestBody);
+                }
 
+                ICommand Command = MainManager.INSTANCE.CommandsManager.CommandList[KeyCommand];
 
-                //Receiving details from a money tracking table with social activist ID
-                case "getDataMoney":
+                object responseMessage = Command.Execute(userId, User);
 
-                    List<MAMoneyTracking> ListMoneyTracking = MainManager.INSTANCE.SocialActivists.GetMoneyData(userId);
-                    string responseMessageList = System.Text.Json.JsonSerializer.Serialize(ListMoneyTracking);
-                    Console.WriteLine(responseMessageList);
-                    return new OkObjectResult(responseMessageList);
+                if (responseMessage != null && responseMessage is string)
+                {
+                    string ResponseMessage = (string)responseMessage;
+
+                    return new OkObjectResult(ResponseMessage);
+                }
+
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
 
             }
-            return new OkObjectResult("");
+            catch (System.Exception Ex)
+            {
+                MainManager.INSTANCE.Logger.LogException(Ex.Message, Ex);
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
+            }
         }
     }
 }

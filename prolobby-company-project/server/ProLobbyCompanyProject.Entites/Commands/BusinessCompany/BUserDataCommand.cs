@@ -1,16 +1,20 @@
 ﻿using ProLobbyCompanyProject.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Entites.Commands.BusinessCompany
 {
-    public class BUserDataCommand:ICommand
+    public class BUserDataCommand: BaseCommands,ICommand
     {
-        //User login with enter details
-        //Checks if the user exists
+        public BUserDataCommand(Logger logger) : base(logger) { }
+
+        /// <summary>
+        /// User login with enter details,
+        /// Checks if the user exists.
+        /// </summary>
+        /// <param name="argv"> Receiving a thesis of the company representative and checking whether it exists. </param>
+        /// <returns>  Null if there is no such representative in another system returns his details. </returns>
         public object Execute (params object[] argv)
         {
             foreach (var item in argv)
@@ -20,12 +24,18 @@ namespace ProLobbyCompanyProject.Entites.Commands.BusinessCompany
                     string userId = (string)item;
 
                     List<TBBusinessCompanyRepresentative> ListBusinessCompany = MainManager.INSTANCE.BusinessCompanyRepresentatives.CheckingIfExistUser(userId);
+
                     string responseMessageLB = System.Text.Json.JsonSerializer.Serialize(ListBusinessCompany);
+
                     Console.WriteLine(responseMessageLB);
+
+                    base.Logger.LogEvent("The action of checking whether the company representative exists was successfully carried out, in BUserDataCommand.");
 
                     return responseMessageLB;
                 }
             }
+
+            base.Logger.LogError("\nThe operation of checking whether the company representative exists failed in BUserDataCommand.\n");
 
             return null;
         }

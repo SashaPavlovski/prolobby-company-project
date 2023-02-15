@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 //SqlQueryClasses\SqlQueryPost.cs
 // Implements the SQL query post class
@@ -81,7 +78,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.CloseConnect())) return;
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
 
                 throw;
@@ -102,7 +99,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.Connect())) return null;
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;
@@ -118,7 +115,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
                     answer = func(userData, command);
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
 
                 throw;
@@ -128,7 +125,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.CloseConnect())) return null;
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
 
                 throw;
@@ -152,7 +149,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.Connect())) return null;
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;
@@ -168,7 +165,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
                     answer = func(userData, command);
                 }
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;
@@ -179,7 +176,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.CloseConnect())) return null;
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
 
                 throw;

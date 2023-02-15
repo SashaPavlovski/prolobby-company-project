@@ -1,31 +1,26 @@
-﻿using System.Configuration;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 // OpenConnection.cs
 // Implements the open connection class
 namespace ProLobbyCompanyProject.Dal
 {
     /// <summary>   An open connection. </summary>
-    public class OpenConnection
+    public class OpenConnection: BaseDal
     {
         /// <summary> Creating a new database </summary>
-        public static string connectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ProLobbyCompanyProject;Data Source=localhost\\SQLEXPRESS";
-
-       // public static string connectionString = ConfigurationManager.AppSettings["connectionString"];
-
+      //  public static string connectionString = Environment.GetEnvironmentVariable("connectionString");
 
         /// <summary> The connection. </summary>
         public SqlConnection connection;
 
         /// <summary>   Default constructor. </summary>
-        public OpenConnection()
+        public OpenConnection():base(connectionString)
         {
             try
             {
                 connection = new SqlConnection(connectionString);
-
             }
-            catch (SqlException EX)
+            catch (SqlException)
             {
 
                 throw;
@@ -43,7 +38,7 @@ namespace ProLobbyCompanyProject.Dal
                 connection.Open();
                 return true;
             }
-            catch (SqlException EX)
+            catch (SqlException)
             {
                 return false;
             }
@@ -59,7 +54,7 @@ namespace ProLobbyCompanyProject.Dal
                 connection.Close();
                 return true;
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 return false;
             }

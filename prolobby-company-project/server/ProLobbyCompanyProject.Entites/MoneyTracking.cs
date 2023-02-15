@@ -11,7 +11,10 @@ namespace ProLobbyCompanyProject.Entites
         DSMoneyTrackingGetUserMoney dSMoneyTrackingGetUserMoney;
 
 
-        //Entering financial data of the social activists
+        /// <summary>
+        /// Entering financial data of the social activists
+        /// </summary>
+        /// <param name="moneyTracking">id of the campaign and id of the activist.</param>
         public void PostDataTracking(TBMoneyTracking moneyTracking)
         {
             Logger.LogEvent("\n\nEnter into PostDataTracking function");
@@ -22,7 +25,11 @@ namespace ProLobbyCompanyProject.Entites
 
         }
 
-        //Receiving financial data of the social activists
+        /// <summary>
+        /// Receiving financial data of the social activists
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns>Details about campaign and how much money accumulated.</returns>
         public List<MAMoneyTracking> GetMoneyData(string idUser)
         {
             Logger.LogEvent("\n\nEnter into GetMoneyData function");

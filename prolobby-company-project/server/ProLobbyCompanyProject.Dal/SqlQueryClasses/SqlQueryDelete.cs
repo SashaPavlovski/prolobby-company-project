@@ -7,7 +7,6 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
 {
     public class SqlQueryDelete
     {
-
         // <summary>   Default constructor. </summary>
         public SqlQueryDelete() { }
         /// <summary>   The open connection. </summary>
@@ -29,12 +28,12 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!openConnection.Connect()) return;
             }
-            catch (SqlException SE)
+            catch (SqlException)
             {
 
                 throw;
             }
-            catch (System.Exception Ex)
+            catch (System.Exception)
             {
 
                 throw;
@@ -49,7 +48,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
                     func(command, selector);
                 }
             }
-            catch (System.Exception Ex)
+            catch (System.Exception)
             {
 
                 throw;
@@ -59,17 +58,16 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.CloseConnect())) return;
             }
-            catch (SqlException SE)
+            catch (SqlException)
             {
 
                 throw;
             }
-            catch (System.Exception Ex)
+            catch (System.Exception)
             {
 
                 throw;
             }
-
         }
     }
 }

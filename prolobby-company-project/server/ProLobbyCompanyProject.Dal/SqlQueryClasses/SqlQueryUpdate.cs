@@ -34,7 +34,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!openConnection.Connect()) return;
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;
@@ -49,7 +49,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
                     func(command, updateData);
                 }
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;
@@ -60,7 +60,7 @@ namespace ProLobbyCompanyProject.Dal.SqlQueryClasses
             {
                 if (!(openConnection.CloseConnect())) return;
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;

@@ -1,13 +1,13 @@
-﻿using Utilities.Logger;
+﻿using System;
+using System.Data.Entity;
 
 namespace ProLobbyCompanyProject.Dal
 {
-    public class BaseDal
+    public class BaseDal: DbContext
     {
-        public Logger Logger;
-        public BaseDal(Logger logger)
-        {
-            Logger = logger;
-        }
+        public static string connectionString = Environment.GetEnvironmentVariable("connectionString");
+
+        public BaseDal(string connectionString) : base(connectionString) { }
+
     }
 }

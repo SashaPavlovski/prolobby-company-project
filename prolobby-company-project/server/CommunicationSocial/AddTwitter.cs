@@ -2,7 +2,6 @@
 using ProLobbyCompanyProject.Data.Sql.MoneyTracking;
 using ProLobbyCompanyProject.Data.Sql.PostsTracking;
 using ProLobbyCompanyProject.Data.Sql.Twitter;
-using ProLobbyCompanyProject.Model.Keys;
 using ProLobbyCompanyProject.Model.Tables;
 using ProLobbyCompanyProject.Model.Twitter;
 using RestSharp;
@@ -28,25 +27,26 @@ namespace CommunicationSocial
 
 
 
-        /// <summary> Delegate </summary>
+        /// <summary> UrlQueryDelegate </summary>
         public delegate string UrlQueryDelegate(object data);
 
+        /// <summary> AccessDataSqlDelegate </summary>
         public delegate void AccessDataSqlDelegate(object date, object newDate);
-        /// <summary> Delegate </summary>
 
 
-
-        /// <summary> Defining Task </summary>
+        /// <summary>Twitter Task </summary>
         Task TwitterTask = null;
-        /// <summary> Defining Task </summary>
 
 
 
-        /// <summary> Defining Properties </summary>
+        /// <summary> StopLoop Properties </summary>
         bool StopLoop { get; set; } = false;
-        /// <summary> Defining Properties </summary>
 
 
+        /// <summary>
+        /// Running the task that runs every hour
+        /// </summary>
+        /// <param name="logger"></param>
         public AddTwitter(Logger logger) : base(logger) 
         {
             dSTwitterGet = new DSTwitterGet(base.Logger);
@@ -90,7 +90,7 @@ namespace CommunicationSocial
                     return url;
                 }
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;
@@ -147,7 +147,7 @@ namespace CommunicationSocial
                         {
                              userData = dSTwitterGet.GetTwitterUserRow();
                         }
-                        catch (Exception EX)
+                        catch (Exception)
                         {
 
                             throw;
@@ -160,7 +160,7 @@ namespace CommunicationSocial
                         {
                             if (userData != null && userData.Count > 0)
                             {
-                                PostTweets(userData, NoTweetsList, ExistTweetsList, Keys.BearerToken, UrlQuery, AccessDataSql);
+                                PostTweets(userData, NoTweetsList, ExistTweetsList, base.Keys.BearerToken, UrlQuery, AccessDataSql);
 
 
                                 //Update tweets
@@ -179,7 +179,7 @@ namespace CommunicationSocial
                             Thread.Sleep(1000 * 60 * 60);
                         }
                     }
-                    catch (Exception EX)
+                    catch (Exception)
                     {
 
                         throw;
@@ -328,7 +328,7 @@ namespace CommunicationSocial
 
                 Logger.LogEvent("End PostTweets function successfully");
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;
@@ -364,7 +364,7 @@ namespace CommunicationSocial
                     TweetTime = new DateTime(parsedDate.Year, parsedDate.Month, parsedDate.Day, parsedTime.Hour, parsedTime.Minute, 0);
                 }
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;

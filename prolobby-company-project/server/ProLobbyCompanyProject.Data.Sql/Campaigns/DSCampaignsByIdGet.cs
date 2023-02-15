@@ -89,7 +89,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                 Logger.LogEvent("End SetValues function and done successfully");
 
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;
@@ -123,7 +123,7 @@ namespace ProLobbyCompanyProject.Data.Sql.Campaigns
                     }
                 }
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;

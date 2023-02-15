@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ProLobbyCompanyProject.Model;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProLobbyCompanyProject.Model;
+using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Entites.Commands.BusinessCompany
 {
-    public class BAddDataCommand: ICommand
+    public class BAddDataCommand: BaseCommands,ICommand
     {
-        //Enters new data 
+        public BAddDataCommand(Logger logger):base(logger) { }
+
+        /// <summary>
+        /// Saving for the first time of the details of the company representative.
+        /// </summary>
+        /// <param name="argv">Receiving all the data on the representative of the company.</param>
+        /// <returns> Answer whether the operation was successful. </returns>
         public object Execute(params object[] argv)
         {
             foreach (var item in argv)
@@ -20,11 +19,15 @@ namespace ProLobbyCompanyProject.Entites.Commands.BusinessCompany
                 if(item is TBBusinessCompanyRepresentative)
                 {
                     TBBusinessCompanyRepresentative userCompany = (TBBusinessCompanyRepresentative)item;
+
                     if (userCompany.Url != null && userCompany.Email != null && userCompany.CompanyName != null && userCompany.RepresentativeFirstName != null && userCompany.RepresentativeLastName != null && userCompany.User_Id != null && userCompany.Phone_number != null)
                     {
                         MainManager.INSTANCE.BusinessCompanyRepresentatives.PostUsersCompanys(userCompany);
+
                         return "The operation was successful";
                     }
+
+                    base.Logger.LogError("\nNot all the details of a company representative were received in BAddDataCommand class, the operation failed\n");
 
                     return "The operation failed";
                 }

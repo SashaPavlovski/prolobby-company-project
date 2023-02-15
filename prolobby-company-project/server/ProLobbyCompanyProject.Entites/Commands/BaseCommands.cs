@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Utilities.Logger;
 
 namespace ProLobbyCompanyProject.Entites.Commands
 {
@@ -14,5 +10,10 @@ namespace ProLobbyCompanyProject.Entites.Commands
     }
     public class BaseCommands
     {
+        public Logger Logger;
+        public BaseCommands(Logger logger) 
+        {
+            Logger = logger;
+        }
     }
 }

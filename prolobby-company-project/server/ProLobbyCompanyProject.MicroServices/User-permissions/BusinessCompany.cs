@@ -19,28 +19,39 @@ namespace ProLobbyCompanyProject.MicroServices.User_permissions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "delete", "post", "put", Route = "BusinessCompanyRepresentative/{action}/{userId?}")] HttpRequest req, string action, string userId,
             ILogger log)
         {
+            MainManager.INSTANCE.Logger.LogEvent("\n\nStarting BusinessCompany function:");
 
-            TBBusinessCompanyRepresentative userCompany = null;
-
-            if (req.ContentLength != null)
+            try
             {
-                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                userCompany = System.Text.Json.JsonSerializer.Deserialize<TBBusinessCompanyRepresentative>(requestBody);
+                TBBusinessCompanyRepresentative userCompany = null;
+
+                string KeyCommand = $"BusinessCompanyRepresentative/{action}";
+
+                if (req.ContentLength != null)
+                {
+                    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+
+                    userCompany = System.Text.Json.JsonSerializer.Deserialize<TBBusinessCompanyRepresentative>(requestBody);
+                }
+
+                ICommand Command = MainManager.INSTANCE.CommandsManager.CommandList[KeyCommand];
+
+                object responseMessage = Command.Execute(userId, userCompany);
+
+                if (responseMessage != null && responseMessage is string)
+                {
+                    string ResponseMessage = (string)responseMessage;
+                    return new OkObjectResult(ResponseMessage);
+                }
+
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
+
             }
-
-            string KeyCommand = $"BusinessCompanyRepresentative/{action}";
-
-            ICommand Command = MainManager.INSTANCE.CommandsManager.CommandList[KeyCommand];
-
-            object responseMessage = Command.Execute(userId, userCompany);
-
-            if (responseMessage is string)
+            catch (Exception Ex)
             {
-                string ResponseMessage = (string)responseMessage;
-                return new OkObjectResult(ResponseMessage);
+                MainManager.INSTANCE.Logger.LogException(Ex.Message, Ex);
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
             }
-
-            return new OkObjectResult("The operation failed");
         }
     }
 }

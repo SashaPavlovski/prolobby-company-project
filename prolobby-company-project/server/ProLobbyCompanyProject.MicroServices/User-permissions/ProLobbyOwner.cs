@@ -6,10 +6,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using ProLobbyCompanyProject.Entites;
 using ProLobbyCompanyProject.Model;
-using System.Collections.Generic;
+using ProLobbyCompanyProject.Entites.Commands;
 
 namespace ProLobbyCompanyProject.MicroServices.User_permissions
 {
@@ -22,42 +21,38 @@ namespace ProLobbyCompanyProject.MicroServices.User_permissions
         {
 
             //User login with enter details
-            switch (action)
+            MainManager.INSTANCE.Logger.LogEvent("\n\nStarting ProLobbyOwner function:");
+
+            try
             {
-                //Checks if the user exists
-                case "userData":
-                    List<TBProLobbyOwner> ListProLobbyOwner = MainManager.INSTANCE.ProLobbyOwner.CheckingIfExistUser(userId);
-                    string responseMessagePO = System.Text.Json.JsonSerializer.Serialize(ListProLobbyOwner);
-                    Console.WriteLine(responseMessagePO);
-                    return new OkObjectResult(responseMessagePO);
+                TBProLobbyOwner User = null;
 
-                //Enters new data
-                case "addData":
+                string KeyCommand = $"ProLobbyOwner/{action}";
 
+                if (req.ContentLength != null)
+                {
                     string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    TBProLobbyOwner userOwner = System.Text.Json.JsonSerializer.Deserialize<TBProLobbyOwner>(requestBody);
-                    if (userOwner.FirstName != null && userOwner.LastName != null && userOwner.Email != null && userOwner.Phone_number != null && userOwner.User_Id != null)
-                    {
-                        MainManager.INSTANCE.ProLobbyOwner.PostUsersOwner(userOwner);
-                        return new OkObjectResult("The operation was successful");
-                    }
-                    return new OkObjectResult("The operation failed");
+                    User = System.Text.Json.JsonSerializer.Deserialize<TBProLobbyOwner>(requestBody);
+                }
 
+                ICommand Command = MainManager.INSTANCE.CommandsManager.CommandList[KeyCommand];
 
-                //Updates the user's data
-                case "updateData":
+                object responseMessage = Command.Execute(userId, User);
 
-                    string requestOwnerBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    TBProLobbyOwner UserOwnerData = System.Text.Json.JsonSerializer.Deserialize<TBProLobbyOwner>(requestOwnerBody);
-                    if (UserOwnerData.ProLobbyOwner_Id != 0 && UserOwnerData.FirstName != null && UserOwnerData.LastName != null && UserOwnerData.Email != null && UserOwnerData.Phone_number != null)
-                    {
-                        MainManager.INSTANCE.ProLobbyOwner.UpdateUsersOwner(UserOwnerData);
-                        return new OkObjectResult("The operation was successful");
-                    }
-                    return new OkObjectResult("The operation failed");
+                if (responseMessage is string)
+                {
+                    string ResponseMessage = (string)responseMessage;
+
+                    return new OkObjectResult(ResponseMessage);
+                }
+
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
             }
-
-            return new OkObjectResult("");
+            catch (Exception Ex)
+            {
+                MainManager.INSTANCE.Logger.LogException(Ex.Message, Ex);
+                return new BadRequestObjectResult("The operation failed, please contact the site administrator");//400
+            }
         }
     }
 }
