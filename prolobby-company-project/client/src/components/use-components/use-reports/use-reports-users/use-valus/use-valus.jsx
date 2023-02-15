@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { GetDataAsync } from "../../../../../services/services";
+import { GetDataAsync } from "../../../../../services/services.get.data.js";
 
 //The functions required for user reports
 //Receiving the reports from cs

@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { addUserDataAsync } from "../../../../services/services";
+import { addUserDataAsync } from "../../../../services/services.add.data.js";
 import { useNavigate } from "react-router-dom";
 
 //Uploading the Owner data to the system

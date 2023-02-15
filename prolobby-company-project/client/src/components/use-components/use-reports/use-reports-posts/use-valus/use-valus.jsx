@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { GetDataAsync } from "../../../../../services/services";
+import { GetDataAsync } from "../../../../../services/services.get.data.js";
 
 //The functions of the options of Posts
 //Sending the value of the option to the cs

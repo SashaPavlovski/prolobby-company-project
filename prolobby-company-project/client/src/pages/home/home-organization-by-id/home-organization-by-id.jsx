@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { CampaignCard } from "../../../components/organization-components/campaign-card/campaign-card";
 import { Ifexist } from "../../../components/repeat/user-if-exist";
-import { GetDataAsync } from "../../../services/services";
+import { GetDataAsync } from "../../../services/services.get.data.js";
 
 //The campaign view of a specific association
 //Sending the association's id to receive its campaigns

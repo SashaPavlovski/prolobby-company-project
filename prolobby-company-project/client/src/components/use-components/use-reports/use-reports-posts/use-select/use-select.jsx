@@ -13,6 +13,10 @@ export const UseSelectValueReportsPosts = () => {
       label: "By number of responses",
       value: 2,
     },
+    {
+      label: "By amount of shares",
+      value: 3,
+    },
   ];
   return { options };
 };

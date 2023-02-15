@@ -1,4 +1,4 @@
-import { UpdateUserAsync } from "../../../../services/services.js";
+import { UpdateUserAsync } from "../../../../services/services.update.data.js";
 
 //Sending updated data to Cs of Owner
 export const UseUpdateLoginOwner = ({ UseStatsVariables, userDataRow }) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { GetDataAsync } from "../../../../../services/services";
+import { GetDataAsync } from "../../../../../services/services.get.data.js";
 
 //The functions related to the reports of the campaigns
 //Sending the value of the column to cs

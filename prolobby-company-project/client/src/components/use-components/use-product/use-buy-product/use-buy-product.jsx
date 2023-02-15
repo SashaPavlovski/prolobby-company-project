@@ -1,4 +1,4 @@
-import { addUserDataAsync } from "./../../../../services/services";
+import { addUserDataAsync } from "./../../../../services/services.add.data.js";
 
 //Sending product ID to cs
 //There the product is bought

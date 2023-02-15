@@ -1,4 +1,4 @@
-import { GetDataAsync } from "../../../../services/services.js";
+import { GetDataAsync } from "../../../../services/services.get.data.js";
 
 //A component that performs the link to the cs
 //to perform the Twitter scan

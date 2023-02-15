@@ -1,4 +1,4 @@
-import { addUserDataAsync } from "../../../../services/services.js";
+import { addUserDataAsync } from "../../../../services/services.add.data.js";
 
 //The function of sends the data of Create Campaign to cs
 //Additionally sends a message to the user

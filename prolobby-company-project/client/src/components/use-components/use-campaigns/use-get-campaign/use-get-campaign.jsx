@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { GetDataAsync } from "../../../../services/services.js";
+import { GetDataAsync } from "../../../../services/services.get.data.js";
 
 //Generic function to send a value
 //at url

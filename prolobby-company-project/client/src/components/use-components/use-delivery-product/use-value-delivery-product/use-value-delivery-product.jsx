@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { GetDataAsync } from "../../../../services/services.js";
+import { GetDataAsync } from "../../../../services/services.get.data.js";
 
 //Receiving all Buy Product
 //that are needed for sending

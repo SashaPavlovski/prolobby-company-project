@@ -1,5 +1,4 @@
-import { UpdateUserAsync } from "../../../../services/services.js";
-
+import { UpdateUserAsync } from "../../../../services/services.update.data.js";
 //Updating the Organization details
 export const UseUpdateLoginOrganization = ({
   UseStatsVariables,

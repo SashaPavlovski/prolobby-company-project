@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { GetDataAsync } from "../../services/services.js";
+import { GetDataAsync } from "../../services/services.get.data.js";
 import { UserContext } from "../../context/userData.context.js";
 
 //Checking if the user exists

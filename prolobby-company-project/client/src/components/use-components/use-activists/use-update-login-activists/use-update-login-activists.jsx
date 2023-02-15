@@ -1,4 +1,4 @@
-import { UpdateUserAsync } from "../../../../services/services.js";
+import { UpdateUserAsync } from "../../../../services/services.update.data.js";
 
 //update the Activists details
 export const UseUpdateLoginActivists = ({ UseStatsVariables, userDataRow }) => {

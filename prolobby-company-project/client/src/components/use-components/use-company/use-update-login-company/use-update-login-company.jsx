@@ -1,4 +1,4 @@
-import { UpdateUserAsync } from "../../../../services/services.js";
+import { UpdateUserAsync } from "../../../../services/services.update.data.js";
 
 //sending data to cs
 //update the details of company user

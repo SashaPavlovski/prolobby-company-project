@@ -7,7 +7,9 @@ import { UseSelectValueReportsPosts } from "../../../components/use-components/u
 
 //Reports Posts page
 export const ReportsPosts = () => {
-  let { handleValue, arrOfSortingPosts } = UseValusReportsPosts({});
+  let { valueOption, handleValue, arrOfSortingPosts } = UseValusReportsPosts(
+    {}
+  );
   return (
     <>
       <br />
@@ -17,7 +19,10 @@ export const ReportsPosts = () => {
       />
       <br />
       <br />
-      <UseTableReportsPosts arrOfSortingPosts={arrOfSortingPosts} />
+      <UseTableReportsPosts
+        valueOption={valueOption}
+        arrOfSortingPosts={arrOfSortingPosts}
+      />
     </>
   );
 };

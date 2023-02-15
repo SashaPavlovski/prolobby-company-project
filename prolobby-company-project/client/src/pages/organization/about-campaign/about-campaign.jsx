@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../context/userData.context.js";
-import { DeleteAsync } from "../../../services/services.js";
+import { DeleteAsync } from "../../../services/services.delete.data.js";
 import { UseGetCampaign } from "./../../../components/use-components/use-campaigns/use-get-campaign/use-get-campaign";
 import { UseFormAboutCampaign } from "./../../../components/use-components/use-campaigns/use-form-about-campaign/use-form-about-campaign";
 import { JoinCampaign } from "../join-campaign/join-campaign.jsx";

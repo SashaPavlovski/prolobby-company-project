@@ -3,18 +3,28 @@ import React from "react";
 import { UseRowsReportsPosts } from "../use-rows/use-row";
 
 //The view of the report table of the posts
-export const UseTableReportsPosts = ({ arrOfSortingPosts }) => {
+export const UseTableReportsPosts = ({ valueOption, arrOfSortingPosts }) => {
   return (
     <div className="table-responsive">
       <table className="table align-middle">
         <thead>
           <tr>
-            <th>Organization Name</th>
-            <th>Campaigns Name</th>
-            <th>User Twitter</th>
-            <th>Amount Publications</th>
-            <th>Activity</th>
-            <th>Date Posted Tweets</th>
+            {valueOption !== null && valueOption == 2 ? (
+              <>
+                <th>User Twitter</th>
+                <th>Amount Publications</th>
+              </>
+            ) : (
+              <>
+                <th>Organization Name</th>
+                <th>Campaigns Name</th>
+                <th>User Twitter</th>
+                <th>Activity</th>
+                <th>Date Posted Tweets</th>
+                <th>Tweet</th>
+                <th>Amount of shares</th>
+              </>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -27,6 +37,9 @@ export const UseTableReportsPosts = ({ arrOfSortingPosts }) => {
                 Campaigns_Name={p.Campaigns_Name}
                 NonProfitOrganizationName={p.NonProfitOrganizationName}
                 Active={p.Active}
+                Tweets_Message={p.Tweets_Message}
+                Retweets_Count={p.Retweets_Count}
+                valueOption={valueOption}
               />
             ))
           ) : (

@@ -8,15 +8,28 @@ export const UseRowsReportsPosts = ({
   Campaigns_Name,
   NonProfitOrganizationName,
   Active,
+  Tweets_Message,
+  Retweets_Count,
+  valueOption,
 }) => {
   return (
     <tr>
-      <td>{NonProfitOrganizationName}</td>
-      <td>{Campaigns_Name}</td>
-      <td>{Twitter_user}</td>
-      <td>{Amount_publications}</td>
-      <td>{Active}</td>
-      <td>{Date}</td>
+      {valueOption != null && valueOption == 2 ? (
+        <>
+          <td>{Twitter_user}</td>
+          <td>{Amount_publications}</td>
+        </>
+      ) : (
+        <>
+          <td>{NonProfitOrganizationName}</td>
+          <td>{Campaigns_Name}</td>
+          <td>{Twitter_user}</td>
+          <td>{Active}</td>
+          <td>{Date}</td>
+          <td>{Tweets_Message}</td>
+          <td>{Retweets_Count}</td>
+        </>
+      )}
     </tr>
   );
 };

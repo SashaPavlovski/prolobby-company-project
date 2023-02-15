@@ -1,4 +1,4 @@
-import { addUserDataAsync } from "./../../../services/services";
+import { addUserDataAsync } from "./../../../services/services.add.data.js";
 
 //Sends the ID of activist and the campaign ID
 //in order to join the campaign

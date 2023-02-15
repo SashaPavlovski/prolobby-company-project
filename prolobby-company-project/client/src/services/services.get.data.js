@@ -1,14 +1,16 @@
 import axios from "axios";
 
-//Sends the user's ID to check if he has permission to log in
-export const GetRolesAsync = async (userID) => {
+//Receiving data according to an identity value
+export const GetDataAsync = async (userAccess, action, userID) => {
   try {
     let result = await axios.get(
-      `http://localhost:7251/api/roles/roles/${userID}`
+      `http://localhost:7251/api/${userAccess}/${action}/${userID}`
     );
     if (result.status === 200) {
+      console.log(`seccsed : ${result.data}`);
       return result.data;
     } else {
+      console.log("enter GetDataAsync else");
       alert(result.data);
       return {};
     }
